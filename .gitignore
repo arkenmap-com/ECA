@@ -1,0 +1,10 @@
+# Upstream simulator source trees and their local build artifacts
+/Cell2Fire/
+/BurnP3Plus/
+/BurnP3PlusCell2Fire/
+
+# Local environments and OS files
+.venv/
+.DS_Store
+__pycache__/
+*.py[cod]

@@ -1,0 +1,21 @@
+FROM --platform=linux/amd64 mambaorg/micromamba:2.5.0
+
+USER root
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates curl mono-runtime unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -fsSL https://downloads.syncrosim.com/3-1-31/syncrosim-linux-3-1-31.zip -o /tmp/syncrosim.zip \
+    && mkdir -p /opt/syncrosim \
+    && unzip -q /tmp/syncrosim.zip -d /opt/syncrosim \
+    && rm /tmp/syncrosim.zip
+
+RUN micromamba install -y -n base -c conda-forge gdal-csharp \
+    && micromamba clean --all --yes
+
+ENV LD_LIBRARY_PATH=/opt/conda/lib
+ENV SYNCROSIM_HOME=/opt/syncrosim
+ENV HOME=/workspace/syncrosim-home
+
+WORKDIR /workspace
+ENTRYPOINT ["/bin/bash"]
