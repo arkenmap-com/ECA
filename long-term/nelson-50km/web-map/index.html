@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
     html, body, #map { height: 100%; margin: 0; }
+    .leaflet-container { background: #f7f7f7; }
     .panel { max-width: 330px; font: 14px/1.4 system-ui, sans-serif; }
     .panel h1 { font-size: 16px; margin: 0 0 6px; }
     .legend { display: grid; grid-template-columns: 18px 1fr; gap: 4px 8px; align-items: center; margin-top: 8px; }
@@ -24,14 +25,24 @@
     const cfg = window.NELSON_MAP;
     const map = L.map('map');
     map.fitBounds(cfg.bounds, { padding: [12, 12] });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+    const PlainGreyLayer = L.GridLayer.extend({
+      createTile: () => {
+        const tile = document.createElement('div');
+        tile.style.background = '#d9d9d9';
+        return tile;
+      }
+    });
+    const plainGrey = new PlainGreyLayer({ tileSize: 256 });
+    const noBasemap = L.layerGroup();
+    const baseLayers = { 'OpenStreetMap': streets, 'Plain grey': plainGrey, 'No basemap': noBasemap };
     const fuel = L.tileLayer('tiles/fuel/{z}/{x}/{y}.png', { opacity: 0.58, maxNativeZoom: cfg.tileMaxZoom });
     const probability = L.tileLayer('tiles/probability/{z}/{x}/{y}.png', { opacity: 0.83, maxNativeZoom: cfg.tileMaxZoom }).addTo(map);
     const overlays = { 'FBP fuel types': fuel, 'Burn probability': probability };
-    const layerControl = L.control.layers(null, overlays, { collapsed: false }).addTo(map);
+    const layerControl = L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
     fetch('data/ignitions.geojson').then(r => r.json()).then(data => {
       const ignitions = L.geoJSON(data, {
         pointToLayer: (_, latlng) => L.circleMarker(latlng, { radius: 3, color: '#422', weight: 1, fillColor: '#f4c542', fillOpacity: 0.7 }),
