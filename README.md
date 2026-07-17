@@ -40,6 +40,23 @@ The test uses one ignition and deliberately severe **synthetic** four-hour weath
 
 For a defensible burn-probability study, use BCWS/observed weather distributions, realistic historical or scenario ignition locations, calibration, sensitivity checks, and thousands of stochastic iterations. Use results for planning and research—not as operational fire prediction.
 
+## Nelson 2025 weather-conditioned scenario
+
+The repository now also includes a completed 50 km Nelson planning scenario. It uses a 250 m current-fuel landscape, observed 2025 BCWS weather sampled from nearby stations, and sampled 2000–2023 BCWS historical ignition locations. Cell2Fire completed 1,000 independent six-hour simulations.
+
+![Nelson 2025 weather-conditioned burn probability](long-term/nelson-50km/outputs/nelson_2025_probability_map.png)
+
+The resulting cell-level probability surface and run summary are in `long-term/nelson-50km/outputs/`. The maximum estimated cell probability is 1.3%; 15,191 cells were reached in at least one run. This is a **2025-conditioned planning scenario**, not a multi-decade burn-probability study, a live-fire forecast, or an operational decision product.
+
+An interactive local web map is in `long-term/nelson-50km/web-map/`. From that directory, serve it and open the shown address:
+
+```bash
+python3 -m http.server 4174
+# http://127.0.0.1:4174
+```
+
+The map has toggleable burn-probability, FBP fuel-type, and historical-ignition layers. Inputs and reproducible build/run scripts are documented in `long-term/nelson-50km/README.md`.
+
 ## Data source
 
 Fuel and elevation inputs were obtained from the Canadian Wildland Fire Information System (CWFIS): [CFFDRS FBP fuel-type data](https://open.canada.ca/data/en/dataset/4e66dd2f-5cd0-42fd-b82c-a430044b31de). The elevation layer is resampled from 250 m resolution; slope and aspect therefore support a pilot only.

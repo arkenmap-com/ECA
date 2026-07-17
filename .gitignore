@@ -8,3 +8,6 @@
 .DS_Store
 __pycache__/
 *.py[cod]
+
+# Downloaded, high-volume inputs for the long-term study
+/long-term/nelson-50km/data/

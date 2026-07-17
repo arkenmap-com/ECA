@@ -1,0 +1,38 @@
+{
+  "name": "nelson-50km-long-term-burn-probability",
+  "purpose": "Planning-scale burn probability using current fuels and historical fire-weather/ignition samples; not an operational forecast.",
+  "study_centre": {
+    "name": "Nelson, British Columbia",
+    "longitude": -117.2948,
+    "latitude": 49.4928,
+    "crs": "EPSG:4326"
+  },
+  "analysis_crs": "EPSG:3005",
+  "centre_projected_m": [1629471.567, 536140.0],
+  "buffer_radius_m": 50000,
+  "screening_grid": {
+    "cell_size_m": 250,
+    "extent_m": [1579471.567, 486140.0, 1679471.567, 586140.0],
+    "rows": 400,
+    "columns": 400,
+    "cell_count": 160000
+  },
+  "baseline_period": {
+    "start_year": 2000,
+    "end_year": 2021,
+    "fuel_vintage": "current"
+  },
+  "planned_inputs": [
+    "CWFIS FBP fuel types",
+    "CWFIS elevation and derived slope/aspect",
+    "BCWS historical hourly weather and Fire Weather Index values",
+    "BCWS historical ignition locations and fire perimeters"
+  ],
+  "planned_simulation": {
+    "engine": "Cell2Fire",
+    "iterations": 1000,
+    "ignition_sampling": "empirical spatial sample from historical ignitions",
+    "weather_sampling": "seasonally stratified historical daily/hourly sequences",
+    "status": "input acquisition and calibration required before execution"
+  }
+}

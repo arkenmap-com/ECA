@@ -1,0 +1,9 @@
+{
+  "completed_runs": 1000,
+  "mean_burned_cells": 22.789,
+  "max_burned_cells": 541,
+  "cells_with_nonzero_probability": 15191,
+  "maximum_probability": 0.013,
+  "cell_size_m": 250,
+  "scenario": "2025 BCWS weather; historical ignition locations; current fuel landscape"
+}

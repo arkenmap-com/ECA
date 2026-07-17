@@ -1,0 +1,9 @@
+{
+  "name": "nelson-50km-2025-weather-scenario",
+  "purpose": "Planning scenario using 2025 BCWS fire-season weather with current fuel and historical ignition locations; not a long-term probability estimate or an operational forecast.",
+  "weather_period": "2025-05-01 to 2025-10-31",
+  "weather_stations": ["404 SMALLWOOD", "406 SLOCAN", "408 NORNS"],
+  "ignitions": "BCWS historical ignition points within the 50 km Nelson study envelope",
+  "grid": "250 m, 400 x 400 cells",
+  "planned_iterations": 1000
+}
