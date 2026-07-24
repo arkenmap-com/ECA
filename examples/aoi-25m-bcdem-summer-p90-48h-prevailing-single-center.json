@@ -1,0 +1,42 @@
+{
+  "name": "aoi-25m-bcdem-summer-p90-48h-prevailing-single-center",
+  "display_name": "AOI - 48 h prevailing wind, single central ignition",
+  "scenario_description": "Single central ignition; GeoBC 25 m terrain; observed Smallwood weather 20-21 August 2018 with 193 degree prevailing wind direction",
+  "analysis_crs": "EPSG:3005",
+  "study_area": {
+    "aoi_geojson": "aoi.geojson"
+  },
+  "inputs": {
+    "fuel_raster": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/data/derived/fuel_25m.tif",
+    "elevation_raster": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/data/derived/elevation_25m.tif",
+    "slope_raster": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/data/derived/slope_percent_25m.tif",
+    "aspect_raster": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/data/derived/aspect_degrees_25m.tif",
+    "weather_library": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/data/weather/prepared/weather_library.csv",
+    "weather_scenarios": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/data/weather/prepared/weather_scenarios.csv",
+    "ignitions_geojson": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/data/ignition_single_center.geojson",
+    "fbp_lookup_table": "Cell2Fire/data/9cellsC1/fbp_lookup_table.csv"
+  },
+  "outputs": {
+    "cell2fire_input_dir": "Cell2Fire/data/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center",
+    "output_dir": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/outputs",
+    "web_map_dir": "runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/web-map"
+  },
+  "simulation": {
+    "runs": 1,
+    "seed": 20260725,
+    "workers": 1,
+    "weather_hours": 48,
+    "save_intermediate_grids": true,
+    "fire_period_length_hours": 1.0,
+    "ros_cv": 0.0,
+    "cell_size_m": 25,
+    "ignition_sampling": "exhaustive",
+    "scratch_root": "/private/tmp/fire-sim/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center",
+    "cell2fire_python": "Cell2Fire/.venv/bin/python",
+    "cell2fire_main": "Cell2Fire/cell2fire/main.py",
+    "results_dir": "/private/tmp/fire-sim/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/results-growth"
+  },
+  "ignition_fields": {
+    "fire_number": "GRID_ID"
+  }
+}

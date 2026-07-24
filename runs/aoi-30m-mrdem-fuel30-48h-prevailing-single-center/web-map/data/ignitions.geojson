@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "name": "single central ignition",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": "AOI_CENTER",
+        "definition": "centre of the AOI projected bounding box"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50967916130027,
+          49.522910931152246
+        ]
+      }
+    }
+  ]
+}

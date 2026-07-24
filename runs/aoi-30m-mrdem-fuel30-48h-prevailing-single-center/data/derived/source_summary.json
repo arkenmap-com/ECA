@@ -1,0 +1,44 @@
+{
+  "grid": {
+    "analysis_crs": "EPSG:3005",
+    "cell_size_m": 30.0,
+    "rows": 736,
+    "columns": 712
+  },
+  "fuel": {
+    "product": "CFFDRS Fire Behaviour Prediction Fuel Types 2024, 30 m",
+    "producer": "Natural Resources Canada / Canadian Forest Service",
+    "source_crs": "EPSG:3978",
+    "source_resolution_m": 30,
+    "resampling": "nearest neighbour to aligned 30 m BC Albers grid",
+    "source_service": "https://cwfis.cfs.nrcan.gc.ca/geoserver/public/cffdrs_fbp_fuel_types/wcs",
+    "fuel_codes": [
+      2,
+      3,
+      4,
+      5,
+      7,
+      11,
+      13,
+      31,
+      101,
+      102,
+      415,
+      625,
+      650,
+      675
+    ]
+  },
+  "terrain": {
+    "product": "MRDEM-30 DTM, CanElevation Series",
+    "producer": "Natural Resources Canada",
+    "source_crs": "EPSG:3979",
+    "source_resolution_m": 30,
+    "vertical_datum": "CGVD2013",
+    "resampling": "bilinear to aligned 30 m BC Albers grid",
+    "slope_aspect": "recalculated from reprojected elevation",
+    "source": "https://canelevation-dem.s3.ca-central-1.amazonaws.com/mrdem-30/mrdem-30-dtm.vrt",
+    "elevation_min_m": 439.4712829589844,
+    "elevation_max_m": 2008.8387451171875
+  }
+}

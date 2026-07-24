@@ -1,0 +1,41 @@
+{
+  "name": "aoi-25m-p90-smallwood",
+  "display_name": "AOI \u2014 25 m, Smallwood P90 weather",
+  "scenario_description": "AOI landscape at 25 m; 2016-2025 Smallwood P90 FWI weather; exhaustive 500 m ignition grid",
+  "analysis_crs": "EPSG:3005",
+  "study_area": {
+    "aoi_geojson": "aoi.geojson"
+  },
+  "inputs": {
+    "fuel_raster": "runs/aoi-25m-p90-smallwood/data/derived/fuel_25m.tif",
+    "elevation_raster": "runs/aoi-25m-p90-smallwood/data/derived/elevation_25m.tif",
+    "slope_raster": "runs/aoi-25m-p90-smallwood/data/derived/slope_percent_25m.tif",
+    "aspect_raster": "runs/aoi-25m-p90-smallwood/data/derived/aspect_degrees_25m.tif",
+    "weather_library": "runs/aoi-25m-p90-smallwood/data/weather/prepared/weather_library.csv",
+    "weather_scenarios": "runs/aoi-25m-p90-smallwood/data/weather/prepared/weather_scenarios.csv",
+    "ignitions_geojson": "runs/aoi-25m-p90-smallwood/data/ignitions_500m.geojson",
+    "fbp_lookup_table": "Cell2Fire/data/9cellsC1/fbp_lookup_table.csv"
+  },
+  "outputs": {
+    "cell2fire_input_dir": "Cell2Fire/data/aoi-25m-p90-smallwood",
+    "output_dir": "runs/aoi-25m-p90-smallwood/outputs",
+    "web_map_dir": "runs/aoi-25m-p90-smallwood/web-map"
+  },
+  "simulation": {
+    "runs": 1028,
+    "seed": 20260723,
+    "workers": 4,
+    "weather_hours": 6,
+    "fire_period_length_hours": 1.0,
+    "ros_cv": 0.0,
+    "cell_size_m": 25,
+    "ignition_sampling": "exhaustive",
+    "scratch_root": "/private/tmp/fire-sim/aoi-25m-p90-smallwood",
+    "cell2fire_python": "Cell2Fire/.venv/bin/python",
+    "cell2fire_main": "Cell2Fire/cell2fire/main.py",
+    "results_dir": "/private/tmp/fire-sim/aoi-25m-p90-smallwood/results"
+  },
+  "ignition_fields": {
+    "fire_number": "GRID_ID"
+  }
+}

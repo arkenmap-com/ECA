@@ -1,0 +1,35 @@
+{
+  "scenario": "404_20180820_21_48H_PREVAILING",
+  "period": "2018-08-20 00:00 through 2018-08-21 23:00",
+  "hours": 48,
+  "wind_direction_override": {
+    "direction_degrees_from": 193.38023374314278,
+    "applied_integer_direction_degrees_from": 193,
+    "direction_label": "south-southwest",
+    "observation_count": 20178,
+    "calculation": "wind-speed-weighted circular mean of non-calm hourly wind directions",
+    "period": "June-August 2016-2025",
+    "station": "404 SMALLWOOD",
+    "resultant_vector_concentration": 0.39474422058979974,
+    "most_frequent_22_5_degree_sector": "SSE",
+    "most_frequent_sector_count": 2817,
+    "most_frequent_sector_fraction": 0.13960749330954506,
+    "rationale": "Wind speed is used as the weight because stronger winds contribute more to directional fire-spread forcing than calm or light-wind observations. The full summer record is used instead of the selected day's direction so the result represents prevailing severe-season flow rather than one day's trajectory.",
+    "direction_convention": "meteorological direction the wind comes from, clockwise from north"
+  },
+  "hourly_variables": [
+    "precipitation",
+    "temperature",
+    "relative humidity",
+    "wind speed",
+    "Fine Fuel Moisture Code",
+    "Initial Spread Index",
+    "Fire Weather Index"
+  ],
+  "daily_variables": [
+    "Duff Moisture Code",
+    "Drought Code",
+    "Build Up Index"
+  ],
+  "rationale": "The observed two-day sequence preserves hourly weather variation while replacing direction with the wind-speed-weighted prevailing June-August direction from 2016-2025."
+}

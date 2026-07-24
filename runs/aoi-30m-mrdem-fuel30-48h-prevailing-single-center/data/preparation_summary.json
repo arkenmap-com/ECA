@@ -1,0 +1,10 @@
+{
+  "grid": "712 x 736 at 30 m",
+  "ignition": {
+    "longitude": -117.50967916130027,
+    "latitude": 49.522910931152246,
+    "x_epsg3005": 1613608.766896125,
+    "y_epsg3005": 537575.6471688692
+  },
+  "weather": "same 48-hour prevailing-wind sequence as the 25 m comparison run"
+}

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fire Simulation Pipeline</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #24323a;
+      --muted: #5d6b72;
+      --line: #d8e0e3;
+      --panel: #ffffff;
+      --soft: #f3f6f5;
+      --accent: #b53b24;
+      --accent-dark: #842b1d;
+      --good: #28734c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #eef3f0 0%, #f8f6f1 52%, #f4ebe6 100%);
+      color: var(--ink);
+      font: 15px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 48px; }
+    header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; margin-bottom: 24px; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.04em; line-height: 1; }
+    h2 { margin: 0 0 12px; font-size: 18px; }
+    p { margin: 7px 0; }
+    .eyebrow { color: var(--accent-dark); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
+    .subtitle { max-width: 670px; color: var(--muted); font-size: 16px; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(310px, .75fr); gap: 18px; align-items: start; }
+    .panel { background: color-mix(in srgb, var(--panel) 93%, transparent); border: 1px solid var(--line); border-radius: 16px; padding: 20px; box-shadow: 0 12px 32px rgba(44, 57, 61, .08); }
+    .section + .section { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px 15px; }
+    .full { grid-column: 1 / -1; }
+    label { display: grid; gap: 5px; color: var(--muted); font-size: 13px; font-weight: 650; }
+    input, select, textarea { width: 100%; border: 1px solid #c9d3d6; border-radius: 9px; padding: 9px 10px; background: #fff; color: var(--ink); font: inherit; }
+    input:focus, select:focus, textarea:focus { outline: 3px solid rgba(181, 59, 36, .18); border-color: var(--accent); }
+    input[type="number"] { font-variant-numeric: tabular-nums; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    button { border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; font: 650 14px/1 system-ui, sans-serif; }
+    button.primary { color: #fff; background: var(--accent); }
+    button.primary:hover { background: var(--accent-dark); }
+    button.secondary { color: var(--ink); background: #e6eeeb; }
+    button.stop { color: #fff; background: #5b6267; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+    .status { position: sticky; top: 18px; }
+    .status-line { display: flex; justify-content: space-between; gap: 12px; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 12px; }
+    .badge { border-radius: 999px; padding: 5px 9px; background: #e9eef0; color: var(--muted); font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; }
+    .badge.running { color: #fff; background: var(--accent); }
+    .badge.success { color: #fff; background: var(--good); }
+    .badge.failed { color: #fff; background: #8d3327; }
+    .log { min-height: 260px; max-height: 470px; overflow: auto; white-space: pre-wrap; word-break: break-word; background: #1e282b; color: #d9e7e0; border-radius: 11px; padding: 13px; font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .hint { color: var(--muted); font-size: 12px; }
+    .paths { display: grid; gap: 8px; margin-top: 14px; }
+    .path { padding: 9px 10px; background: var(--soft); border-radius: 9px; overflow-wrap: anywhere; font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .check { color: var(--good); font-weight: 650; }
+    @media (max-width: 820px) {
+      main { width: min(100% - 20px, 680px); padding-top: 22px; }
+      header { display: block; }
+      .layout { grid-template-columns: 1fr; }
+      .status { position: static; }
+    }
+    @media (max-width: 460px) { .grid { grid-template-columns: 1fr; } .full { grid-column: auto; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <div class="eyebrow">Cell2Fire workflow</div>
+        <h1>Fire simulation pipeline</h1>
+        <p class="subtitle">Choose an area configuration, validate the inputs, and launch a reproducible burn-probability run from your browser.</p>
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="panel">
+        <form id="config-form">
+          <div class="section">
+            <h2>Study area</h2>
+            <div class="grid">
+              <label>Internal name<input id="name" required pattern="[A-Za-z0-9_-]+" autocomplete="off"></label>
+              <label>Display name<input id="display_name" required></label>
+              <label>Centre latitude<input id="latitude" type="number" step="any" required></label>
+              <label>Centre longitude<input id="longitude" type="number" step="any" required></label>
+              <label>Buffer radius (km)<input id="radius_km" type="number" min="1" step="1" required></label>
+              <label>Analysis CRS<input id="analysis_crs" required></label>
+            </div>
+            <p class="hint">The centre and buffer are recorded in the scenario metadata. The input rasters and ignition/weather files must already cover the selected area.</p>
+          </div>
+
+          <div class="section">
+            <h2>Prepared inputs</h2>
+            <div class="grid">
+              <label class="full">Fuel raster<input id="fuel_raster" required></label>
+              <label>Elevation raster<input id="elevation_raster" required></label>
+              <label>Slope raster<input id="slope_raster" required></label>
+              <label>Aspect raster<input id="aspect_raster" required></label>
+              <label>Weather library CSV<input id="weather_library" required></label>
+              <label>Weather scenarios CSV<input id="weather_scenarios" required></label>
+              <label>Ignition GeoJSON<input id="ignitions_geojson" required></label>
+              <label>FBP lookup table<input id="fbp_lookup_table" required></label>
+            </div>
+            <p class="hint">Paths are relative to the project root unless they start with <code>/</code>.</p>
+          </div>
+
+          <div class="section">
+            <h2>Simulation settings</h2>
+            <div class="grid">
+              <label>Monte Carlo runs<input id="runs" type="number" min="1" step="1" required></label>
+              <label>Random seed<input id="seed" type="number" step="1" required></label>
+              <label>Parallel workers<input id="workers" type="number" min="1" step="1" required></label>
+              <label>Weather hours per run<input id="weather_hours" type="number" min="1" step="1" required></label>
+              <label>Cell size (m)<input id="cell_size_m" type="number" min="1" step="1" required></label>
+              <label>Scenario description<input id="scenario_description" required></label>
+              <label class="full">Output root<input id="output_root" required></label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="secondary" id="validate" type="button">Validate inputs</button>
+            <button class="primary" id="run" type="submit">Run full pipeline</button>
+            <button class="stop" id="stop" type="button" disabled>Stop job</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel status" aria-live="polite">
+        <div class="status-line"><h2>Job status</h2><span id="badge" class="badge">idle</span></div>
+        <p id="message" class="hint">Load the default configuration, then validate or run it.</p>
+        <div id="log" class="log">No job started.</div>
+        <div id="paths" class="paths"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const fields = ['name', 'display_name', 'latitude', 'longitude', 'radius_km', 'analysis_crs', 'fuel_raster', 'elevation_raster', 'slope_raster', 'aspect_raster', 'weather_library', 'weather_scenarios', 'ignitions_geojson', 'fbp_lookup_table', 'runs', 'seed', 'workers', 'weather_hours', 'cell_size_m', 'scenario_description', 'output_root'];
+    const el = id => document.getElementById(id);
+    const state = { config: null, timer: null };
+
+    function setForm(config) {
+      const area = config.study_area || {};
+      const inputs = config.inputs || {};
+      const sim = config.simulation || {};
+      const outputDir = (config.outputs || {}).output_dir || `runs/${config.name || 'fire-sim'}/outputs`;
+      const values = {
+        name: config.name || 'my-area', display_name: config.display_name || 'My fire simulation', latitude: area.latitude || 49.4928, longitude: area.longitude || -117.2948,
+        radius_km: (area.radius_m || 50000) / 1000, analysis_crs: config.analysis_crs || 'EPSG:3005', ...inputs,
+        runs: sim.runs || 1000, seed: sim.seed || 20250716, workers: sim.workers || 4, weather_hours: sim.weather_hours || 6, cell_size_m: sim.cell_size_m || 250,
+        scenario_description: config.scenario_description || 'Configured Cell2Fire scenario', output_root: outputDir
+      };
+      fields.forEach(id => { if (values[id] !== undefined) el(id).value = values[id]; });
+    }
+
+    function formConfig() {
+      const number = id => Number(el(id).value);
+      const config = { ...state.config };
+      config.name = el('name').value.trim();
+      config.display_name = el('display_name').value.trim();
+      config.analysis_crs = el('analysis_crs').value.trim();
+      config.scenario_description = el('scenario_description').value.trim();
+      config.study_area = { ...(config.study_area || {}), latitude: number('latitude'), longitude: number('longitude'), radius_m: number('radius_km') * 1000 };
+      config.inputs = {};
+      ['fuel_raster', 'elevation_raster', 'slope_raster', 'aspect_raster', 'weather_library', 'weather_scenarios', 'ignitions_geojson', 'fbp_lookup_table'].forEach(id => { config.inputs[id] = el(id).value.trim(); });
+      config.outputs = { ...(config.outputs || {}), cell2fire_input_dir: `Cell2Fire/data/${config.name}`, output_dir: el('output_root').value.trim(), web_map_dir: `${el('output_root').value.trim().replace(/\/outputs\/?$/, '')}/web-map` };
+      config.simulation = { ...(config.simulation || {}), runs: number('runs'), seed: number('seed'), workers: number('workers'), weather_hours: number('weather_hours'), cell_size_m: number('cell_size_m') };
+      return config;
+    }
+
+    function showStatus(status, message, log) {
+      const badge = el('badge'); badge.textContent = status; badge.className = `badge ${status}`;
+      el('message').textContent = message || '';
+      if (log !== undefined) { el('log').textContent = log || 'No output yet.'; el('log').scrollTop = el('log').scrollHeight; }
+      el('stop').disabled = status !== 'running';
+    }
+
+    function showPaths(paths) {
+      if (!paths) { el('paths').innerHTML = ''; return; }
+      el('paths').innerHTML = Object.entries(paths).map(([key, value]) => `<div><div class="hint">${key}</div><div class="path">${value}</div></div>`).join('');
+    }
+
+    async function loadDefaults() {
+      const response = await fetch('/api/default-config');
+      state.config = await response.json();
+      setForm(state.config);
+    }
+
+    async function validate() {
+      const response = await fetch('/api/validate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formConfig()) });
+      const result = await response.json();
+      showStatus(result.ok ? 'success' : 'failed', result.message, result.log);
+      if (result.paths) showPaths(result.paths);
+    }
+
+    async function run(event) {
+      event.preventDefault();
+      if (!el('config-form').reportValidity()) return;
+      const response = await fetch('/api/run', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formConfig()) });
+      const result = await response.json();
+      if (!result.ok) { showStatus('failed', result.message, result.log); return; }
+      showStatus('running', 'Pipeline started. This can take a while for large run counts.', result.log);
+      showPaths(result.paths);
+      if (state.timer) clearInterval(state.timer);
+      state.timer = setInterval(refresh, 1000);
+    }
+
+    async function refresh() {
+      const response = await fetch('/api/status');
+      const result = await response.json();
+      showStatus(result.status, result.message, result.log);
+      showPaths(result.paths);
+      if (result.status !== 'running' && state.timer) { clearInterval(state.timer); state.timer = null; }
+    }
+
+    async function stop() {
+      await fetch('/api/stop', { method: 'POST' });
+      await refresh();
+    }
+
+    el('validate').addEventListener('click', validate);
+    el('config-form').addEventListener('submit', run);
+    el('stop').addEventListener('click', stop);
+    loadDefaults().catch(error => showStatus('failed', `Could not load defaults: ${error}`, ''));
+  </script>
+</body>
+</html>

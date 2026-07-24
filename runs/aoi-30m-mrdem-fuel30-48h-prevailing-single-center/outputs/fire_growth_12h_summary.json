@@ -1,0 +1,44 @@
+{
+  "source_grids": [
+    "ForestGrid12.csv",
+    "ForestGrid24.csv",
+    "ForestGrid36.csv",
+    "ForestGrid48.csv"
+  ],
+  "classification": "first 12-hour interval in which each cell is burned",
+  "cell_size_m": 30.0,
+  "intervals": [
+    {
+      "interval": "0-12 hours",
+      "class_value": 1,
+      "new_cells": 1677,
+      "new_area_km2": 1.5093,
+      "cumulative_cells": 1677,
+      "cumulative_area_km2": 1.5093
+    },
+    {
+      "interval": "12-24 hours",
+      "class_value": 2,
+      "new_cells": 34267,
+      "new_area_km2": 30.8403,
+      "cumulative_cells": 35944,
+      "cumulative_area_km2": 32.3496
+    },
+    {
+      "interval": "24-36 hours",
+      "class_value": 3,
+      "new_cells": 49123,
+      "new_area_km2": 44.2107,
+      "cumulative_cells": 85067,
+      "cumulative_area_km2": 76.5603
+    },
+    {
+      "interval": "36-48 hours",
+      "class_value": 4,
+      "new_cells": 95143,
+      "new_area_km2": 85.6287,
+      "cumulative_cells": 180210,
+      "cumulative_area_km2": 162.189
+    }
+  ]
+}

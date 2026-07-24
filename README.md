@@ -48,6 +48,10 @@ The repository now also includes a completed 50 km Nelson planning scenario. It 
 
 The resulting cell-level probability surface and run summary are in `long-term/nelson-50km/outputs/`. The maximum estimated cell probability is 1.3%; 15,191 cells were reached in at least one run. This is a **2025-conditioned planning scenario**, not a multi-decade burn-probability study, a live-fire forecast, or an operational decision product.
 
+For reusable simulations in other areas, see [`PIPELINE.md`](PIPELINE.md) and the example configuration [`examples/nelson-50km-2025.json`](examples/nelson-50km-2025.json). The config-driven runner is `fire_sim_pipeline.py`; it keeps each area's Cell2Fire inputs, probability outputs, and web map in separate directories.
+
+The runner also has a local browser GUI: `python3 fire_sim_gui.py` then open `http://127.0.0.1:4180`.
+
 An interactive local web map is in `long-term/nelson-50km/web-map/`. From that directory, serve it and open the shown address:
 
 ```bash

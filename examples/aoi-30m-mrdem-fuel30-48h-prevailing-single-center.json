@@ -1,0 +1,42 @@
+{
+  "name": "aoi-30m-mrdem-fuel30-48h-prevailing-single-center",
+  "display_name": "AOI - native 30 m fuel and MRDEM, 48 h central ignition",
+  "scenario_description": "Single central ignition; native 30 m NRCan fuel and MRDEM terrain; observed Smallwood weather 20-21 August 2018 with 193 degree prevailing wind direction",
+  "analysis_crs": "EPSG:3005",
+  "study_area": {
+    "aoi_geojson": "aoi.geojson"
+  },
+  "inputs": {
+    "fuel_raster": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/derived/fuel_30m.tif",
+    "elevation_raster": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/derived/elevation_30m.tif",
+    "slope_raster": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/derived/slope_percent_30m.tif",
+    "aspect_raster": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/derived/aspect_degrees_30m.tif",
+    "weather_library": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/weather/prepared/weather_library.csv",
+    "weather_scenarios": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/weather/prepared/weather_scenarios.csv",
+    "ignitions_geojson": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/ignition_single_center.geojson",
+    "fbp_lookup_table": "Cell2Fire/data/9cellsC1/fbp_lookup_table.csv"
+  },
+  "outputs": {
+    "cell2fire_input_dir": "Cell2Fire/data/aoi-30m-mrdem-fuel30-48h-prevailing-single-center",
+    "output_dir": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/outputs",
+    "web_map_dir": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/web-map"
+  },
+  "simulation": {
+    "runs": 1,
+    "seed": 20260726,
+    "workers": 1,
+    "weather_hours": 48,
+    "save_intermediate_grids": true,
+    "fire_period_length_hours": 1.0,
+    "ros_cv": 0.0,
+    "cell_size_m": 30,
+    "ignition_sampling": "exhaustive",
+    "scratch_root": "/private/tmp/fire-sim/aoi-30m-mrdem-fuel30-48h-prevailing-single-center",
+    "cell2fire_python": "Cell2Fire/.venv/bin/python",
+    "cell2fire_main": "Cell2Fire/cell2fire/main.py",
+    "results_dir": "/private/tmp/fire-sim/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/results"
+  },
+  "ignition_fields": {
+    "fire_number": "GRID_ID"
+  }
+}

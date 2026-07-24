@@ -1,0 +1,15 @@
+{
+  "name": "aoi-30m-mrdem-fuel30-48h-prevailing-single-center",
+  "display_name": "AOI - native 30 m fuel and MRDEM, 48 h central ignition",
+  "completed_runs": 1,
+  "requested_runs": 1,
+  "mean_burned_cells": 180210.0,
+  "max_burned_cells": 180210,
+  "cells_with_nonzero_probability": 180210,
+  "maximum_probability": 1.0,
+  "cell_size_m": 30.0,
+  "analysis_crs": "EPSG:3005",
+  "scenario": "Single central ignition; native 30 m NRCan fuel and MRDEM terrain; observed Smallwood weather 20-21 August 2018 with 193 degree prevailing wind direction",
+  "aggregation_run_limit": null,
+  "partial_aggregation": false
+}

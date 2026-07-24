@@ -1,0 +1,47 @@
+{
+  "name": "nelson-50km-2025-summer",
+  "display_name": "Nelson 50 km — summer 2025 weather",
+  "scenario_description": "June–August 2025 BCWS weather; historical ignition locations; current fuel landscape",
+  "analysis_crs": "EPSG:3005",
+  "study_area": {
+    "centre_name": "Nelson, British Columbia",
+    "latitude": 49.4928,
+    "longitude": -117.2948,
+    "radius_m": 50000
+  },
+  "inputs": {
+    "fuel_raster": "long-term/nelson-50km/data/derived/fuel_250m_50km.tif",
+    "elevation_raster": "long-term/nelson-50km/data/derived/elevation_250m_50km.tif",
+    "slope_raster": "long-term/nelson-50km/data/derived/slope_percent_250m_50km.tif",
+    "aspect_raster": "long-term/nelson-50km/data/derived/aspect_degrees_250m_50km.tif",
+    "weather_library": "long-term/nelson-50km/data/prepared/weather_library.csv",
+    "weather_scenarios": "long-term/nelson-50km/data/prepared/weather_scenarios.csv",
+    "ignitions_geojson": "long-term/nelson-50km/data/ignitions/bcws_historical_ignitions_50km.geojson",
+    "fbp_lookup_table": "Cell2Fire/data/9cellsC1/fbp_lookup_table.csv"
+  },
+  "outputs": {
+    "cell2fire_input_dir": "Cell2Fire/data/nelson-50km-2025-summer-reusable",
+    "output_dir": "runs/nelson-50km-2025-summer/outputs",
+    "web_map_dir": "runs/nelson-50km-2025-summer/web-map"
+  },
+  "simulation": {
+    "runs": 1000,
+    "seed": 20250722,
+    "workers": 4,
+    "weather_hours": 6,
+    "weather_start_date": "2025-06-01",
+    "weather_end_date": "2025-08-31",
+    "fire_period_length_hours": 1.0,
+    "ros_cv": 0.0,
+    "cell_size_m": 250,
+    "scratch_root": "/private/tmp/fire-sim/nelson-50km-2025-summer",
+    "cell2fire_python": "Cell2Fire/.venv/bin/python",
+    "cell2fire_main": "Cell2Fire/cell2fire/main.py",
+    "results_dir": "/private/tmp/fire-sim/nelson-50km-2025-summer/results"
+  },
+  "ignition_fields": {
+    "fire_number": "FIRE_NUMBER",
+    "fire_year": "FIRE_YEAR",
+    "fire_cause": "FIRE_CAUSE"
+  }
+}
