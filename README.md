@@ -61,6 +61,12 @@ python3 -m http.server 4174
 
 The map has toggleable burn-probability, FBP fuel-type, and historical-ignition layers. Inputs and reproducible build/run scripts are documented in `long-term/nelson-50km/README.md`.
 
+## Interactive web maps
+
+The latest AOI [area of interest] simulation maps are published through GitHub Pages:
+
+<https://axlesholtz.github.io/fire-sim-bc/>
+
 ## Data source
 
 Fuel and elevation inputs were obtained from the Canadian Wildland Fire Information System (CWFIS): [CFFDRS FBP fuel-type data](https://open.canada.ca/data/en/dataset/4e66dd2f-5cd0-42fd-b82c-a430044b31de). The elevation layer is resampled from 250 m resolution; slope and aspect therefore support a pilot only.

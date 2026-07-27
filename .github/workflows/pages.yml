@@ -1,0 +1,49 @@
+name: Deploy web maps to GitHub Pages
+
+on:
+  push:
+    branches:
+      - codex/nelson-fire-pilot
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site/maps
+          cp pages/index.html _site/index.html
+          cp pages/.nojekyll _site/.nojekyll
+          cp -R runs/aoi-25m-bcdem-summer-p90/web-map _site/maps/aoi-25m-bcdem-summer-p90
+          cp -R runs/aoi-25m-bcdem-summer-p90-24h-prevailing/web-map _site/maps/aoi-25m-bcdem-summer-p90-24h-prevailing
+          cp -R runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-sw/web-map _site/maps/aoi-25m-bcdem-summer-p90-48h-prevailing-single-sw
+          cp -R runs/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/web-map _site/maps/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center
+          cp -R runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/web-map _site/maps/aoi-30m-mrdem-fuel30-48h-prevailing-single-center
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

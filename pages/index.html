@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive wildfire-spread simulation maps for the Nelson, British Columbia study area.">
+  <title>Nelson wildfire simulation maps</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231d;
+      --muted: #59675f;
+      --paper: #f5f2e9;
+      --card: #fffdf8;
+      --line: #d9d2c2;
+      --ember: #a83b22;
+      --forest: #244c36;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% 5%, rgba(168, 59, 34, .13), transparent 28rem),
+        linear-gradient(145deg, #eef1e8, var(--paper));
+      font: 16px/1.55 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(1050px, calc(100% - 32px)); margin: 0 auto; padding: 58px 0 72px; }
+    header { max-width: 780px; margin-bottom: 34px; }
+    .eyebrow { color: var(--ember); font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 8px 0 14px; font-size: clamp(2.25rem, 6vw, 4.8rem); letter-spacing: -.055em; line-height: .98; }
+    .lede { color: var(--muted); font-size: 1.08rem; }
+    .notice { border-left: 4px solid var(--ember); padding: 11px 15px; background: rgba(255, 253, 248, .72); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    article { display: flex; flex-direction: column; min-height: 250px; padding: 23px; border: 1px solid var(--line); border-radius: 15px; background: var(--card); box-shadow: 0 12px 34px rgba(39, 48, 42, .07); }
+    article.featured { grid-column: 1 / -1; min-height: 230px; border-color: #b8ad99; }
+    h2 { margin: 0 0 8px; font-size: 1.2rem; line-height: 1.25; }
+    article p { margin: 0 0 16px; color: var(--muted); }
+    dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0 0 20px; font-size: .88rem; }
+    dt { color: var(--muted); }
+    dd { margin: 0; font-weight: 650; }
+    a.button { display: inline-block; align-self: flex-start; margin-top: auto; padding: 10px 15px; border-radius: 999px; color: white; background: var(--forest); font-weight: 750; text-decoration: none; }
+    a.button:hover, a.button:focus-visible { background: var(--ember); }
+    footer { margin-top: 30px; color: var(--muted); font-size: .88rem; }
+    footer a { color: var(--forest); }
+    @media (max-width: 700px) {
+      main { width: min(100% - 22px, 580px); padding-top: 34px; }
+      .grid { grid-template-columns: 1fr; }
+      article.featured { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Nelson, British Columbia study area</div>
+      <h1>Wildfire simulation maps</h1>
+      <p class="lede">Interactive outputs from Cell2Fire planning scenarios using observed Smallwood weather, Canadian FBP [Fire Behaviour Prediction] fuel types, and terrain-derived slope and aspect.</p>
+      <p class="notice"><strong>Planning and research only.</strong> These scenarios are conditional model experiments, not wildfire forecasts or operational decision products.</p>
+    </header>
+
+    <section class="grid" aria-label="Available simulation maps">
+      <article class="featured">
+        <h2>30 m fuel and terrain · 48-hour central ignition</h2>
+        <p>The newest single-point scenario, using the native 30 m fuel product and the MRDEM [Multi-Resolution Digital Elevation Model] DTM [Digital Terrain Model]. Fire growth is shown in 12-hour intervals.</p>
+        <dl><dt>Weather</dt><dd>Summer P90 [90th percentile] representative day</dd><dt>Wind</dt><dd>Prevailing summer direction</dd><dt>Ignition</dt><dd>AOI [area of interest] centre</dd></dl>
+        <a class="button" href="maps/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/">Open newest map</a>
+      </article>
+
+      <article>
+        <h2>25 m terrain · 48-hour central ignition</h2>
+        <p>The comparable central-ignition run using the BC DEM [British Columbia Digital Elevation Model] at 25 m and fuel resampled from the 100 m source.</p>
+        <a class="button" href="maps/aoi-25m-bcdem-summer-p90-48h-prevailing-single-center/">Open map</a>
+      </article>
+
+      <article>
+        <h2>25 m terrain · 48-hour southwest ignition</h2>
+        <p>A single ignition placed in the middle of the AOI [area of interest] southwest quadrant, with the same prevailing-wind weather sequence.</p>
+        <a class="button" href="maps/aoi-25m-bcdem-summer-p90-48h-prevailing-single-sw/">Open map</a>
+      </article>
+
+      <article>
+        <h2>25 m terrain · summer P90 ignition grid</h2>
+        <p>The corrected exhaustive 500 m ignition-grid experiment using the BC DEM [British Columbia Digital Elevation Model] and a representative severe summer weather day.</p>
+        <a class="button" href="maps/aoi-25m-bcdem-summer-p90/">Open map</a>
+      </article>
+
+      <article>
+        <h2>24-hour prevailing wind · first 500 runs</h2>
+        <p>A deliberately stopped partial experiment. Results include only the first 500 spatially ordered ignitions and must not be interpreted as an unbiased AOI-wide burn probability.</p>
+        <a class="button" href="maps/aoi-25m-bcdem-summer-p90-24h-prevailing/">Open partial map</a>
+      </article>
+    </section>
+
+    <footer>
+      Methods, configurations, and caveats are available in the
+      <a href="https://github.com/Axlesholtz/fire-sim-bc">GitHub repository</a>.
+    </footer>
+  </main>
+</body>
+</html>
