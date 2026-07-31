@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+	<Esri>
+		<CreaDate>20260324</CreaDate>
+		<CreaTime>07194200</CreaTime>
+		<ArcGISFormat>1.0</ArcGISFormat>
+		<SyncOnce>TRUE</SyncOnce>
+	</Esri>
+	<tool name="ECAEstimateTool" displayname="1 - ECA Estimate" toolboxalias="ECA">
+		<parameters>
+			<param name="input_watershed" displayname="Input Watershed (Subbasins)" datatype="GPFeatureLayer" direction="Input" type="Required" expression="input_watershed">
+				<dialogReference>&lt;p&gt;Polygon feature layer representing the watershed sub-basins to analyse.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="basin_field" displayname="Basin Name Field" datatype="Field" direction="Input" type="Required" expression="basin_field">
+				<dialogReference>&lt;p&gt;Field in the watershed layer that contains the basin (watershed) name.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="subbasin_field" displayname="Sub-Basin Name Field" datatype="Field" direction="Input" type="Required" expression="subbasin_field">
+				<dialogReference>&lt;p&gt;Field in the watershed layer that contains the sub-basin name.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="output_folder" displayname="Output Folder" datatype="DEFolder" direction="Input" type="Required" expression="output_folder">
+				<dialogReference>&lt;p&gt;Folder where the output geodatabase and report spreadsheets will be created.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="layer_config" displayname="Layer Configuration Spreadsheet" datatype="DEFile" direction="Input" type="Required" expression="layer_config">
+				<dialogReference>&lt;p&gt;Excel workbook (.xlsx) that defines the input vector layers, DEMs, and optional joins used by the analysis pipeline.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="recovery_curves" displayname="Recovery Curves Spreadsheet" datatype="DEFile" direction="Input" type="Required" expression="recovery_curves">
+				<dialogReference>&lt;p&gt;Excel workbook (.xlsx) containing recovery curve parameters. Each sheet represents a field team (tab name must match the Field_Team value). Columns: BEC_Zone, BEC_Subzone, h0-h5 (height breakpoints in metres), cc0-cc4 (crown closure breakpoints in percent). Leave BEC_Subzone blank for zone-level curves; fill it for subzone overrides.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="bcgw_sde" displayname="BCGW Connection (.sde)" datatype="DEFile" direction="Input" type="Required" expression="bcgw_sde">
+				<dialogReference>&lt;p&gt;SDE connection file for the BC Geographic Warehouse (BCGW).&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="dbp06_sde" displayname="DBP06 Connection (.sde)" datatype="DEFile" direction="Input" type="Required" expression="dbp06_sde">
+				<dialogReference>&lt;p&gt;SDE connection file for the DBP06 (LRM/BCTS Oracle) database.&lt;/p&gt;</dialogReference>
+			</param>
+		</parameters>
+		<summary>&lt;p&gt;Performs a quick automated Equivalent Clearcut Area analysis. A manual visual check should be performed afterwards to ensure openings and recovery values are correctly represented.&lt;/p&gt;</summary>
+	</tool>
+</metadata>

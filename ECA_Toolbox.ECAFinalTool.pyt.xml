@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en">
+	<Esri>
+		<CreaDate>20260324</CreaDate>
+		<CreaTime>07194600</CreaTime>
+		<ArcGISFormat>1.0</ArcGISFormat>
+		<SyncOnce>TRUE</SyncOnce>
+	</Esri>
+	<tool name="ECAFinalTool" displayname="2 - ECA Final" toolboxalias="ECA">
+		<parameters>
+			<param name="estimate_gdb" displayname="Estimate Output GDB (with reviewed Openings)" datatype="DEWorkspace" direction="Input" type="Required" expression="estimate_gdb">
+				<dialogReference>&lt;p&gt;The output geodatabase from a previous Estimate run. The tool reads the watershed boundary, sub-basins, H60 split, BEC zones, clipped DEM, and metadata from this GDB. The Openings and OtherOpenings feature classes should be reviewed and adjusted before running this tool.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="output_folder" displayname="Output Folder" datatype="DEFolder" direction="Input" type="Required" expression="output_folder">
+				<dialogReference>&lt;p&gt;Folder where the ECA_Final.gdb and report spreadsheets will be created.&lt;/p&gt;</dialogReference>
+			</param>
+			<param name="recovery_curves" displayname="Recovery Curves Spreadsheet" datatype="DEFile" direction="Input" type="Required" expression="recovery_curves">
+				<dialogReference>&lt;p&gt;Excel workbook (.xlsx) containing recovery curve parameters. Each sheet represents a field team (tab name must match the Field_Team value). Columns: BEC_Zone, BEC_Subzone, h0-h5 (height breakpoints in metres), cc0-cc4 (crown closure breakpoints in percent). Leave BEC_Subzone blank for zone-level curves; fill it for subzone overrides.&lt;/p&gt;</dialogReference>
+			</param>
+		</parameters>
+		<summary>&lt;p&gt;Performs the final ECA analysis after manual review. Run this after inspecting and adjusting the Openings (and optionally OtherOpenings) feature class in the Estimate output GDB. The tool reuses the watershed, DEM, H60, and BEC layers from the Estimate run — no SDE connections or layer configuration spreadsheet required.&lt;/p&gt;</summary>
+	</tool>
+</metadata>
