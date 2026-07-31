@@ -1,0 +1,15 @@
+{
+  "name": "aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary",
+  "display_name": "SyncroSim Package 1 - 30 m fuel, 24 h P90, 1,000 m ignition grid",
+  "completed_runs": 257,
+  "requested_runs": 257,
+  "mean_burned_cells": 15377.490272373541,
+  "max_burned_cells": 51672,
+  "cells_with_nonzero_probability": 257409,
+  "maximum_probability": 0.1828793774319066,
+  "cell_size_m": 30.0,
+  "analysis_crs": "EPSG:3005",
+  "scenario": "Package 1 input data only; native 30 m NRCan FBP fuel with named Freshwater Atlas main streams, all lakes, and the selected main tributary to Falls Creek assigned water fuel code 102; 24 hourly Smallwood records from 20 August 2018, the observed day nearest the June-August 2016-2025 daily noon FWI P90.",
+  "aggregation_run_limit": null,
+  "partial_aggregation": false
+}

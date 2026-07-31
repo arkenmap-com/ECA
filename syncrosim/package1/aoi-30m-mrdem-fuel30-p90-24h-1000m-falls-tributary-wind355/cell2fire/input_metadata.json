@@ -1,0 +1,14 @@
+{
+  "name": "aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary-wind355",
+  "display_name": "SyncroSim Package 1 - 30 m fuel, 24 h P90, 1,000 m ignition grid, wind 355 degrees",
+  "analysis_crs": "EPSG:3005",
+  "grid": {
+    "rows": 736,
+    "columns": 712,
+    "cell_size_m": 30.0
+  },
+  "weather_scenarios": 1,
+  "usable_ignitions": 257,
+  "planned_runs": 257,
+  "seed": 20260731
+}

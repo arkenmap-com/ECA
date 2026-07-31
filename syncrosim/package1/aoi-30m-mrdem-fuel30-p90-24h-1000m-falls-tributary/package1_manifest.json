@@ -1,0 +1,18 @@
+{
+  "package": "SyncroSim Package 1 data bundle",
+  "name": "aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary",
+  "analysis_crs": "EPSG:3005",
+  "cell_size_m": 30,
+  "ignition_spacing_m": 1000,
+  "ignition_points": 257,
+  "weather_hours": 24,
+  "weather_scenario": "404_P90_20180820_24H_PREVAILING",
+  "water_fuel_code": 102,
+  "water_inputs": {
+    "named_main_stream_features": 231,
+    "all_lake_features": 42,
+    "falls_creek_main_tributary_blue_line_key": 356567471,
+    "falls_creek_main_tributary_segments": 12
+  },
+  "note": "Package data only; no fire simulation was executed by this preparation script."
+}

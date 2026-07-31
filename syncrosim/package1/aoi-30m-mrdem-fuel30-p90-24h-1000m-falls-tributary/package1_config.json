@@ -1,0 +1,40 @@
+{
+  "name": "aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary",
+  "display_name": "SyncroSim Package 1 - 30 m fuel, 24 h P90, 1,000 m ignition grid",
+  "scenario_description": "Package 1 input data only; native 30 m NRCan FBP fuel with named Freshwater Atlas main streams, all lakes, and the selected main tributary to Falls Creek assigned water fuel code 102; 24 hourly Smallwood records from 20 August 2018, the observed day nearest the June-August 2016-2025 daily noon FWI P90.",
+  "analysis_crs": "EPSG:3005",
+  "study_area": {
+    "aoi_geojson": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/aoi.geojson"
+  },
+  "inputs": {
+    "fuel_raster": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/fuel_30m_hydro_named_mainstreams_falls_tributary.tif",
+    "elevation_raster": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/elevation_30m.tif",
+    "slope_raster": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/slope_percent_30m.tif",
+    "aspect_raster": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/aspect_degrees_30m.tif",
+    "weather_library": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/weather_library.csv",
+    "weather_scenarios": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/weather_scenarios.csv",
+    "ignitions_geojson": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/ignitions_1000m.geojson",
+    "fbp_lookup_table": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/inputs/fbp_lookup_table.csv"
+  },
+  "outputs": {
+    "cell2fire_input_dir": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/cell2fire",
+    "output_dir": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/outputs",
+    "web_map_dir": "syncrosim/package1/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary/web-map"
+  },
+  "simulation": {
+    "runs": 257,
+    "seed": 20260730,
+      "workers": 8,
+    "weather_hours": 24,
+    "fire_period_length_hours": 1.0,
+    "ros_cv": 0.0,
+    "cell_size_m": 30,
+    "ignition_sampling": "exhaustive",
+    "scratch_root": "/private/tmp/fire-sim/aoi-30m-mrdem-fuel30-p90-24h-1000m-falls-tributary",
+    "cell2fire_python": "Cell2Fire/.venv/bin/python",
+    "cell2fire_main": "Cell2Fire/cell2fire/main.py"
+  },
+  "ignition_fields": {
+    "fire_number": "GRID_ID"
+  }
+}

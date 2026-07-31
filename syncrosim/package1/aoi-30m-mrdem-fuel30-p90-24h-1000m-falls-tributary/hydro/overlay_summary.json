@@ -1,0 +1,19 @@
+{
+  "source_raster": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/derived/fuel_30m.tif",
+  "output_raster": "runs/aoi-30m-mrdem-fuel30-48h-prevailing-single-center/data/derived/fuel_30m_hydro_named_mainstreams_falls_tributary.tif",
+  "crs": "EPSG:3005",
+  "cell_size_m": 30,
+  "water_fuel_code": 102,
+  "named_main_stream_features": 231,
+  "falls_creek_tributary_features": 12,
+  "stream_features": 243,
+  "lake_features": 42,
+  "stream_buffer_m": 15.0,
+  "valid_cells": 286190,
+  "original_water_cells": 6113,
+  "water_cells_after_overlay": 13731,
+  "new_water_cells": 7618,
+  "stream_cells_touched": 6606,
+  "lake_cells_touched": 4180,
+  "method": "Named Stream - Main Flow features, all available segments of the selected main tributary to Falls Creek, and all lake geometries were rasterized onto the existing 30 m grid; intersecting valid cells were assigned FBP water/non-fuel code 102."
+}

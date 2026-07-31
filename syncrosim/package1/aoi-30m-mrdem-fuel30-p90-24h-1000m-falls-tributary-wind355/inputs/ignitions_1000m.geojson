@@ -1,0 +1,4375 @@
+{
+  "type": "FeatureCollection",
+  "name": "1000 m ignition grid",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 1,
+        "GRID_X": 1604000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.63907367092304,
+          49.54589841921097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 2,
+        "GRID_X": 1604000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.63744605232752,
+          49.55483184186568
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 3,
+        "GRID_X": 1604000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.6358178028648,
+          49.56376512468906
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 4,
+        "GRID_X": 1604000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.6341889221698,
+          49.57269826783012
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 5,
+        "GRID_X": 1605000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.62861834369086,
+          49.52697064022217
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 6,
+        "GRID_X": 1605000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.62698936799933,
+          49.53590415133754
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 7,
+        "GRID_X": 1605000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.62535976118482,
+          49.54483752223079
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 8,
+        "GRID_X": 1605000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.62372952288224,
+          49.553770753050905
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 9,
+        "GRID_X": 1605000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.62209865272614,
+          49.56270384394659
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 10,
+        "GRID_X": 1605000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.62046715035088,
+          49.571636795066745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 11,
+        "GRID_X": 1605000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.61883501539046,
+          49.580569606560424
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 12,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.61654126248845,
+          49.516974935438874
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 13,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.61491030116818,
+          49.52590839506798
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 14,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.61327870810538,
+          49.53484171423316
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 15,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.61164648293469,
+          49.543774893083246
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 16,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.61001362529039,
+          49.55270793176693
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 17,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.60838013480661,
+          49.56164083043292
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 18,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.60674601111705,
+          49.570573589230115
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 19,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.6051112538552,
+          49.57950620830749
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 20,
+        "GRID_X": 1606000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.6034758626543,
+          49.588438687813834
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 21,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.60610172569649,
+          49.49804419378307
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 22,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.60446941271104,
+          49.50697774281353
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 23,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.60283646772999,
+          49.51591115098986
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 24,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.60120289038794,
+          49.524844418460624
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 25,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59956868031928,
+          49.533777545374264
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 26,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59793383715805,
+          49.54271053187953
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 27,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59629836053807,
+          49.5516433781251
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 28,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59466225009277,
+          49.56057608425959
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 29,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59302550545542,
+          49.56950865043188
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 30,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59138812625896,
+          49.57844107679079
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 31,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58975011213604,
+          49.58737336348519
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 32,
+        "GRID_X": 1607000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58811146271906,
+          49.59630551066397
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 33,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59403708572472,
+          49.48804556507977
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 34,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59240279166185,
+          49.49697906293295
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 35,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.59076786498632,
+          49.50591241969034
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 36,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58913230533246,
+          49.51484563550035
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 37,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5874961123343,
+          49.52377871051149
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 38,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58585928562572,
+          49.53271164487229
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 39,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58422182484018,
+          49.54164443873127
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 40,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58258372961095,
+          49.55057709223703
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 41,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58094499957096,
+          49.55950960553829
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 42,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57930563435289,
+          49.5684419787837
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 43,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57766563358916,
+          49.577374212122166
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 44,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57602499691183,
+          49.58630630570233
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 45,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57438372395279,
+          49.59523825967316
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 46,
+        "GRID_X": 1608000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57274181434352,
+          49.604170074183614
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 47,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58197766982194,
+          49.47804544967315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 48,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.58034139664528,
+          49.48697889638306
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 49,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57870449023989,
+          49.49591220175559
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 50,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57706695023991,
+          49.50484536593905
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 51,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57542877627913,
+          49.51377838908178
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 52,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57378996799109,
+          49.522711271332206
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 53,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57215052500904,
+          49.531644012838804
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 54,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.57051044696594,
+          49.54057661375008
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 55,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56886973349452,
+          49.549509074214505
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 56,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56722838422716,
+          49.55844139438084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 57,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.565586398796,
+          49.56737357439763
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 58,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56394377683286,
+          49.57630561441359
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 59,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56230051796933,
+          49.585237514577486
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 60,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56065662183667,
+          49.59416927503811
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 61,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55901208806587,
+          49.60310089594443
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 62,
+        "GRID_X": 1609000.0,
+        "GRID_Y": 547000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55736691628766,
+          49.61203237744518
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 63,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56992347529528,
+          49.46804384814835
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 64,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56828522496671,
+          49.47697724374927
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 65,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56664634079449,
+          49.485910497771215
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 66,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56500682241247,
+          49.49484361036244
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 67,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56336666945424,
+          49.503776581671175
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 68,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56172588155302,
+          49.512709411845734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 69,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.56008445834182,
+          49.52164210103443
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 70,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55844239945333,
+          49.53057464938561
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 71,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55679970452002,
+          49.53950705704782
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 72,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.555156373174,
+          49.5484393241696
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 73,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55351240504713,
+          49.55737145089926
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 74,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.551867799771,
+          49.56630343738558
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 75,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55022255697693,
+          49.57523528377723
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 76,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54857667629591,
+          49.5841669902228
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 77,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54693015735864,
+          49.5930985568711
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 78,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54528299979562,
+          49.60202998387093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 79,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 547000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54363520323697,
+          49.610961271371075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 80,
+        "GRID_X": 1610000.0,
+        "GRID_Y": 548000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5419867673126,
+          49.61989241952048
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 81,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 530000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55787449945299,
+          49.458040761089755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 82,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55623427393273,
+          49.46697410561621
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 83,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55459341395505,
+          49.47590730832225
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 84,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55295191915346,
+          49.48484036935585
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 85,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.55130978916127,
+          49.493773288865235
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 86,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54966702361146,
+          49.502706066998556
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 87,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54802362213684,
+          49.51163870390407
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 88,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54637958436977,
+          49.52057119973003
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 89,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54473490994243,
+          49.529503554624725
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 90,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54308959848674,
+          49.53843576873663
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 91,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54144364963425,
+          49.547367842214165
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 92,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53979706301631,
+          49.55629977520578
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 93,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53814983826393,
+          49.56523156785996
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 94,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5365019750079,
+          49.57416322032546
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 95,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53485347287864,
+          49.58309473275072
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 96,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53320433150633,
+          49.592026105284525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 97,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53155455052092,
+          49.60095733807565
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 98,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 547000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52990412955198,
+          49.609888431272736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 99,
+        "GRID_X": 1611000.0,
+        "GRID_Y": 548000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52825306822884,
+          49.6188193850248
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 100,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 529000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54583073960437,
+          49.44803618908109
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 101,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 530000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5441885408511,
+          49.45696948256796
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 102,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54254570702761,
+          49.46590263399288
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 103,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.54090223776723,
+          49.47483564350377
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 104,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53925813270298,
+          49.48376851124867
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 105,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5376133914676,
+          49.49270123737571
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 106,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53596801369353,
+          49.501633822033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 107,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53432199901302,
+          49.510566265368716
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 108,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53267534705793,
+          49.51949856753099
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 109,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53102805745986,
+          49.52843072866824
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 110,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5293801298502,
+          49.537362748928615
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 111,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52773156385993,
+          49.54629462846066
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 112,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52608235911988,
+          49.55522636741265
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 113,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5244325152605,
+          49.56415796593318
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 114,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52278203191203,
+          49.57308942417073
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 115,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52113090870435,
+          49.582020742273826
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 116,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51947914526713,
+          49.590951920391134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 117,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51782674122968,
+          49.5998829586713
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 118,
+        "GRID_X": 1612000.0,
+        "GRID_Y": 547000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5161736962211,
+          49.608813857263115
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 119,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 528000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53379219305992,
+          49.43803013270549
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 120,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 529000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53214802303059,
+          49.446963375187785
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 121,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 530000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.53050321731936,
+          49.45589647536669
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 122,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52885777555933,
+          49.464829433389966
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 123,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52721169738324,
+          49.473762249405624
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 124,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52556498242357,
+          49.482694923561695
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 125,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52391763031254,
+          49.49162745600599
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 126,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52226964068204,
+          49.500559846886674
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 127,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.52062101316376,
+          49.50949209635184
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 128,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.518971747389,
+          49.51842420454968
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 129,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51732184298888,
+          49.52735617162839
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 130,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51567129959416,
+          49.53628799773619
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 131,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51402011683537,
+          49.54521968302146
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 132,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51236829434272,
+          49.55415122763252
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 133,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51071583174614,
+          49.563082631717805
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 134,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5090627286753,
+          49.572013895425705
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 135,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50740898475959,
+          49.580945018904856
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 136,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50575459962806,
+          49.58987600230373
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 137,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50409957290954,
+          49.59880684577092
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 138,
+        "GRID_X": 1613000.0,
+        "GRID_Y": 547000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50244390423255,
+          49.60773754945519
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 139,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 529000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51846594213859,
+          49.4458888330266
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 140,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 530000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5168185298364,
+          49.454821739597726
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 141,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51517048050707,
+          49.463754503919624
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 142,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51352179378276,
+          49.472687126139995
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 143,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5118724692955,
+          49.481619606406845
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 144,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.51022250667687,
+          49.490551944868045
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 145,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50857190555831,
+          49.499484141671694
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 146,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50692066557089,
+          49.50841619696577
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 147,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50526878634541,
+          49.51734811089833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 148,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50361626751243,
+          49.52627988361768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 149,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50196310870217,
+          49.53521151527192
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 150,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.5003093095446,
+          49.54414300600918
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 151,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49865486966941,
+          49.55307435597802
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 152,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49699978870599,
+          49.56200556532656
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 153,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49534406628342,
+          49.57093663420331
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 154,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49368770203057,
+          49.57986756275671
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 155,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49203069557596,
+          49.588798351135296
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 156,
+        "GRID_X": 1614000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49037304654784,
+          49.597728999487465
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 157,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.50148382284968,
+          49.462677845693804
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 158,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49983252794524,
+          49.471610273818925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 159,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4981805942987,
+          49.48054255989647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 160,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49652802154111,
+          49.48947470407434
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 161,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4948748093034,
+          49.498406706500575
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 162,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49322095721602,
+          49.507338567322975
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 163,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.49156646490928,
+          49.516270286689625
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 164,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4899113320132,
+          49.52520186474875
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 165,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48825555815743,
+          49.534133301648374
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 166,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48659914297144,
+          49.543064597536734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 167,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4849420860843,
+          49.55199575256197
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 168,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48328438712491,
+          49.56092676687244
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 169,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48162604572181,
+          49.569857640616505
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 170,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47996706150329,
+          49.578788373942565
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 171,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47830743409733,
+          49.58771896699894
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 172,
+        "GRID_X": 1615000.0,
+        "GRID_Y": 546000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47664716313163,
+          49.596649419934245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 173,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48779780356578,
+          49.461599458824786
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 174,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48614390084981,
+          49.47053169255475
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 175,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48448935841284,
+          49.47946378414301
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 176,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4828341758855,
+          49.48839573373738
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 177,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.48117835289803,
+          49.497327541485745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 178,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47952188908046,
+          49.506259207536054
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 179,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4778647840625,
+          49.515190732036295
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 180,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47620703747361,
+          49.5241221151344
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 181,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47454864894291,
+          49.533053356978634
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 182,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47288961809932,
+          49.54198445771688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 183,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47122994457143,
+          49.55091541749748
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 184,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4695696279875,
+          49.55984623646858
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 185,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46790866797556,
+          49.56877691477851
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 186,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46624706416338,
+          49.57770745257553
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 187,
+        "GRID_X": 1616000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46458481617834,
+          49.586637850008096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 188,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 531000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47411242363367,
+          49.46051934342503
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 189,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47245591347532,
+          49.46945138246001
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 190,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.47079876261739,
+          49.47838327925896
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 191,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46914097068995,
+          49.48731503396974
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 192,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46748253732274,
+          49.496246646740126
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 193,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46582346214522,
+          49.5051781177179
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 194,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46416374478659,
+          49.51410944705112
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 195,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46250338487573,
+          49.52304063488765
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 196,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.46084238204125,
+          49.53197168137555
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 197,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45918073591149,
+          49.54090258666279
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 198,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4575184461145,
+          49.54983335089762
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 199,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45585551227802,
+          49.558763974228135
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 200,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45419193402952,
+          49.56769445680259
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 201,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45252771099622,
+          49.57662479876916
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 202,
+        "GRID_X": 1617000.0,
+        "GRID_Y": 545000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45086284280501,
+          49.585555000276216
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 203,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 532000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45876856680033,
+          49.46836934364737
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 204,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 533000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4571088078914,
+          49.47730104535722
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 205,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45544840693412,
+          49.486232604884314
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 206,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45378736355771,
+          49.49516402237648
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 207,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45212567739108,
+          49.50409529798145
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 208,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.45046334806285,
+          49.51302643184717
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 209,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.44880037520142,
+          49.52195742412151
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 210,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.44713675843481,
+          49.53088827495241
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 211,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.44547249739085,
+          49.53981898448779
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 212,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.443807591697,
+          49.548749552875876
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 213,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4421420409805,
+          49.55767998026465
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 214,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.44047584486829,
+          49.5666102668023
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 215,
+        "GRID_X": 1618000.0,
+        "GRID_Y": 544000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.43880900298697,
+          49.575540412636975
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 216,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4417564855974,
+          49.48514844659405
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 217,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.44009283258286,
+          49.4940796685079
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 218,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.43842853579845,
+          49.50301074843989
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 219,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.43676359487232,
+          49.51194168653776
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 220,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.43509800943224,
+          49.520872482949365
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 221,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4334317791057,
+          49.5298031378226
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 222,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.43176490352005,
+          49.53873365130537
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 223,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.43009738230214,
+          49.54766402354572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 224,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.42842921507867,
+          49.556594254691674
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 225,
+        "GRID_X": 1619000.0,
+        "GRID_Y": 543000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.42676040147606,
+          49.56552434489129
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 226,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.42806520765885,
+          49.48406255921213
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 227,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4263989453778,
+          49.49299358524772
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 228,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.42473203834754,
+          49.50192446920649
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 229,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.42306448619564,
+          49.5108552112362
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 230,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.42139628854939,
+          49.519785811484645
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 231,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.41972744503575,
+          49.52871627009967
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 232,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.41805795528138,
+          49.53764658722909
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 233,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.41638781891277,
+          49.5465767630209
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 234,
+        "GRID_X": 1620000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.41471703555598,
+          49.55550679762303
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 235,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.41437457409728,
+          49.48297494285192
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 236,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.41270570292191,
+          49.491905772709245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 237,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.41103618601822,
+          49.500836460394765
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 238,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.4093660230133,
+          49.50976700605611
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 239,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.40769521353388,
+          49.51869740984101
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 240,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.40602375720641,
+          49.527627671897314
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 241,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.40435165365696,
+          49.536557792372804
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 242,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.40267890251148,
+          49.54548777141522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 243,
+        "GRID_X": 1621000.0,
+        "GRID_Y": 542000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.40100550339552,
+          49.554417609172695
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 244,
+        "GRID_X": 1622000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.3990131061942,
+          49.49081623100606
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 245,
+        "GRID_X": 1622000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.39734097979012,
+          49.49974672211832
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 246,
+        "GRID_X": 1622000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.39566820630546,
+          49.50867707111115
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 247,
+        "GRID_X": 1622000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.39399478536644,
+          49.517607278132324
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 248,
+        "GRID_X": 1622000.0,
+        "GRID_Y": 539000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.39232071659893,
+          49.526537343329444
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 249,
+        "GRID_X": 1622000.0,
+        "GRID_Y": 540000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.39064599962857,
+          49.535467266850354
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 250,
+        "GRID_X": 1622000.0,
+        "GRID_Y": 541000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.38897063408065,
+          49.54439704884278
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 251,
+        "GRID_X": 1623000.0,
+        "GRID_Y": 534000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.38699524401895,
+          49.480794523650665
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 252,
+        "GRID_X": 1623000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.38532115617348,
+          49.489724960251976
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 253,
+        "GRID_X": 1623000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.38364642064249,
+          49.49865525449104
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 254,
+        "GRID_X": 1623000.0,
+        "GRID_Y": 537000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.38197103705191,
+          49.50758540651526
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 255,
+        "GRID_X": 1623000.0,
+        "GRID_Y": 538000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.3802950050274,
+          49.51651541647247
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 256,
+        "GRID_X": 1624000.0,
+        "GRID_Y": 535000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.37162985383826,
+          49.48863196056084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "GRID_ID": 257,
+        "GRID_X": 1624000.0,
+        "GRID_Y": 536000.0,
+        "SPACING_M": 1000,
+        "definition": "Projected 1,000 m grid point inside the AOI; Cell2Fire snaps it to the nearest burnable cell."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -117.36995250955444,
+          49.49756205762688
+        ]
+      }
+    }
+  ]
+}

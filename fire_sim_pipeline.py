@@ -551,10 +551,17 @@ def build_map(config: dict[str, Any]) -> Path:
     entries: list[dict[str, str]] = []
     seen_types: set[str] = set()
     for code, entry in sorted(mapping.items()):
-        alpha = 0 if entry["type"] == "NF" else 255
+        # Keep non-fuel and water visible in the map so the display matches the
+        # simulation grid. NoData remains transparent when the source raster
+        # carries it as a dataset-level NoData value.
+        alpha = 255
         rgb = tuple(int(entry["color"].lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))
         lines.append(f"{code} {rgb[0]} {rgb[1]} {rgb[2]} {alpha}")
-        if entry["type"] != "NF" and entry["type"] not in seen_types:
+        if entry["type"] == "NF":
+            legend_entry = dict(entry)
+            legend_entry["label"] = f"{entry['label']} [{code}]"
+            entries.append(legend_entry)
+        elif entry["type"] not in seen_types:
             entries.append(entry)
             seen_types.add(entry["type"])
     colors.write_text("\n".join(lines) + "\n", encoding="utf-8")
