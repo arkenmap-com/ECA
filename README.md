@@ -1,5 +1,7 @@
 # ECA Analysis Toolbox - Technical Reference
 
+## [Open the hosted ECA web app](https://arkenmap-com.github.io/ECA/)
+
 **Equivalent Clearcut Area (ECA) Analysis for ArcGIS Pro**
 Authors: Eric Hoodicoff, Moez Labiadh (BCTS Kootenay Business Area)
 Refactored for ArcGIS Pro: 2026

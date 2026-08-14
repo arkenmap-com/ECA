@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 import html
-import shutil
+import os
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
@@ -73,21 +73,36 @@ def _safe_filename(name: str | None, fallback: str) -> str:
     return candidate if candidate and candidate != "." else fallback
 
 
-async def _save_upload(upload: UploadFile, directory: Path, prefix: str) -> Path:
+async def _save_upload(upload: UploadFile, directory: Path, prefix: str, max_bytes: int) -> Path:
     filename = _safe_filename(upload.filename, prefix)
     destination = directory / f"{prefix}_{filename}"
-    with destination.open("wb") as target:
-        shutil.copyfileobj(upload.file, target)
-    await upload.close()
+    written = 0
+    try:
+        with destination.open("wb") as target:
+            while chunk := await upload.read(1024 * 1024):
+                written += len(chunk)
+                if written > max_bytes:
+                    raise HTTPException(
+                        status_code=413,
+                        detail=f"Uploaded files must be smaller than {max_bytes // (1024 * 1024)} MB.",
+                    )
+                target.write(chunk)
+    except Exception:
+        destination.unlink(missing_ok=True)
+        raise
+    finally:
+        await upload.close()
     return destination
 
 
 def create_app(data_dir: Path | None = None) -> FastAPI:
     """Create the application; ``data_dir`` is injectable for tests and deployments."""
-    root = (data_dir or Path("webapp_data")).resolve()
+    root = (data_dir or Path(os.environ.get("ECA_DATA_DIR", "webapp_data"))).resolve()
     root.mkdir(parents=True, exist_ok=True)
+    max_upload_bytes = int(os.environ.get("ECA_MAX_UPLOAD_MB", "100")) * 1024 * 1024
     runs: dict[str, Run] = {}
     lock = Lock()
+    analysis_lock = Lock()
     app = FastAPI(title="Open ECA", docs_url=None, redoc_url=None)
 
     def get_run(identifier: str) -> Run:
@@ -98,28 +113,33 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         return run
 
     def execute(run: Run, fwa_id: int, inputs: Path | None, curves: Path, field_team: str | None, extras: tuple[AdditionalInput, ...]) -> None:
-        run.state = "running"
-        try:
-            run.stage = "Downloading Freshwater Atlas watershed"
-            watershed_path = run.directory / "uploads" / "fwa_watershed.geojson"
-            download_named_watershed(fwa_id, watershed_path)
-            if inputs is None:
-                run.stage = "Downloading current BC warehouse layers"
-                inputs = acquire_for_watershed(
-                    watershed_path,
-                    run.directory / "inputs" / "bc_catalogue_inputs.gpkg",
-                )
-            run.stage = "Calculating ECA draft"
-            result = run_draft(watershed_path, "GNIS_NAME", "GNIS_NAME", inputs, None, load_curves(curves), run.directory / "output", field_team, extras)
-            run.stage = "Building dashboard"
-            create_dashboard(result.geopackage, run.directory / "output" / "eca_dashboard.html")
-            run.basin = result.basin
-            run.stage = "Complete"
-            run.state = "complete"
-        except Exception as error:  # Show a concise, local diagnostic on the result page.
-            run.error = str(error)
-            run.stage = "Failed"
-            run.state = "failed"
+        with analysis_lock:
+            run.state = "running"
+            try:
+                run.stage = "Downloading Freshwater Atlas watershed"
+                watershed_path = run.directory / "uploads" / "fwa_watershed.geojson"
+                download_named_watershed(fwa_id, watershed_path)
+                if inputs is None:
+                    run.stage = "Downloading current BC warehouse layers"
+                    inputs = acquire_for_watershed(
+                        watershed_path,
+                        run.directory / "inputs" / "bc_catalogue_inputs.gpkg",
+                    )
+                run.stage = "Calculating ECA draft"
+                result = run_draft(watershed_path, "GNIS_NAME", "GNIS_NAME", inputs, None, load_curves(curves), run.directory / "output", field_team, extras)
+                run.stage = "Building dashboard"
+                create_dashboard(result.geopackage, run.directory / "output" / "eca_dashboard.html")
+                run.basin = result.basin
+                run.stage = "Complete"
+                run.state = "complete"
+            except Exception as error:  # Show a concise diagnostic on the result page.
+                run.error = str(error)
+                run.stage = "Failed"
+                run.state = "failed"
+
+    @app.get("/health")
+    def health() -> JSONResponse:
+        return JSONResponse({"status": "ok"})
 
     @app.get("/", response_class=HTMLResponse)
     def home() -> HTMLResponse:
@@ -161,11 +181,11 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         directory = root / identifier
         uploads = directory / "uploads"
         uploads.mkdir(parents=True)
-        saved_inputs = await _save_upload(inputs, uploads, "inputs") if data_source == "upload" and inputs is not None else None
-        saved_curves = await _save_upload(curves, uploads, "curves")
+        saved_inputs = await _save_upload(inputs, uploads, "inputs", max_upload_bytes) if data_source == "upload" and inputs is not None else None
+        saved_curves = await _save_upload(curves, uploads, "curves", max_upload_bytes)
         extras: list[AdditionalInput] = []
         for index, upload in enumerate(additional_files):
-            path = await _save_upload(upload, uploads, f"additional_{index + 1}")
+            path = await _save_upload(upload, uploads, f"additional_{index + 1}", max_upload_bytes)
             try:
                 buffer_m = float(additional_buffers[index] or 0) if additional_buffers else 0
             except ValueError as error:

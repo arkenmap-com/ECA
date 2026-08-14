@@ -1,5 +1,7 @@
 # Open ECA web app
 
+Hosted entry point: <https://arkenmap-com.github.io/ECA/>
+
 This is a local-first browser interface around the existing Open ECA draft
 workflow. It stores uploads and outputs under `webapp_data/` by default and
 binds only to `127.0.0.1`, so it does not publish watershed data anywhere.
@@ -51,3 +53,11 @@ clipped to the watershed.
 For a shared deployment, run behind authenticated HTTPS and move the data
 directory to managed storage. Do not expose this local development server
 directly to the internet.
+
+## Hosted deployment
+
+`Dockerfile` and `render.yaml` deploy the Python/GDAL service to Render. The
+static page in `docs/` embeds that service at the GitHub Pages project URL.
+The free Render instance uses ephemeral storage, runs one analysis at a time,
+and may take about a minute to wake after an idle period. Completed runs and
+uploads are not durable across service restarts or redeploys.
