@@ -30,7 +30,7 @@ from open_eca.openings import (
     split_openings,
 )
 from open_eca.recovery import apply_recovery, load_curves
-from open_eca.spatial import buffer_transport, clip_to_boundary
+from open_eca.spatial import buffer_transport, clip_to_boundary, polygonal_features
 from open_eca.watershed import prepare_watershed
 
 
@@ -105,7 +105,8 @@ def _field_team(
         return supplied
     if teams is None or "FIELD_TEAM" not in teams:
         raise ValueError("Provide --field-team or an input field_teams layer with FIELD_TEAM.")
-    intersection = gpd.overlay(teams.to_crs(watershed.crs), watershed[["geometry"]], how="intersection")
+    teams = polygonal_features(teams).to_crs(watershed.crs)
+    intersection = gpd.overlay(teams, watershed[["geometry"]], how="intersection")
     if intersection.empty:
         raise ValueError("No field-team boundary intersects the watershed.")
     areas = intersection.assign(_area=intersection.geometry.area).groupby("FIELD_TEAM")["_area"].sum()
@@ -131,8 +132,9 @@ def _recovery_layer(
     missing = required - set(bec.columns)
     if missing:
         raise ValueError(f"BEC layer is missing fields: {', '.join(sorted(missing))}")
+    bec = polygonal_features(bec[["ZONE", "SUBZONE", "geometry"]]).to_crs(openings.crs)
     openings_bec = gpd.overlay(
-        openings, bec[["ZONE", "SUBZONE", "geometry"]].to_crs(openings.crs), how="intersection",
+        openings, bec, how="intersection",
     )
     openings_bec["Field_Team"] = field_team
     openings_bec = add_opening_area(openings_bec)

@@ -8,7 +8,7 @@ from typing import Tuple, Union
 import geopandas as gpd
 import pandas as pd
 
-from open_eca.spatial import clip_to_boundary
+from open_eca.spatial import clip_to_boundary, polygonal_features
 
 
 BASE_FIELDS = ("OPENING_ID", "CROWN_CLOSURE", "PROJ_HEIGHT_1", "Info", "ECAsrc")
@@ -27,7 +27,10 @@ def _normalise_openings(
     """Align opening fields while retaining all source attributes for review."""
     if openings.crs is None:
         raise ValueError(f"{source_label} has no CRS.")
-    result = openings.copy()
+    # ECA is an area calculation. Public WFS responses and user files can
+    # contain stray lines, points, or GeometryCollection parts; retaining them
+    # would make later polygon overlays fail or create zero-area records.
+    result = polygonal_features(openings)
     for field in BASE_FIELDS:
         if field not in result:
             result[field] = None
@@ -51,7 +54,7 @@ def _erase(features: gpd.GeoDataFrame, erase_features: gpd.GeoDataFrame) -> gpd.
     erased["geometry"] = erased.geometry.difference(mask)
     usable = erased.geometry.map(lambda geometry: geometry is not None and not geometry.is_empty)
     erased = erased.loc[usable]
-    return erased.explode(ignore_index=True)[features.columns].copy()
+    return polygonal_features(erased.explode(ignore_index=True)[features.columns])
 
 
 def _concat_openings(parts: Iterable[gpd.GeoDataFrame], crs: object) -> gpd.GeoDataFrame:

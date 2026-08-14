@@ -1,9 +1,9 @@
 import unittest
 
 import geopandas as gpd
-from shapely.geometry import LineString, Polygon
+from shapely.geometry import GeometryCollection, LineString, Point, Polygon
 
-from open_eca.spatial import buffer_transport, clip_to_boundary
+from open_eca.spatial import buffer_transport, clip_to_boundary, polygonal_features
 
 
 class SpatialTests(unittest.TestCase):
@@ -20,6 +20,34 @@ class SpatialTests(unittest.TestCase):
         self.assertEqual(list(clipped.columns), ["source", "geometry"])
         self.assertEqual(clipped.loc[0, "source"], "test")
         self.assertAlmostEqual(clipped.geometry.area.iloc[0], 2500)
+
+    def test_clip_accepts_mixed_geometry_families(self):
+        features = gpd.GeoDataFrame(
+            {"source": ["area", "line", "outside", "touching_area"]},
+            geometry=[
+                Polygon([(50, 50), (150, 50), (150, 150), (50, 150)]),
+                LineString([(-20, 25), (120, 25)]),
+                Point((150, 150)),
+                Polygon([(100, 20), (110, 20), (110, 30), (100, 30)]),
+            ],
+            crs="EPSG:3005",
+        )
+        clipped = clip_to_boundary(features, self.boundary)
+        self.assertEqual(set(clipped["source"]), {"area", "line"})
+        self.assertEqual(set(clipped.geom_type), {"Polygon", "LineString"})
+
+    def test_polygonal_features_extracts_collection_polygons(self):
+        features = gpd.GeoDataFrame(
+            {"source": ["collection", "line"]},
+            geometry=[
+                GeometryCollection([Polygon([(0, 0), (2, 0), (2, 2), (0, 2)]), Point((1, 1))]),
+                LineString([(0, 0), (2, 2)]),
+            ],
+            crs="EPSG:3005",
+        )
+        polygons = polygonal_features(features)
+        self.assertEqual(polygons["source"].tolist(), ["collection"])
+        self.assertEqual(polygons.geom_type.tolist(), ["Polygon"])
 
     def test_buffer_transport_dissolves_and_clips(self):
         road = gpd.GeoDataFrame(

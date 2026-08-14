@@ -1,7 +1,7 @@
 import unittest
 
 import geopandas as gpd
-from shapely.geometry import box
+from shapely.geometry import LineString, box
 
 from open_eca.openings import append_lower_priority, build_other_openings, merge_base_openings, split_openings
 
@@ -44,6 +44,15 @@ class OpeningTests(unittest.TestCase):
         self.assertAlmostEqual(result.geometry.area.sum(), 50)
         self.assertTrue((result["CROWN_CLOSURE"] == 0).all())
         self.assertTrue((result["PROJ_HEIGHT_1"] == 0).all())
+
+    def test_opening_normalisation_drops_non_area_geometry(self):
+        mixed = frame(
+            [1, 2],
+            [box(0, 0, 10, 10), LineString([(20, 0), (20, 10)])],
+        )
+        merged = merge_base_openings(mixed)
+        self.assertEqual(merged["OPENING_ID"].tolist(), [1])
+        self.assertEqual(merged.geom_type.tolist(), ["Polygon"])
 
     def test_empty_lower_priority_layer_preserves_recovery_fields(self):
         vri = gpd.GeoDataFrame(
