@@ -31,18 +31,11 @@ def create_other_openings(scratch_gdb, output_gdb):
     Writes result to *output_gdb*/OtherOpenings.
     """
     clip_roads = os.path.join(scratch_gdb, "Clip_RoadsPipelinesRailways")
-    clip_bcts = os.path.join(scratch_gdb, "buffer_Clip_BCTSProposedRoads")
     clip_nat = os.path.join(scratch_gdb, "Clip_VRINaturalandOtherOpenings")
     clip_water = os.path.join(scratch_gdb, "Clip_VRIWater")
     clip_pas = os.path.join(scratch_gdb, "Clip_ResultsPAS")
     openings_fc = gdb_fc(output_gdb, "Openings")
     other_openings_fc = gdb_fc(output_gdb, FC_OTHER_OPENINGS)
-
-    # Erase BCTS roads from existing roads
-    bcts_erased = os.path.join(scratch_gdb, "BCTSRoadsErased")
-    if arcpy.Exists(clip_bcts) and arcpy.Exists(clip_roads):
-        erase = EraseFeatures(clip_bcts, clip_roads, bcts_erased)
-        erase.erase_analysis()
 
     # Collect processed layers, then Merge at end (avoids empty-FC append problem)
     parts = []
@@ -70,18 +63,6 @@ def create_other_openings(scratch_gdb, output_gdb):
         )
         _add_to_other(roads_erase1)
         cleanup_memory(roads_erase1)
-
-    if arcpy.Exists(bcts_erased):
-        roads_erase2 = os.path.join(scratch_gdb, "roadsErase2")
-        erase2 = EraseFeatures(bcts_erased, openings_fc, roads_erase2)
-        erase2.erase_analysis()
-        cleanup_memory(bcts_erased)
-        safe_add_field(roads_erase2, FLD_ECA_SRC, "TEXT", field_length=50)
-        arcpy.management.CalculateField(
-            roads_erase2, FLD_ECA_SRC, '"BCTS Proposed Roads"', "PYTHON3",
-        )
-        _add_to_other(roads_erase2)
-        cleanup_memory(roads_erase2)
 
     # --- Natural openings ---
     if arcpy.Exists(clip_nat):

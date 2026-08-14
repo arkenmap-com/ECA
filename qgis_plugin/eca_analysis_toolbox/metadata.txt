@@ -1,0 +1,20 @@
+[general]
+name=ECA Analysis Toolbox
+description=Run the open-source Equivalent Clearcut Area draft workflow from the QGIS Processing Toolbox.
+version=0.1.0
+# The plugin uses long-standing Processing APIs and works across supported
+# QGIS 3 releases; leave room for QGIS 4 while its plugin API remains stable.
+qgisMinimumVersion=3.0
+qgisMaximumVersion=4.99
+author=ECA Analysis Toolbox contributors
+email=
+about=Creates a review-ready ECA GeoPackage, clipped DEM, and summary reports from local watershed, catalogue, DEM, and recovery-curve inputs.
+category=Analysis
+tags=ECA,hydrology,forestry,watershed,BC
+homepage=
+repository=
+tracker=
+icon=icons/eca_toolbox.svg
+experimental=True
+deprecated=False
+hasProcessingProvider=yes

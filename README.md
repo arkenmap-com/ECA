@@ -6,6 +6,17 @@ Refactored for ArcGIS Pro: 2026
 
 ---
 
+## Open-source draft workflow
+
+The legacy ArcGIS toolbox remains below as the validation reference. The
+ArcPy-free draft implementation is in `open_eca/`: it acquires catalogue data
+to a local GeoPackage, calculates the watershed/H60/opening/recovery workflow,
+and writes `ECA_Draft.gpkg` plus CSV and HTML reports. See
+[`open_eca/README.md`](open_eca/README.md) for the command-line and QGIS
+Processing-tool instructions.
+
+---
+
 ## Table of Contents
 
 1. [What is ECA and Why It Matters](#1-what-is-eca-and-why-it-matters)
@@ -147,7 +158,6 @@ flowchart TD
     JOINS --> |"Join_Table + Join_Fields"| APPLY["database.apply_joins()"]
 
     RESOLVE --> BCGW["BCGW.sde<br/>BC Geographic Warehouse"]
-    RESOLVE --> DBP06["DBP06.sde<br/>LRM/BCTS Oracle"]
     RESOLVE --> LOCAL["Local Feature Classes"]
 
     RESOLVE_DEM --> TRIM["TRIM DEM<br/>(default)"]
@@ -155,7 +165,6 @@ flowchart TD
 
     style XLSX fill:#27ae60,color:#fff
     style BCGW fill:#2980b9,color:#fff
-    style DBP06 fill:#2980b9,color:#fff
 ```
 
 ### Hot-Reload Development Pattern
@@ -194,16 +203,13 @@ Both tools share a common parameter set built by `_build_parameters()` in `ECA_T
 | 2 | Sub-Basin Name Field | Field | The attribute field containing individual sub-basin names (e.g., "Upper Moyie", "Lower Moyie"). Can be the same as the basin field if no sub-basins exist. | If basin_field == subbasin_field, values are copied. Null/blank sub-basin values are filled with the watershed name. |
 | 3 | Output Folder | DEFolder | The directory where all output files will be created (GDB, reports, scratch). | Used to create `ECA_Estimate.gdb`, `EstECAscratch.gdb`, and `EstimateOutputs/` (or Final equivalents). |
 | 4 | Layer Configuration Spreadsheet | DEFile (.xlsx) | The Excel file that defines all input layers, DEMs, and joins. Defaults to the template in the toolbox directory. | Read by `database.load_layer_config()`. Returns 3 lists: vector_layers, dem_layers, joins. |
-| 5 | BCGW Connection (.sde) | DEFile (.sde) | The SDE connection file for the BC Geographic Warehouse -- the provincial data warehouse containing VRI, roads, BEC zones, etc. | Validated by `database.validate_connections()`. Path stored in connections dict under key "BCGW". |
-| 6 | DBP06 Connection (.sde) | DEFile (.sde) | The SDE connection file for the DBP06 Oracle database -- contains LRM (Logging Road Management) block and standard unit data from BCTS. | Same as BCGW but stored under key "DBP06". |
-| 7 | Estimate Output GDB | DEWorkspace | **Final tool only.** The geodatabase from the Estimate run that contains the manually reviewed Openings feature class. | Used to read `Openings`, `OtherOpenings`, `PestInfestation`, etc. from the Estimate pass. |
+| 5 | Estimate Output GDB | DEWorkspace | **Final tool only.** The geodatabase from the Estimate run that contains the manually reviewed Openings feature class. | Used to read `Openings`, `OtherOpenings`, `PestInfestation`, etc. from the Estimate pass. |
 
 ### Data Sources Explained
 
 | Source | Full Name | Contains | Connection |
 |---|---|---|---|
 | **BCGW** | BC Geographic Warehouse | VRI (vegetation), Results (silviculture), BEC zones, roads (DRA), pest surveys, wildfire history, US/Canada border | Enterprise SDE via `BCGW.sde` |
-| **DBP06** | BCTS Oracle Database | LRM cut blocks (ADV, PP, Recent), standard units, BCTS proposed roads, FTA pending blocks | Enterprise SDE via `DBP06.sde` |
 | **LOCAL** | Local Feature Classes | Field team boundaries, any locally maintained layers | Direct file paths |
 
 ---
@@ -225,7 +231,7 @@ flowchart TD
     SRTM --> DEM_PROC
     DEM_PROC --> H60["Draw H60 contour line<br/>Split watershed into<br/>H60 Above / H60 Below"]
     H60 --> TRANSPORT["Clip transport layers<br/>Buffer 8m and 18m<br/>Merge and dissolve"]
-    TRANSPORT --> OPENINGS["Clip opening layers<br/>Add Info fields<br/>Merge VRI/Results/FTA<br/>Process LRM blocks<br/>Complete Openings FC"]
+    TRANSPORT --> OPENINGS["Clip opening layers<br/>Add Info fields<br/>Merge VRI/Results/FTA<br/>Complete Openings FC"]
     OPENINGS --> OTHER["Create OtherOpenings<br/>(roads, natural, water, PAS)<br/>Create Pest layer"]
     OTHER --> BEC["Clip BEC zones<br/>Clip Field Team boundaries<br/>Select dominant field team"]
     BEC --> SPLITS["Split all layers by H60<br/>Split by sub-basin<br/>Calculate H60Basin stats"]
@@ -264,10 +270,9 @@ flowchart TD
 | Aspect | Estimate Tool | Final Tool |
 |---|---|---|
 | **Purpose** | Automated first pass | Refined final analysis |
-| **Opening source** | Clips and assembles from BCGW/DBP06/LOCAL | Reads reviewed Openings from Estimate GDB |
+| **Opening source** | Clips and assembles from BCGW/LOCAL | Reads reviewed Openings from Estimate GDB |
 | **Transport processing** | Full clip/buffer/merge pipeline | Skipped (uses Estimate data) |
 | **VRI/Results/FTA merge** | Performed | Skipped |
-| **LRM block processing** | Performed | Skipped |
 | **Aspect raster** | Not calculated | Calculated and saved to GDB |
 | **Slope raster** | Not calculated | Calculated and saved to GDB |
 | **Recovery Override** | Not supported (Override = -1) | Supported (analyst can set any value) |
@@ -539,7 +544,7 @@ flowchart TD
     XLSX --> S2["Sheet: DEMs"]
     XLSX --> S3["Sheet: Joins"]
 
-    S1 --> |"Per vector layer"| COLS1["Layer_Name<br/>Short_Name<br/>Data_Source (BCGW/DBP06/LOCAL)<br/>Feature_Class (SDE path)<br/>Processing_Step<br/>Definition_Query<br/>ECA_Source_Label<br/>Companion_Layer<br/>Info_Field"]
+    S1 --> |"Per vector layer"| COLS1["Layer_Name<br/>Short_Name<br/>Data_Source (BCGW/LOCAL)<br/>Feature_Class (SDE path)<br/>Processing_Step<br/>Definition_Query<br/>ECA_Source_Label<br/>Info_Field"]
 
     S2 --> |"Per DEM raster"| COLS2["DEM_Name<br/>Data_Source<br/>Raster_Path<br/>Use_Condition (default/cross_border)"]
 
@@ -555,8 +560,8 @@ Each vector layer is assigned a `Processing_Step` that determines when and how i
 | Processing_Step | Meaning | Examples |
 |---|---|---|
 | `transport_8` | Road/rail/pipeline layers buffered at **8m** width (4m half-width) | Minor DRA roads |
-| `transport_18` | Road/rail/pipeline layers buffered at **18m** width (9m half-width) | Major DRA roads, pipelines, railways, BCTS proposed roads |
-| `opening` | Forest opening layers (harvested, burned, urban) | VRI Openings & Burns, Results, FTA Pending Blocks, LRM Blocks, LRM Standard Units |
+| `transport_18` | Road/rail/pipeline layers buffered at **18m** width (9m half-width) | Major DRA roads, pipelines, railways |
+| `opening` | Forest opening layers (harvested, burned, urban) | VRI Openings & Burns, Results, FTA Pending Blocks |
 | `other` | Non-forest opening layers tracked separately | VRI Natural Openings, VRI Water, Results PAS, Private Lands, Wildfire 20+ Years |
 | `pest` | Pest infestation data | Current Pest Infestation, Historic Pest Infestation |
 | `reference` | Reference layers not clipped into openings | BEC Zones, Field Team boundaries, US/Canada Border |
@@ -593,9 +598,8 @@ Script: database.apply_joins(feature_layer, joins_for_layer, connections)
      - join_type = Join_Type (KEEP_ALL or KEEP_COMMON)
 
 GIS Terms: A table join attaches attributes from a related table to a feature
-  layer using a shared key field. For example, LRM cut blocks might be joined
-  to FORESTVIEW tables to get block state (ADV, PP, etc.) and standard unit
-  type information that isn't stored directly in the spatial table.
+  layer using a shared key field so the analysis can select or report on
+  attributes that are not stored directly in the spatial feature class.
 ```
 
 ### Example Spreadsheet Row Walkthrough
@@ -640,7 +644,7 @@ The toolbox buffers road centerlines to approximate their actual cleared width.
 
 ```mermaid
 flowchart TD
-    SOURCE["Source Road/Rail/Pipeline<br/>layers from BCGW/DBP06"] --> CLIP["Clip to watershed<br/>(with optional def query)"]
+    SOURCE["Source Road/Rail/Pipeline<br/>layers from BCGW or local files"] --> CLIP["Clip to watershed<br/>(with optional def query)"]
     CLIP --> SORT{"Processing_Step?"}
     SORT -->|transport_8| BUF8["Buffer 4m<br/>(half of 8m total width)"]
     SORT -->|transport_18| BUF18["Buffer 9m<br/>(half of 18m total width)"]
@@ -650,10 +654,7 @@ flowchart TD
     DISSOLVE --> CLIPF["Clip to watershed"]
     CLIPF --> ROADS["Clip_RoadsPipelinesRailways<br/>(in scratch GDB)"]
 
-    BUF18 -->|"BCTSProposedRoads<br/>kept separate"| BCTS["BCTS Proposed Roads buffer<br/>(separate for OtherOpenings)"]
-
     style ROADS fill:#27ae60,color:#fff
-    style BCTS fill:#e67e22,color:#fff
 ```
 
 ### Buffer Widths
@@ -672,8 +673,7 @@ GIS Terms: Road centerlines are drawn as single lines. To represent their actual
   - 18m roads (major highways, railways, pipelines): 9m buffer on each side = 18m
 
   The Dissolve step merges all overlapping road buffers into a single polygon so
-  road intersections aren't double-counted. BCTS proposed roads are kept separate
-  because they appear as their own category in the OtherOpenings report.
+  road intersections aren't double-counted.
 ```
 
 ### DRA Road Copy
@@ -763,63 +763,11 @@ GIS Terms: The three data sources overlap in space:
   with), those are added with crown=0 and height=0 (fully clearcut equivalent).
 ```
 
-### LRM Block and Standard Unit Processing
-
-```mermaid
-flowchart TD
-    BLOCK["LRM Cut Block<br/>(ADV, PP, or Recent)"] --> HAS_SU{"Does block have<br/>matching Standard Units?"}
-    HAS_SU -->|"Yes"| FILTER["Filter SUs to<br/>PROD (productive) only"]
-    HAS_SU -->|"No"| USE_BLOCK["Use entire block<br/>geometry"]
-    FILTER --> MATCH["Match by CUTB_SEQ_NBR<br/>(block sequence number)"]
-    MATCH --> USE_SU["Use SU geometries<br/>instead of block"]
-    MATCH --> REMAIN["Remaining blocks<br/>(no matching SUs)"]
-    USE_SU --> LRM["LRM_Blocks FC"]
-    USE_BLOCK --> LRM
-    REMAIN --> LRM
-    LRM --> ERASE["Erase LRM area<br/>from mergeFinal"]
-    ERASE --> APPEND2["Append LRM_Blocks<br/>to mergeOpenings"]
-    APPEND2 --> RESULT["mergeOpenings<br/>(crown=0, height=0)"]
-
-    style LRM fill:#e67e22,color:#fff
-    style RESULT fill:#27ae60,color:#fff
-```
-
-```
-Script: openings.setup_lrm_blocks(scratch_gdb, layer_configs)
-  For each block type (ADV, PP, Recent):
-  1. Look up Companion_Layer from spreadsheet (block -> SU relationship)
-  2. Create feature layers for blocks and SUs
-  3. Filter SUs: delete non-productive SUs (NOT FORESTVIEW_V_SU_SUTY_TYPE_ID = 'PROD')
-  4. Create CUTB_SEQ_NBR field in SUs from FORESTVIEW join
-  5. Match block/SU pairs by CUTB_SEQ_NBR
-  6. For matching pairs: append SU to LRM_Blocks, delete the block
-  7. For remaining blocks (no SUs): append block to LRM_Blocks
-  8. Set CROWN_CLOSURE=0 and PROJ_HEIGHT_1=0 for all LRM records
-  9. Erase LRM_Blocks area from mergeFinal
-  10. Fix field name collisions from Union (CROWN_CLOSURE_1 -> CROWN_CLOSURE)
-  11. Append LRM_Blocks to mergeOpenings
-
-GIS Terms: LRM (Logging Road Management) blocks are BCTS cut block polygons.
-  Standard Units (SUs) are subdivisions within a block representing different
-  treatment units. When SUs exist, they provide better geometry than the block
-  boundary because a single block may contain both productive harvest areas and
-  retention areas that shouldn't be counted as openings.
-
-  Block states:
-  - ADV = Advertised (approved for sale)
-  - PP = Pre-Planning (being planned)
-  - Recent = LC (Layout Complete), WIP (Work In Progress), HB (Harvested Block)
-
-  The CUTB_SEQ_NBR is a unique identifier linking a block to its standard units
-  in the FORESTVIEW database. Crown closure and height are set to 0 because
-  these are active or recently completed harvest blocks with no regrowth data.
-```
-
 ### Complete Openings Assembly
 
 ```
 Script: openings.complete_openings(layer_list, scratch_gdb, output_gdb)
-  1. Start with the VRI/Results/FTA/LRM merge as the highest-priority base.
+  1. Start with the VRI/Results/FTA merge as the highest-priority base.
   2. Add Consolidated Cut Blocks only where they do not overlap the base.
   3. Add wildfire layers only where they do not overlap the base or
      Consolidated Cut Blocks.
@@ -832,7 +780,7 @@ Script: openings.complete_openings(layer_list, scratch_gdb, output_gdb)
 
 GIS Terms: The main opening priority is:
 
-  VRI/Results/FTA/LRM > Consolidated Cut Blocks > Wildfire
+  VRI/Results/FTA > Consolidated Cut Blocks > Wildfire
 
 Consolidated Cut Blocks and wildfire are clipped against the already-built
 higher-priority openings before appending, so they cannot overwrite them or
@@ -867,12 +815,8 @@ Every opening polygon carries an `ECAsrc` (ECA Source) field that records which 
 | VRI Openings and Burns | From the provincial vegetation inventory |
 | Results | From silviculture results (RESULTS layer) |
 | FTA Pending Blocks | Approved future harvest blocks |
-| LRM ADV Blocks / SUs | BCTS advertised blocks or standard units |
-| LRM PP Blocks / SUs | BCTS pre-planning blocks |
-| LRM Recent Blocks / SUs | Recently harvested BCTS blocks |
 | Wildfire 20+ Years | Historic wildfire areas (20+ year old burns) |
 | Roads, Railways, Pipelines | Buffered transport corridors |
-| BCTS Proposed Roads | Planned but not yet built BCTS roads |
 | VRI Natural Openings | Naturally non-forested areas (rock, alpine, etc.) |
 | VRI Water | Lakes, rivers, wetlands |
 | Results PAS | Post-Activity Silviculture (regeneration areas) |
@@ -897,11 +841,7 @@ flowchart TD
     OPEN["Openings FC<br/>(main forest openings)"]
 
     ROADS["Roads, Railways,<br/>Pipelines buffer"] -->|"Erase Openings area"| R_CLEAN["Roads cleaned"]
-    BCTS["BCTS Proposed Roads"] -->|"Erase existing roads area"| B_ERASED["BCTS erased from roads"]
-    B_ERASED -->|"Erase Openings area"| B_CLEAN["BCTS cleaned"]
-
     R_CLEAN --> OTHER["OtherOpenings FC"]
-    B_CLEAN --> OTHER
 
     NAT["VRI Natural Openings"] -->|"Erase OtherOpenings area"| N1["Natural erased from other"]
     N1 -->|"Erase Openings area"| N_CLEAN["Natural cleaned"]
@@ -923,10 +863,9 @@ flowchart TD
 Script: other_openings.create_other_openings(scratch_gdb, output_gdb)
   Processing order (highest to lowest priority):
   1. Roads/Railways/Pipelines - erased from Openings
-  2. BCTS Proposed Roads - erased from existing roads AND Openings
-  3. VRI Natural Openings - erased from OtherOpenings AND Openings
-  4. VRI Water - erased from OtherOpenings AND Openings
-  5. Results PAS - erased from OtherOpenings AND Openings
+  2. VRI Natural Openings - erased from OtherOpenings AND Openings
+  3. VRI Water - erased from OtherOpenings AND Openings
+  4. Results PAS - erased from OtherOpenings AND Openings
 
   Each layer is added using _add_to_other() which CopyFeatures on first call
   and ez_append on subsequent calls.
@@ -1320,7 +1259,7 @@ Example: "Upper Moyie" sub-basin sheet
 | BEC Zone | BEC Sub-Zone | Source Layer        | Sub-Basin Area | H60 Above | H60 Below | Total ECA (ha) | ECA % |
 |----------|--------------|---------------------|----------------|-----------|-----------|----------------|-------|
 | ICH      | mw2          | VRI Openings        | 1250.5         | 12.3      | 5.1       | 17.4           | 1.4%  |
-| ICH      | mw2          | LRM Recent Blocks   | 1250.5         | 8.7       | 2.3       | 11.0           | 0.9%  |
+| ICH      | mw2          | Results             | 1250.5         | 8.7       | 2.3       | 11.0           | 0.9%  |
 | ESSF     | dcp          | VRI Openings        | 1250.5         | 22.1      | 0.0       | 22.1           | 1.8%  |
 | ESSF     | dcp          | Wildfire 20+ Years  | 1250.5         | 15.4      | 0.0       | 15.4           | 1.2%  |
 
@@ -1373,7 +1312,7 @@ Reports are generated using `pandas.ExcelWriter` with the `xlsxwriter` engine. K
 | `H60_Line` | Polyline | Contour line at the 40th percentile elevation | `dem.draw_contour_line()` |
 | `H60Split` | Polygon | Two polygons: H60 Above and H60 Below | `dem.split_h60()` |
 | `H60Basin` | Polygon | Union of H60Split and Sub_Basins with area percentages | `other_openings.calc_subbasin_h60()` |
-| `Openings` | Polygon | All forest openings (VRI, Results, FTA, LRM, wildfire) | `openings.complete_openings()` |
+| `Openings` | Polygon | All forest openings (VRI, Results, FTA, wildfire) | `openings.complete_openings()` |
 | `Openings_BEC` | Polygon | Openings intersected with BEC zones, with recovery values | `other_openings.setup_curve_layer()` |
 | `Openings_and_Recovery` | Polygon | Final openings with recovery and basin area | `other_openings.append_to_recovery_layer()` |
 | `OtherOpenings` | Polygon | Roads, natural openings, water, PAS | `other_openings.create_other_openings()` |
@@ -1435,7 +1374,7 @@ Output folder structure:
 | **workspace** | `core/workspace.py` | 6 | GDB creation, FC naming constants, scratch management, report paths |
 | **watershed** | `core/watershed.py` | 2 | Watershed dissolve, sub-basin standardization |
 | **dem** | `core/dem.py` | 8 | DEM clip, percentile, contour, H60 split, aspect, slope |
-| **openings** | `core/openings.py` | 7 | Transport clip/buffer/merge, opening clip/merge/LRM/complete |
+| **openings** | `core/openings.py` | 7 | Transport clip/buffer/merge, opening clip/merge, complete |
 | **other_openings** | `core/other_openings.py` | 9 | Other openings, pest, H60/subbasin splits, BEC intersection, field team |
 | **recovery** | `core/recovery.py` | 3 | Recovery curve calculation, application, error checking |
 | **reporting** | `core/reporting.py` | 9 | FC-to-DataFrame, pivot tables, Excel export with formatting |
@@ -1453,7 +1392,7 @@ Output folder structure:
 | `clip_transport_layers()` | openings | MakeFeatureLayer, SelectByLocation, Clip | Clips road/rail/pipeline data to watershed |
 | `buffer_transport()` | openings | Buffer at 4m or 9m half-width | Creates road surface area polygons |
 | `merge_vri_results_fta()` | openings | OPENING_ID match, EraseFeatures, Append | Merges three opening data sources without overlap |
-| `setup_lrm_blocks()` | openings | SU/Block match by CUTB_SEQ_NBR | Uses detailed harvest unit geometry where available |
+| `promote_base_openings()` | openings | Copies the merged base and normalizes fields | Prepares base openings for lower-priority layers |
 | `create_other_openings()` | other_openings | Priority-based erase chain | Builds non-forest opening layer |
 | `split_by_h60()` | other_openings | Intersect with H60Split | Splits layers into above/below elevation |
 | `split_by_subbasin()` | other_openings | Intersect with Sub_Basins | Further splits by drainage unit |
@@ -1471,12 +1410,9 @@ Output folder structure:
 |---|---|---|---|
 | VRI Openings & Burns | BCGW | WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY | opening |
 | Results | BCGW | WHSE_FOREST_VEGETATION.RSLT_OPENING_SVW | opening |
-| FTA Pending Blocks | DBP06 | (FTA feature class) | opening |
-| LRM ADV/PP/Recent Blocks | DBP06 | (FORESTVIEW block feature classes) | opening |
-| LRM ADV/PP/Recent SUs | DBP06 | (FORESTVIEW standard unit feature classes) | opening |
+| FTA Pending Blocks | BCGW | WHSE_FOREST_TENURE.FTEN_CUT_BLOCK_POLY_SVW | opening |
 | DRA Major Roads | BCGW | WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP | transport_18 |
 | DRA Minor Roads | BCGW | WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP | transport_8 |
-| BCTS Proposed Roads | DBP06 | (BCTS roads feature class) | transport_18 |
 | Railways | BCGW | (railway feature class) | transport_18 |
 | Pipelines | BCGW | (pipeline feature class) | transport_18 |
 | VRI Natural Openings | BCGW | WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY | other |
@@ -1546,7 +1482,7 @@ This traces the exact function calls in `ECAEstimateTool.execute()`:
 ```
 1.  _reload_modules()
 2.  database.load_layer_config(xlsx_path)
-3.  database.validate_connections(bcgw_sde, dbp06_sde)
+3.  database.check_db_connections()
 4.  database.validate_all_layers(vector_layers, dem_layers, connections)
 5.  workspace.create_output_gdb(output_folder, "estimate")
 6.  workspace.create_scratch_gdb(output_folder, "estimate")
@@ -1567,7 +1503,7 @@ This traces the exact function calls in `ECAEstimateTool.execute()`:
 21. openings.clip_opening_layers(opening_configs, connections, ws_fc, scratch_gdb, output_gdb, joins)
 22. openings.add_info_fields(scratch_gdb, opening_configs)
 23. openings.merge_vri_results_fta(scratch_gdb)
-24. openings.setup_lrm_blocks(scratch_gdb, vector_layers)
+24. openings.promote_base_openings(scratch_gdb)
 25. openings.complete_openings(layer_list, scratch_gdb, output_gdb)
 26. other_openings.create_other_openings(scratch_gdb, output_gdb)
 27. other_openings.create_pest_layer(scratch_gdb, output_gdb)

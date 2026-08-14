@@ -18,9 +18,9 @@ It builds watershed-level geospatial outputs, computes recovery, and exports rep
 ## High-Level Flow (Estimate)
 1. Validate input watershed/subbasins and build workspace outputs.
 2. Clip transport layers, buffer, and merge road/rail/pipeline openings.
-3. Clip opening-related layers (VRI, Results, FTA, LRM, other, pest).
+3. Clip opening-related layers (VRI, Results, FTA, other, pest).
 4. Merge VRI + Results + FTA by OPENING_ID with overlap erasure.
-5. Build LRM openings (blocks/SUs), erase overlap from merged openings, append LRM.
+5. Promote the VRI/Results/FTA opening merge for lower-priority processing.
 6. Build OtherOpenings and Pest layers.
 7. Split layers by H60 and subbasin; add BEC and field team attributes.
 8. Apply recovery curves and create recovery output layer.
@@ -38,7 +38,7 @@ It builds watershed-level geospatial outputs, computes recovery, and exports rep
 - core/dem.py
   - DEM clip, H60 percentile logic, slope/aspect derivation.
 - core/openings.py
-  - Transport buffering/merge, opening clipping, VRI/Results/FTA merge, LRM replacement, final openings build.
+  - Transport buffering/merge, opening clipping, VRI/Results/FTA merge, final openings build.
 - core/other_openings.py
   - Other openings chain, pest processing, H60 and subbasin splits, BEC/field-team intersection.
 - core/recovery.py
@@ -69,6 +69,27 @@ It builds watershed-level geospatial outputs, computes recovery, and exports rep
 - Final GDB: ECA_Final.gdb
 - Report folders under output directory (EstimateOutputs or Final_Outputs)
 - Additional docs copied to output folder when available.
+
+## Open-Source Port
+- `open_eca/data_acquisition.py`
+  - ArcPy-free CLI that queries BC Data Catalogue WFS services into a
+    watershed-bounded GeoPackage and writes a provenance manifest.
+- `open_eca/watershed.py`
+  - ArcPy-free GeoPackage preparation for watershed and sub-basin geometry.
+- `open_eca/spatial.py`
+  - ArcPy-free clipping and dissolved transport-buffer operations.
+- `open_eca/dem.py`
+  - ArcPy-free DEM clipping, 40th-percentile elevation, and H60 zone creation.
+- `open_eca/recovery.py`
+  - ArcPy-free recovery curves that retain the existing workbook and override contract.
+- `open_eca/openings.py`
+  - ArcPy-free opening precedence, H60/sub-basin split, and ECA-area operations.
+- `open_eca/draft.py`
+  - Complete ArcPy-free ECA Estimate workflow and report packaging.
+- `open_eca/qgis/eca_draft_algorithm.py`
+  - QGIS Processing Toolbox wrapper for the draft workflow.
+- `open_eca/config/bc_catalogue_layers.json`
+  - Starter source mapping for verified public catalogue layers.
 
 ## Maintenance Notes
 - Most behavior changes should be made through spreadsheet configuration first.
