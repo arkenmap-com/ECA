@@ -9,6 +9,7 @@ webapp_data
 dist
 tests
 qgis_plugin
-templates
+templates/*
+!templates/TKO_ECA_Recovery_Curves.xlsx
 *.pyt
 *.pyt.xml

@@ -16,6 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY open_eca ./open_eca
 COPY webapp ./webapp
+COPY templates/TKO_ECA_Recovery_Curves.xlsx ./templates/TKO_ECA_Recovery_Curves.xlsx
 
 EXPOSE 10000
 
