@@ -85,7 +85,9 @@ def h60_zones(dem_path: Path, elevation: float) -> gpd.GeoDataFrame:
     if zones.empty:
         raise ValueError("DEM has no valid cells to polygonize.")
     zones = zones.dissolve(by="ELEVATION", as_index=False)
-    zones["H60Area"] = zones.geometry.area / 10_000
+    # DEMs uploaded through the web app may be geographic or use non-metre
+    # projected units. Calculate area in BC Albers rather than native pixels.
+    zones["H60Area"] = zones.to_crs("EPSG:3005").geometry.area / 10_000
     return zones
 
 

@@ -62,7 +62,7 @@ BC's Interior Watershed Assessment Procedure uses ECA thresholds to flag watersh
 
 ### The H60 Line
 
-The **H60 line** is the elevation contour that separates the upper 60% of the watershed's elevation range from the lower 40%. More precisely, it is the **40th percentile elevation** of the Digital Elevation Model (DEM).
+The **H60 line** is the **40th percentile elevation** of valid DEM cells inside the watershed: approximately 60% of the sampled watershed area lies above it and 40% below it.
 
 ```
 GIS Terms: The H60 line divides the watershed into two hydrological zones:
@@ -76,6 +76,12 @@ Script Terms: dem.py calculates the 40th percentile using NumPy on a raster arra
   draws a contour at that elevation, and reclassifies the DEM into two polygon
   zones ("H60 Above" / "H60 Below").
 ```
+
+The web app automatically acquires the open 30 m NRCan Medium Resolution
+Digital Elevation Model terrain product for the selected watershed. It records
+the exact source asset and checksum for reproducibility. Analysts may override
+the automatic source with a georeferenced GeoTIFF or explicitly run without an
+H60 split.
 
 ### The ECA Formula
 

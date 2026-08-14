@@ -259,11 +259,17 @@ def run_draft(
             shutil.copy2(workspace / "clipped_dem.tif", output_dir / "clipped_dem.tif")
         report_dir = output_dir / "reports"
         _write_reports(report_dir, recovery, watershed_result.basin_area_ha)
+        dem_details: dict[str, Any] | None = None
+        if dem_path is not None:
+            dem_details = {"path": str(dem_path)}
+            provenance_path = dem_path.with_suffix(".provenance.json")
+            if provenance_path.is_file():
+                dem_details["provenance"] = json.loads(provenance_path.read_text(encoding="utf-8"))
         (output_dir / "draft_manifest.json").write_text(json.dumps({
             "format": "open-eca-draft/v1", "created_at": datetime.now(timezone.utc).isoformat(),
             "basin": watershed_result.basin, "basin_area_ha": watershed_result.basin_area_ha,
             "h60_elevation": h60_elevation, "field_team": selected_team,
-            "inputs": str(inputs_gpkg),
+            "inputs": str(inputs_gpkg), "dem": dem_details,
         }, indent=2) + "\n", encoding="utf-8")
         return DraftResult(watershed_result.basin, watershed_result.basin_area_ha, h60_elevation, output_gpkg, report_dir, selected_team)
     finally:

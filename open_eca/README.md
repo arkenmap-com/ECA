@@ -122,8 +122,10 @@ python3 -m webapp.app
 Then open <http://127.0.0.1:8000>. The app searches the BC Freshwater Atlas
 for the watershed boundary, accepts a catalogue cache and recovery curves, and
 can include extra local vector layers as ECA-opening or context-only inputs.
-This streamlined web mode intentionally omits the DEM/H60 split and reports
-ECA for the entire selected watershed. Each completed run has an embedded
-dashboard plus GeoPackage and CSV downloads. See
+The default web mode automatically clips NRCan's open, Canada-wide 30 m MRDEM
+terrain model and activates the same H60 Above/Below split used by the
+command-line workflow. An uploaded GeoTIFF can override it, or H60 can be
+disabled explicitly. Each completed run has an embedded dashboard plus
+GeoPackage, CSV, clipped-DEM, and DEM-provenance downloads. See
 [`webapp/README.md`](../webapp/README.md) for the deployment and data-handling
 notes.

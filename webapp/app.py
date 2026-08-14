@@ -17,10 +17,13 @@ from threading import Lock
 
 from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
+import rasterio
+from rasterio.errors import RasterioError
 
 from open_eca.data_acquisition import acquire_for_watershed
 from open_eca.dashboard import create_dashboard
 from open_eca.draft import AdditionalInput, run_draft
+from open_eca.elevation import acquire_nrcan_dem
 from open_eca.fwa import download_named_watershed, search_named_watersheds
 from open_eca.recovery import load_curves
 
@@ -39,7 +42,11 @@ class Run:
     state: str = "queued"
     stage: str = "Waiting to start"
     live_data: bool = False
+    has_dem: bool = False
+    dem_source: str = "none"
+    dem_label: str | None = None
     basin: str | None = None
+    h60_elevation: float | None = None
     error: str | None = None
 
 
@@ -50,7 +57,7 @@ def _page(title: str, content: str, script: str = "") -> HTMLResponse:
 <style>
 :root{{color-scheme:light;--navy:#163a4d;--teal:#146c70;--paper:#fff;--line:#d7e0e4;--muted:#536570}}
 *{{box-sizing:border-box}}body{{margin:0;background:#f3f6f7;color:#1b2838;font:15px system-ui,-apple-system,sans-serif}}
-header{{padding:18px max(24px,calc((100vw - 1180px)/2));background:var(--navy);color:#fff}}header a{{color:#fff;text-decoration:none}}header strong{{font-size:20px}}main{{max-width:1180px;margin:28px auto;padding:0 24px}}.card{{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:24px;box-shadow:0 1px 2px #163a4d0d}}h1{{margin:0 0 8px;font-size:28px}}h2{{font-size:18px;margin:28px 0 10px}}p{{line-height:1.5}}.muted{{color:var(--muted)}}.grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}label{{display:block;font-weight:650;margin:0 0 6px}}input,select{{width:100%;padding:9px;border:1px solid #aebfc6;border-radius:5px;background:white;font:inherit}}input[type=radio]{{width:auto}}.field{{margin:0 0 16px}}.help{{font-size:12px;color:var(--muted);margin:5px 0 0}}button,.button{{display:inline-block;border:0;border-radius:5px;background:var(--teal);color:#fff;padding:10px 14px;font:inherit;font-weight:650;cursor:pointer;text-decoration:none}}button.secondary,.button.secondary{{background:#fff;color:var(--navy);border:1px solid #9aafb7}}.source-choice{{display:flex;gap:20px;margin:10px 0 18px}}.source-choice label{{font-weight:500}}.additional{{border-top:1px solid var(--line);margin-top:12px;padding-top:16px}}.additional-row{{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr .7fr auto;gap:10px;align-items:end;margin:10px 0}}.additional-row label{{font-size:12px}}.error{{background:#fff0f0;border:1px solid #e3a5a5;color:#852020;padding:12px;border-radius:5px}}.status{{padding:10px 12px;border-radius:5px;background:#e8f2f3;color:#115e61;font-weight:650}}.downloads{{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}}iframe{{width:100%;height:760px;border:1px solid var(--line);border-radius:6px;background:#fff}}[hidden]{{display:none!important}}@media(max-width:760px){{.grid,.additional-row{{grid-template-columns:1fr}}.additional-row button{{width:max-content}}}}
+header{{padding:18px max(24px,calc((100vw - 1180px)/2));background:var(--navy);color:#fff}}header a{{color:#fff;text-decoration:none}}header strong{{font-size:20px}}main{{max-width:1180px;margin:28px auto;padding:0 24px}}.card{{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:24px;box-shadow:0 1px 2px #163a4d0d}}h1{{margin:0 0 8px;font-size:28px}}h2{{font-size:18px;margin:28px 0 10px}}p{{line-height:1.5}}.muted{{color:var(--muted)}}.grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}label{{display:block;font-weight:650;margin:0 0 6px}}input,select{{width:100%;padding:9px;border:1px solid #aebfc6;border-radius:5px;background:white;font:inherit}}input[type=radio]{{width:auto}}.field{{margin:0 0 16px}}.help{{font-size:12px;color:var(--muted);margin:5px 0 0}}button,.button{{display:inline-block;border:0;border-radius:5px;background:var(--teal);color:#fff;padding:10px 14px;font:inherit;font-weight:650;cursor:pointer;text-decoration:none}}button.secondary,.button.secondary{{background:#fff;color:var(--navy);border:1px solid #9aafb7}}.source-choice{{display:flex;flex-wrap:wrap;gap:20px;margin:10px 0 18px}}.source-choice label{{font-weight:500}}.additional{{border-top:1px solid var(--line);margin-top:12px;padding-top:16px}}.additional-row{{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr .7fr auto;gap:10px;align-items:end;margin:10px 0}}.additional-row label{{font-size:12px}}.error{{background:#fff0f0;border:1px solid #e3a5a5;color:#852020;padding:12px;border-radius:5px}}.status{{padding:10px 12px;border-radius:5px;background:#e8f2f3;color:#115e61;font-weight:650}}.downloads{{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}}iframe{{width:100%;height:760px;border:1px solid var(--line);border-radius:6px;background:#fff}}[hidden]{{display:none!important}}@media(max-width:760px){{.grid,.additional-row{{grid-template-columns:1fr}}.additional-row button{{width:max-content}}}}
 .notice{{background:#fff8e6;border:1px solid #e2c46d;color:#654d0b;padding:10px 12px;border-radius:5px}}
 </style></head><body><header><a href="/"><strong>Open ECA</strong> <span>Draft analysis workspace</span></a></header><main>{content}</main>{script}</body></html>"""
     )
@@ -63,12 +70,14 @@ def _home() -> HTMLResponse:
 <form action="/runs" method="post" enctype="multipart/form-data"><div class="grid">
 <div class="field"><label for="fwa-search">Freshwater Atlas watershed</label><input id="fwa-search" type="search" placeholder="e.g. Falls Creek" autocomplete="off"><p class="help">Search the BC Freshwater Atlas, then select the exact named watershed. Names are not always unique.</p><button id="find-watersheds" class="secondary" type="button">Find watersheds</button><div id="fwa-results" class="help" aria-live="polite"></div><input id="fwa-id" name="fwa_id" type="hidden" required></div>
 <div class="field"><label>Analysis data</label><div class="source-choice"><label><input name="data_source" type="radio" value="bc_live" checked> Live BC data</label><label><input name="data_source" type="radio" value="upload"> Prepared cache</label></div><div id="inputs-field" hidden><label for="inputs">Catalogue input cache</label><input id="inputs" name="inputs" type="file" accept=".gpkg"><p class="help">GeoPackage containing VRI openings and BEC zones, plus any standard source layers.</p></div><p id="live-help" class="help">Downloads current, watershed-scoped layers from BC OpenMaps. A provenance manifest records the source snapshot.</p></div>
+<div class="field"><label>Digital elevation model</label><div class="source-choice"><label><input name="dem_source" type="radio" value="auto" checked> Automatic NRCan 30 m</label><label><input name="dem_source" type="radio" value="upload"> Upload GeoTIFF</label><label><input name="dem_source" type="radio" value="none"> No H60 split</label></div><p id="auto-dem-help" class="help">Automatically streams the current NRCan MRDEM terrain model, clips it to the selected watershed, and records source provenance.</p><div id="dem-field" hidden><label for="dem">Georeferenced GeoTIFF</label><input id="dem" name="dem" type="file" accept=".tif,.tiff,image/tiff"><p class="help">The raster must cover the watershed, include a CRS, and store elevations in metres.</p></div><p id="no-dem-help" class="help" hidden>Results will use “Entire Watershed” without H60 Above/Below zones.</p></div>
 <div class="field"><label>Recovery curves</label><div class="source-choice"><label><input name="curve_source" type="radio" value="calibrated" checked> Calibrated Kootenay curves</label><label><input name="curve_source" type="radio" value="test"> Synthetic test preset</label><label><input name="curve_source" type="radio" value="upload"> Upload curves</label></div><p id="calibrated-curves-help" class="help">Local height × crown-closure thresholds by BCTS Kootenay field team and BEC zone. <a href="/calibrated-recovery-curves.xlsx">Download workbook</a>.</p><p id="test-curves-help" class="notice" hidden><strong>Testing only.</strong> These province-wide synthetic curves are not calibrated or suitable for operational decisions. <a href="/test-recovery-curves.json">View JSON</a>.</p><div id="curves-field" hidden><label for="curves">Curve workbook or JSON</label><input id="curves" name="curves" type="file" accept=".xlsx,.json"></div></div>
 <div class="field"><label for="field_team">Field team</label><input id="field_team" name="field_team" list="calibrated-field-teams" placeholder="Select or enter the exact curve set" required><datalist id="calibrated-field-teams"><option value="Arrow"><option value="Boundary"><option value="Cranbrook"><option value="Invermere"><option value="Kootenay Lake"></datalist><p class="help">The calibrated workbook covers Arrow, Boundary, Cranbrook, Invermere, and Kootenay Lake. Uploaded curves use their workbook sheet or JSON team name.</p></div>
-</div><p class="help">This streamlined mode does not use a DEM: ECA is reported for the entire selected watershed, without an H60 elevation split.</p><section class="additional"><h2>Additional inputs</h2><p class="muted">Add local vector layers without changing the catalogue cache. “ECA opening” adds uncovered area to the ECA calculation; “Context only” is retained as other openings.</p><div id="additional-inputs"></div><button class="secondary" id="add-input" type="button">Add input layer</button></section><p><button type="submit">Run ECA draft</button></p></form></section>""",
+</div><section class="additional"><h2>Additional inputs</h2><p class="muted">Add local vector layers without changing the catalogue cache. “ECA opening” adds uncovered area to the ECA calculation; “Context only” is retained as other openings.</p><div id="additional-inputs"></div><button class="secondary" id="add-input" type="button">Add input layer</button></section><p><button type="submit">Run ECA draft</button></p></form></section>""",
         """<script>
 const list=document.querySelector('#additional-inputs');document.querySelector('#add-input').addEventListener('click',()=>{const row=document.createElement('div');row.className='additional-row';row.innerHTML=`<div><label>Vector layer<input type="file" name="additional_files" accept=".gpkg,.geojson,.json,.shp" required></label></div><div><label>Source label<input name="additional_labels" placeholder="Local harvest block" required></label></div><div><label>Role<select name="additional_roles"><option value="opening">ECA opening</option><option value="other">Context only</option></select></label></div><div><label>GeoPackage layer <span class="muted">(optional)</span><input name="additional_layers" placeholder="layer_name"></label></div><div><label>Buffer (m) <span class="muted">(optional)</span><input name="additional_buffers" type="number" min="0" step="0.1" placeholder="0"></label></div><button class="secondary" type="button">Remove</button>`;row.querySelector('button').addEventListener('click',()=>row.remove());list.append(row)});
 const inputsField=document.querySelector('#inputs-field'),inputs=document.querySelector('#inputs'),liveHelp=document.querySelector('#live-help');document.querySelectorAll('input[name=data_source]').forEach(radio=>radio.addEventListener('change',()=>{if(!radio.checked)return;const upload=radio.value==='upload';inputsField.hidden=!upload;liveHelp.hidden=upload;inputs.required=upload}));
+const demField=document.querySelector('#dem-field'),dem=document.querySelector('#dem'),autoDemHelp=document.querySelector('#auto-dem-help'),noDemHelp=document.querySelector('#no-dem-help');document.querySelectorAll('input[name=dem_source]').forEach(radio=>radio.addEventListener('change',()=>{if(!radio.checked)return;const upload=radio.value==='upload';demField.hidden=!upload;dem.required=upload;autoDemHelp.hidden=radio.value!=='auto';noDemHelp.hidden=radio.value!=='none'}));
 const curvesField=document.querySelector('#curves-field'),curves=document.querySelector('#curves'),testCurvesHelp=document.querySelector('#test-curves-help'),calibratedCurvesHelp=document.querySelector('#calibrated-curves-help'),fieldTeam=document.querySelector('#field_team');document.querySelectorAll('input[name=curve_source]').forEach(radio=>radio.addEventListener('change',()=>{if(!radio.checked)return;const upload=radio.value==='upload',test=radio.value==='test';curvesField.hidden=!upload;testCurvesHelp.hidden=!test;calibratedCurvesHelp.hidden=radio.value!=='calibrated';curves.required=upload;if(test)fieldTeam.value='Synthetic Test';else if(fieldTeam.value==='Synthetic Test')fieldTeam.value=''}));
 const fwaSearch=document.querySelector('#fwa-search'),fwaResults=document.querySelector('#fwa-results'),fwaId=document.querySelector('#fwa-id');document.querySelector('#find-watersheds').addEventListener('click',async()=>{const query=fwaSearch.value.trim();if(query.length<2){fwaResults.textContent='Enter at least two characters.';return}fwaResults.textContent='Searching the BC Freshwater Atlas…';try{const response=await fetch(`/fwa/search?q=${encodeURIComponent(query)}`);const payload=await response.json();if(!response.ok)throw new Error(payload.detail||'Search failed');fwaResults.replaceChildren();if(!payload.length){fwaResults.textContent='No named watersheds found.';return}payload.forEach(item=>{const label=document.createElement('label'),radio=document.createElement('input');radio.type='radio';radio.name='fwa-choice';radio.value=item.named_watershed_id;radio.addEventListener('change',()=>{fwaId.value=item.named_watershed_id});label.append(radio,` ${item.name} — ID ${item.named_watershed_id}${item.area_ha===null?'':`, ${item.area_ha.toLocaleString(undefined,{maximumFractionDigits:0})} ha`}`);fwaResults.append(label)})}catch(error){fwaResults.textContent=error.message}});
 </script>""",
@@ -102,6 +111,18 @@ async def _save_upload(upload: UploadFile, directory: Path, prefix: str, max_byt
     return destination
 
 
+def _validate_dem(path: Path) -> None:
+    """Reject files that cannot provide georeferenced elevation pixels."""
+    try:
+        with rasterio.open(path) as source:
+            if source.count < 1 or source.width < 1 or source.height < 1:
+                raise ValueError("The DEM contains no raster cells.")
+            if source.crs is None:
+                raise ValueError("The DEM has no coordinate reference system.")
+    except RasterioError as error:
+        raise ValueError("The DEM is not a readable GeoTIFF.") from error
+
+
 def create_app(data_dir: Path | None = None) -> FastAPI:
     """Create the application; ``data_dir`` is injectable for tests and deployments."""
     root = (data_dir or Path(os.environ.get("ECA_DATA_DIR", "webapp_data"))).resolve()
@@ -119,24 +140,32 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             raise HTTPException(status_code=404, detail="Analysis run not found.")
         return run
 
-    def execute(run: Run, fwa_id: int, inputs: Path | None, curves: Path, field_team: str | None, extras: tuple[AdditionalInput, ...]) -> None:
+    def execute(run: Run, fwa_id: int, inputs: Path | None, dem: Path | None, curves: Path, field_team: str | None, extras: tuple[AdditionalInput, ...]) -> None:
         with analysis_lock:
             run.state = "running"
             try:
                 run.stage = "Downloading Freshwater Atlas watershed"
                 watershed_path = run.directory / "uploads" / "fwa_watershed.geojson"
                 download_named_watershed(fwa_id, watershed_path)
+                if run.dem_source == "auto":
+                    run.stage = "Acquiring open NRCan elevation data"
+                    acquired_dem = acquire_nrcan_dem(
+                        watershed_path, run.directory / "inputs" / "nrcan_mrdem.tif",
+                    )
+                    dem = acquired_dem.path
+                    run.dem_label = acquired_dem.source.title
                 if inputs is None:
                     run.stage = "Downloading current BC warehouse layers"
                     inputs = acquire_for_watershed(
                         watershed_path,
                         run.directory / "inputs" / "bc_catalogue_inputs.gpkg",
                     )
-                run.stage = "Calculating ECA draft"
-                result = run_draft(watershed_path, "GNIS_NAME", "GNIS_NAME", inputs, None, load_curves(curves), run.directory / "output", field_team, extras)
+                run.stage = "Calculating ECA draft and H60 split" if dem else "Calculating ECA draft"
+                result = run_draft(watershed_path, "GNIS_NAME", "GNIS_NAME", inputs, dem, load_curves(curves), run.directory / "output", field_team, extras)
                 run.stage = "Building dashboard"
                 create_dashboard(result.geopackage, run.directory / "output" / "eca_dashboard.html")
                 run.basin = result.basin
+                run.h60_elevation = result.h60_elevation
                 run.stage = "Complete"
                 run.state = "complete"
             except Exception as error:  # Show a concise diagnostic on the result page.
@@ -182,6 +211,8 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         fwa_id: int = Form(...),
         data_source: str = Form("bc_live"),
         inputs: UploadFile | None = File(default=None),
+        dem_source: str = Form("auto"),
+        dem: UploadFile | None = File(default=None),
         curve_source: str = Form("calibrated"),
         curves: UploadFile | None = File(default=None),
         field_team: str = Form(""),
@@ -193,12 +224,18 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     ) -> RedirectResponse:
         if data_source not in {"bc_live", "upload"}:
             raise HTTPException(status_code=422, detail="Choose live BC data or a prepared cache.")
+        if dem_source not in {"auto", "upload", "none"}:
+            raise HTTPException(status_code=422, detail="Choose automatic, uploaded, or no DEM.")
         if curve_source not in {"calibrated", "test", "upload"}:
             raise HTTPException(status_code=422, detail="Choose calibrated, synthetic test, or uploaded recovery curves.")
         if curve_source == "upload" and (curves is None or not curves.filename):
             raise HTTPException(status_code=422, detail="Upload a recovery-curve workbook or JSON file.")
         if data_source == "upload" and (inputs is None or not inputs.filename):
             raise HTTPException(status_code=422, detail="Upload a catalogue input cache for prepared-cache mode.")
+        if dem_source == "upload" and (dem is None or not dem.filename):
+            raise HTTPException(status_code=422, detail="Upload a GeoTIFF or choose automatic NRCan elevation data.")
+        if dem_source == "upload" and dem is not None and dem.filename and Path(dem.filename).suffix.lower() not in {".tif", ".tiff"}:
+            raise HTTPException(status_code=422, detail="The DEM must be a georeferenced GeoTIFF (.tif or .tiff).")
         if not field_team.strip():
             raise HTTPException(status_code=422, detail="Field team is required to select the correct recovery curve.")
         if curve_source == "calibrated" and field_team.strip().casefold() not in {team.casefold() for team in CALIBRATED_FIELD_TEAMS}:
@@ -214,6 +251,15 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         uploads = directory / "uploads"
         uploads.mkdir(parents=True)
         saved_inputs = await _save_upload(inputs, uploads, "inputs", max_upload_bytes) if data_source == "upload" and inputs is not None else None
+        saved_dem = await _save_upload(dem, uploads, "dem", max_upload_bytes) if dem_source == "upload" and dem is not None and dem.filename else None
+        if dem_source != "upload" and dem is not None:
+            await dem.close()
+        if saved_dem is not None:
+            try:
+                _validate_dem(saved_dem)
+            except ValueError as error:
+                saved_dem.unlink(missing_ok=True)
+                raise HTTPException(status_code=422, detail=str(error)) from error
         saved_curves = await _save_upload(curves, uploads, "curves", max_upload_bytes) if curve_source == "upload" and curves is not None else (TEST_CURVES if curve_source == "test" else CALIBRATED_CURVES)
         extras: list[AdditionalInput] = []
         for index, upload in enumerate(additional_files):
@@ -223,10 +269,13 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             except ValueError as error:
                 raise HTTPException(status_code=422, detail="Additional input buffers must be numbers.") from error
             extras.append(AdditionalInput(path, additional_labels[index].strip(), additional_roles[index], additional_layers[index].strip() or None, True, buffer_m))
-        run = Run(identifier, directory, live_data=data_source == "bc_live")
+        run = Run(
+            identifier, directory, live_data=data_source == "bc_live", has_dem=dem_source != "none",
+            dem_source=dem_source, dem_label="Uploaded GeoTIFF" if dem_source == "upload" else None,
+        )
         with lock:
             runs[identifier] = run
-        background_tasks.add_task(execute, run, fwa_id, saved_inputs, saved_curves, field_team.strip() or None, tuple(extras))
+        background_tasks.add_task(execute, run, fwa_id, saved_inputs, saved_dem, saved_curves, field_team.strip() or None, tuple(extras))
         return RedirectResponse(f"/runs/{identifier}", status_code=303)
 
     @app.get("/runs/{identifier}", response_class=HTMLResponse)
@@ -239,15 +288,18 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         source_downloads = ""
         if run.live_data:
             source_downloads = f'<a class="button secondary" href="/runs/{identifier}/files/inputs">Download source snapshot</a><a class="button secondary" href="/runs/{identifier}/files/provenance">Download provenance</a>'
+        dem_download = f'<a class="button secondary" href="/runs/{identifier}/files/dem">Download clipped DEM</a>' if run.has_dem else ""
+        h60_summary = f'<p class="muted">H60 elevation: {run.h60_elevation:,.1f} m (40th percentile of valid watershed DEM cells). Source: {html.escape(run.dem_label or "DEM")}.</p>' if run.h60_elevation is not None else '<p class="muted">No DEM supplied; results represent the entire watershed without an H60 split.</p>'
+        dem_provenance = f'<a class="button secondary" href="/runs/{identifier}/files/dem-provenance">Download DEM provenance</a>' if run.dem_source == "auto" else ""
         return _page(
             run.basin or "ECA draft",
-            f'''<section class="card"><h1>{html.escape(run.basin or "ECA draft")} — completed</h1><p class="status">Draft output is ready.</p><div class="downloads"><a class="button" href="/runs/{identifier}/files/dashboard">Open dashboard</a><a class="button secondary" href="/runs/{identifier}/files/geopackage">Download GeoPackage</a><a class="button secondary" href="/runs/{identifier}/files/summary">Download ECA summary</a><a class="button secondary" href="/runs/{identifier}/files/openings">Download opening records</a>{source_downloads}</div><iframe title="Interactive ECA dashboard" src="/runs/{identifier}/files/dashboard"></iframe></section>''',
+            f'''<section class="card"><h1>{html.escape(run.basin or "ECA draft")} — completed</h1><p class="status">Draft output is ready.</p>{h60_summary}<div class="downloads"><a class="button" href="/runs/{identifier}/files/dashboard">Open dashboard</a><a class="button secondary" href="/runs/{identifier}/files/geopackage">Download GeoPackage</a><a class="button secondary" href="/runs/{identifier}/files/summary">Download ECA summary</a><a class="button secondary" href="/runs/{identifier}/files/openings">Download opening records</a>{dem_download}{dem_provenance}{source_downloads}</div><iframe title="Interactive ECA dashboard" src="/runs/{identifier}/files/dashboard"></iframe></section>''',
         )
 
     @app.get("/runs/{identifier}/status")
     def run_status(identifier: str) -> JSONResponse:
         run = get_run(identifier)
-        return JSONResponse({"id": run.identifier, "state": run.state, "stage": run.stage, "live_data": run.live_data, "basin": run.basin, "error": run.error})
+        return JSONResponse({"id": run.identifier, "state": run.state, "stage": run.stage, "live_data": run.live_data, "has_dem": run.has_dem, "dem_source": run.dem_source, "dem_label": run.dem_label, "h60_elevation": run.h60_elevation, "basin": run.basin, "error": run.error})
 
     @app.get("/runs/{identifier}/files/{file_kind}")
     def download(identifier: str, file_kind: str) -> FileResponse:
@@ -257,6 +309,8 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             "geopackage": (run.directory / "output" / "ECA_Draft.gpkg", "application/geopackage+sqlite3", "ECA_Draft.gpkg"),
             "summary": (run.directory / "output" / "reports" / "eca_summary.csv", "text/csv", "eca_summary.csv"),
             "openings": (run.directory / "output" / "reports" / "openings_recovery.csv", "text/csv", "openings_recovery.csv"),
+            "dem": (run.directory / "output" / "clipped_dem.tif", "image/tiff", "clipped_dem.tif"),
+            "dem-provenance": (run.directory / "inputs" / "nrcan_mrdem.provenance.json", "application/json", "nrcan_mrdem.provenance.json"),
             "inputs": (run.directory / "inputs" / "bc_catalogue_inputs.gpkg", "application/geopackage+sqlite3", "bc_catalogue_inputs.gpkg"),
             "provenance": (run.directory / "inputs" / "bc_catalogue_inputs.provenance.json", "application/json", "bc_catalogue_inputs.provenance.json"),
         }

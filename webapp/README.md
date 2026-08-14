@@ -19,8 +19,8 @@ Open <http://127.0.0.1:8000>. Search the BC Freshwater Atlas by watershed
 name and select the exact `NAMED_WATERSHED_ID` result. In the default **Live
 BC data** mode, the app downloads that boundary and the standard analysis
 layers directly from public BC OpenMaps WFS services backed by the BC
-Geographic Warehouse. Use the bundled synthetic recovery curves for a test run,
-or supply an operational curve file and matching field-team name, then
+Geographic Warehouse. Use the bundled calibrated Kootenay recovery curves with
+the matching field-team name, or use the synthetic curves for a test run, then
 download the resulting GeoPackage and reports or use the interactive map
 dashboard. Live acquisition requires `ogr2ogr` from GDAL (QGIS includes it).
 
@@ -40,10 +40,19 @@ polygons are not requested because BC currently exposes that dataset through
 the catalogue custom-download service rather than a public WFS endpoint; they
 can still be supplied through a prepared cache.
 
-This streamlined web workflow deliberately does not use a DEM. It reports ECA
-for the complete watershed and labels the elevation zone `Entire Watershed`.
-It does not calculate or report an H60 elevation split. Use the command-line
-or QGIS workflow with a DEM when H60 Above/Below results are required.
+By default the app discovers NRCan's current 30 m Medium Resolution Digital
+Elevation Model terrain asset through its public STAC catalogue, streams only
+the selected watershed, and calculates H60 from the 40th percentile of valid
+cells. It records the source asset, catalogue record, licence, timestamp, CRS,
+and checksum in a downloadable provenance file. The consistent Canada-wide
+MRDEM is preferred over the higher-resolution HRDEM mosaic because H60 requires
+complete watershed coverage and HRDEM remains project-dependent.
+
+You can instead upload a georeferenced GeoTIFF covering the watershed or choose
+**No H60 split**. Uploaded elevations should be in metres. With a DEM, the app
+splits openings into `H60 Above` and `H60 Below` and makes the clipped raster
+available with the completed run. Without one, it labels the elevation zone
+`Entire Watershed`.
 
 ## Additional inputs
 
