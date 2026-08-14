@@ -36,6 +36,16 @@ class DataAcquisitionTests(unittest.TestCase):
             "FIRE_DATE >= '2006-08-13'",
         )
 
+    def test_all_relative_dates_in_compound_filter_are_resolved(self):
+        expression = (
+            "END_DATE >= CURRENT_TIMESTAMP - 7305 OR "
+            "DENUDATION_DATE >= CURRENT_TIMESTAMP - 7305"
+        )
+        self.assertEqual(
+            _resolve_relative_dates(expression, date(2026, 8, 13)),
+            "END_DATE >= '2006-08-13' OR DENUDATION_DATE >= '2006-08-13'",
+        )
+
     def test_long_simple_in_filter_is_split_into_disjoint_requests(self):
         filters = _split_large_in_filter("CODE IN ('A', 'B', 'C', 'D', 'E')", chunk_size=2)
         self.assertEqual(filters, ["CODE IN ('A', 'B')", "CODE IN ('C', 'D')", "CODE IN ('E')"])
@@ -52,8 +62,15 @@ class DataAcquisitionTests(unittest.TestCase):
     def test_starter_configuration_loads(self):
         sources = load_sources(Path("open_eca/config/bc_catalogue_layers.json"))
         self.assertIn("vri_openings", [source.name for source in sources])
+        self.assertIn("results_openings", [source.name for source in sources])
         self.assertIn("bec_zones", [source.name for source in sources])
         self.assertTrue(next(source for source in sources if source.name == "vri_openings").catalogue_record)
+        results = next(source for source in sources if source.name == "results_openings")
+        self.assertEqual(results.type_name, "pub:WHSE_FOREST_VEGETATION.RSLT_OPENING_SVW")
+        self.assertIn("OPENING_STATUS_CODE <> 'RET'", results.where)
+        self.assertIn("CURRENT_TIMESTAMP - 7305", results.where)
+        forest_cover = next(source for source in sources if source.name == "results_forest_cover")
+        self.assertIn("56ac43a7-724a-4f01-b193-d5f9a16ef0a8", forest_cover.catalogue_record)
 
     def test_watershed_bbox_projects_to_bc_albers_and_adds_padding(self):
         with tempfile.TemporaryDirectory() as directory:

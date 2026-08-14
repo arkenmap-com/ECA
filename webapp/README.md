@@ -38,7 +38,12 @@ timestamp, bounding box, and SHA-256 checksum.
 The public live configuration includes current pest polygons. Historic pest
 polygons are not requested because BC currently exposes that dataset through
 the catalogue custom-download service rather than a public WFS endpoint; they
-can still be supplied through a prepared cache.
+can still be supplied through a prepared cache. Live acquisition includes the
+authoritative RESULTS Openings view as a bounded gap check: mapped,
+non-retired openings disturbed within 20 years are considered only outside
+the higher-priority VRI, RESULTS forest-cover, and FTA geometry. Any included
+remainder is clearly labelled and assigned zero recovery for conservative
+manual review; it never replaces higher-quality source geometry.
 
 By default the app discovers NRCan's current 30 m Medium Resolution Digital
 Elevation Model terrain asset through its public STAC catalogue, streams only

@@ -34,6 +34,17 @@ class OpeningTests(unittest.TestCase):
         self.assertAlmostEqual(merged.geometry.area.sum(), 150)
         self.assertAlmostEqual(merged.loc[merged["ECAsrc"] == "Wildfire", "Hectares"].iloc[0], 0.005)
 
+    def test_results_opening_boundary_is_only_a_spatial_gap_filler(self):
+        base = merge_base_openings(frame([1], [box(0, 0, 10, 10)]))
+        results_boundary = frame([2], [box(5, 0, 15, 10)])
+        merged = append_lower_priority(
+            base, [(results_boundary, "RESULTS Openings (recent unmatched)")],
+        )
+        result = merged.loc[merged["ECAsrc"] == "RESULTS Openings (recent unmatched)"]
+        self.assertAlmostEqual(result.geometry.area.sum(), 50)
+        self.assertTrue((result["CROWN_CLOSURE"] == 0).all())
+        self.assertTrue((result["PROJ_HEIGHT_1"] == 0).all())
+
     def test_empty_lower_priority_layer_preserves_recovery_fields(self):
         vri = gpd.GeoDataFrame(
             {"OPENING_ID": [], "CROWN_CLOSURE": [], "PROJ_HEIGHT_1": []},

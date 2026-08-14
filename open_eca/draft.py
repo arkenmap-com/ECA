@@ -203,7 +203,7 @@ def run_draft(
             h60_elevation = h60.percentile_40th
 
         names = [
-            "vri_openings", "results_forest_cover", "fta_pending_blocks", "consolidated_cut_blocks",
+            "vri_openings", "results_forest_cover", "results_openings", "fta_pending_blocks", "consolidated_cut_blocks",
             "wildfire_current", "wildfire_20_years", "dra_minor_roads", "ften_roads", "dra_major_roads",
             "railways", "pipelines", "natural_openings", "vri_water", "results_pas", "private_lands",
             "historic_wildfire", "current_pest", "historic_pest", "bec_zones", "field_teams",
@@ -219,6 +219,7 @@ def run_draft(
         )
         lower: list[tuple[gpd.GeoDataFrame, str] | tuple[gpd.GeoDataFrame, str, bool]] = [
             (clipped[name], label) for name, label in (
+                ("results_openings", "RESULTS Openings (recent unmatched)"),
                 ("consolidated_cut_blocks", "Consolidated Cutblocks"),
                 ("wildfire_current", "Current Wildfire"),
                 ("wildfire_20_years", "Wildfire Past Twenty Years"),

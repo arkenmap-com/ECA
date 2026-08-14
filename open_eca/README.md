@@ -63,9 +63,15 @@ tables before analysis.
 ## Opening assembly
 
 `open_eca.openings` contains the reusable workflow operations that merge the
-VRI, RESULTS, and FTA opening sources; add lower-priority sources only outside
-already-counted openings; split by H60 and sub-basin; and calculate ECA-ready
-hectare fields.
+VRI, RESULTS forest-cover, and FTA opening sources; add lower-priority sources
+only outside already-counted openings; split by H60 and sub-basin; and
+calculate ECA-ready hectare fields. The public RESULTS Openings administrative
+boundary is also acquired as a conservative gap check. Only mapped,
+non-retired openings disturbed in the past 20 years are requested. Their
+geometry is added at zero recovery only where it is not already represented by
+VRI, RESULTS forest cover, or FTA, so gross opening boundaries cannot replace
+better vegetation or tenure geometry. These records are labelled `RESULTS
+Openings (recent unmatched)` for review.
 
 ## Complete draft tool
 

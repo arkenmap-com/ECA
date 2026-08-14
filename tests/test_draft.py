@@ -33,6 +33,9 @@ class DraftTests(unittest.TestCase):
             gpd.GeoDataFrame(
                 {"ZONE": ["ICH"], "SUBZONE": ["xx"]}, geometry=[box(0, 0, 20, 20)], crs="EPSG:3005",
             ).to_file(inputs_path, layer="bec_zones", driver="GPKG", mode="a")
+            gpd.GeoDataFrame(
+                {"OPENING_ID": [2]}, geometry=[box(5, 0, 15, 20)], crs="EPSG:3005",
+            ).to_file(inputs_path, layer="results_openings", driver="GPKG", mode="a")
             dem_path = root / "dem.tif"
             with rasterio.open(
                 dem_path, "w", driver="GTiff", height=2, width=2, count=1, dtype="float32",
@@ -55,6 +58,9 @@ class DraftTests(unittest.TestCase):
             self.assertAlmostEqual(result.h60_elevation, 220)
             self.assertEqual(set(recovery["Recovery"]), {0, 30})
             self.assertIn("Local harvest", set(recovery["ECAsrc"]))
+            self.assertIn("RESULTS Openings (recent unmatched)", set(recovery["ECAsrc"]))
+            results_gap = recovery.loc[recovery["ECAsrc"] == "RESULTS Openings (recent unmatched)"]
+            self.assertAlmostEqual(results_gap["Hectares"].sum(), 0.01)
             self.assertTrue((result.report_dir / "eca_summary.csv").exists())
 
             no_dem = run_draft(

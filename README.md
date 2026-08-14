@@ -1442,7 +1442,8 @@ Output folder structure:
 | Layer | Source | SDE Path | Processing Step |
 |---|---|---|---|
 | VRI Openings & Burns | BCGW | WHSE_FOREST_VEGETATION.VEG_COMP_LYR_R1_POLY | opening |
-| Results | BCGW | WHSE_FOREST_VEGETATION.RSLT_OPENING_SVW | opening |
+| Results Forest Cover | BCGW | WHSE_FOREST_VEGETATION.RSLT_FOREST_COVER_INV_SVW | opening |
+| RESULTS Openings gap check | BCGW | WHSE_FOREST_VEGETATION.RSLT_OPENING_SVW | opening (recent unmatched remainder only) |
 | FTA Pending Blocks | BCGW | WHSE_FOREST_TENURE.FTEN_CUT_BLOCK_POLY_SVW | opening |
 | DRA Major Roads | BCGW | WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP | transport_18 |
 | DRA Minor Roads | BCGW | WHSE_BASEMAPPING.DRA_DGTL_ROAD_ATLAS_MPAR_SP | transport_8 |
