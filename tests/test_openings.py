@@ -34,6 +34,16 @@ class OpeningTests(unittest.TestCase):
         self.assertAlmostEqual(merged.geometry.area.sum(), 150)
         self.assertAlmostEqual(merged.loc[merged["ECAsrc"] == "Wildfire", "Hectares"].iloc[0], 0.005)
 
+    def test_empty_lower_priority_layer_preserves_recovery_fields(self):
+        vri = gpd.GeoDataFrame(
+            {"OPENING_ID": [], "CROWN_CLOSURE": [], "PROJ_HEIGHT_1": []},
+            geometry=[], crs="EPSG:3005",
+        )
+        empty = gpd.GeoDataFrame(geometry=[], crs="EPSG:3005")
+        merged = append_lower_priority(merge_base_openings(vri), [(empty, "Empty")])
+        self.assertTrue(merged.empty)
+        self.assertTrue({"CROWN_CLOSURE", "PROJ_HEIGHT_1"}.issubset(merged.columns))
+
     def test_splits_openings_by_h60_and_subbasin(self):
         openings = merge_base_openings(frame([1], [box(0, 0, 20, 10)]))
         h60 = gpd.GeoDataFrame(

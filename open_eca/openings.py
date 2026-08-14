@@ -55,8 +55,14 @@ def _erase(features: gpd.GeoDataFrame, erase_features: gpd.GeoDataFrame) -> gpd.
 
 
 def _concat_openings(parts: Iterable[gpd.GeoDataFrame], crs: object) -> gpd.GeoDataFrame:
+    parts = list(parts)
     non_empty = [part for part in parts if not part.empty]
     if not non_empty:
+        # Keep the normalized opening schema for a valid zero-opening result.
+        # A geometry-only frame is later (incorrectly) diagnosed as missing
+        # recovery inputs such as crown closure and projected height.
+        if parts:
+            return parts[0].iloc[0:0].copy()
         return gpd.GeoDataFrame(geometry=[], crs=crs)
     return gpd.GeoDataFrame(pd.concat(non_empty, ignore_index=True), crs=crs)
 
