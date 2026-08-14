@@ -100,7 +100,9 @@ def create_dashboard(draft: Path, output: Path) -> Path:
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const data = __DATA__;
-const map=L.map('map'); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(map);
+const map=L.map('map');
+const streets=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
+const satellite=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community'});
 function escapeHtml(value){const el=document.createElement('div');el.textContent=String(value);return el.innerHTML}
 function popup(p){return Object.entries(p).filter(([,v])=>v!==null && v!==undefined && v!=='' && !Number.isNaN(v)).map(([k,v])=>`<b>${escapeHtml(k)}</b>: ${typeof v==='number'?v.toFixed(2):escapeHtml(v)}`).join('<br>')}
 const boundary=L.geoJSON(data.watershed,{style:{color:'#132f3f',weight:3,fill:false}}).addTo(map);
@@ -120,7 +122,7 @@ function renderOpenings(){const sources=selected('source'), elevations=selected(
 let symbology='recovery';
 document.querySelector('#symbology').addEventListener('change',event=>{symbology=event.target.value;openings.setStyle(openingStyle);legend.update()});
 const initialBounds=boundary.getBounds(); map.fitBounds(initialBounds,{padding:[20,20]}); document.querySelector('#reset-view').addEventListener('click',()=>map.fitBounds(initialBounds,{padding:[20,20]})); renderOpenings();
-L.control.layers({'Watershed':boundary},{'H60 zones':h60,'Recovering openings':openings,'Other openings':other},{collapsed:false}).addTo(map);
+L.control.layers({'Street map':streets,'Satellite imagery':satellite},{'Watershed':boundary,'H60 zones':h60,'Recovering openings':openings,'Other openings':other},{collapsed:false}).addTo(map);
 function legendContent(){if(symbology==='type')return `<b>Opening type</b><br>${data.sources.map(source=>`<span class="swatch" style="background:${typeColour(source)}"></span>${escapeHtml(source)}`).join('<br>')}`;return '<b>Recovery %</b><br><span class="swatch" style="background:#ffffcc"></span>0–19%<br><span class="swatch" style="background:#c2e699"></span>20–39%<br><span class="swatch" style="background:#78c679"></span>40–59%<br><span class="swatch" style="background:#31a354"></span>60–79%<br><span class="swatch" style="background:#006d2c"></span>80–100%'}
 const legend=L.control({position:'bottomleft'});legend.onAdd=function(){this._container=L.DomUtil.create('div','legend');this.update();return this._container};legend.update=function(){if(this._container)this._container.innerHTML=legendContent()};legend.addTo(map);
 </script></body></html>

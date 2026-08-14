@@ -29,3 +29,6 @@ class DashboardTests(unittest.TestCase):
             self.assertIn("Recovery %", text)
             self.assertIn("Opening type", text)
             self.assertIn("leaflet", text)
+            self.assertIn("Satellite imagery", text)
+            self.assertIn("World_Imagery/MapServer/tile", text)
+            self.assertIn("Tiles © Esri", text)
