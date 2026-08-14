@@ -2,7 +2,7 @@
 Opening layer assembly for the ECA Estimate tool.
 
 Handles clipping transport and opening layers, buffering roads,
-merging VRI/Results/FTA, processing LRM blocks, and building the
+merging VRI/Results/FTA and building the
 final consolidated Openings feature class in the output GDB.
 """
 
@@ -12,7 +12,7 @@ import os
 from core.config import (
     FLD_OPENING_ID, FLD_CROWN_CLOSURE, FLD_PROJ_HEIGHT,
     FLD_ECA_SRC, FLD_ECA_SRC_ALT, FLD_ECA_CROWN, FLD_ECA_HEIGHT,
-    FLD_INFO, FLD_OVERRIDE, FLD_HECTARES, FLD_CUTB_SEQ_NBR,
+    FLD_INFO, FLD_OVERRIDE, FLD_HECTARES,
     CLIP_LAYERS_REMOVE, LOWER_PRIORITY_OPENINGS, LAYERS_WITH_ECA_SRC,
 )
 from core.workspace import (
@@ -124,12 +124,10 @@ def clip_transport_layers(layer_configs, connections, watershed, scratch_gdb, ou
 def buffer_transport(list_list, scratch_gdb):
     """Create 8m (minor) and 18m (major) buffers around transport lines.
 
-    Returns a list of buffer layer paths (excluding BCTS Proposed Roads)
-    and the BCTS proposed roads buffer path separately.
+    Returns a list of buffered transport layer paths.
     """
     buffer_distances = [4, 9]  # half-widths: 8m/2=4, 18m/2=9
     buffer_layers = []
-    bcts_path = None
 
     for idx, layers in enumerate(list_list):
         dist = buffer_distances[idx]
@@ -141,12 +139,9 @@ def buffer_transport(list_list, scratch_gdb):
             arcpy.AddMessage(f"Buffering {layer_name} at {dist * 2}m")
             arcpy.analysis.Buffer(layer_path, buff_path, dist, "FULL", "ROUND", "ALL")
 
-            if "BCTSProposedRoads" in layer_name:
-                bcts_path = buff_path
-            else:
-                buffer_layers.append(buff_path)
+            buffer_layers.append(buff_path)
 
-    return buffer_layers, bcts_path
+    return buffer_layers
 
 
 def merge_transport(buffer_layers, watershed, scratch_gdb):
@@ -385,225 +380,22 @@ def merge_vri_results_fta(scratch_gdb):
     cleanup_memory(intermediates)
 
 
-def setup_lrm_blocks(scratch_gdb, layer_configs=None):
-    """Process LRM blocks and standard units.
-
-    For each block type (ADV, PP, Recent): if a block has corresponding
-    productive SUs, use the SU geometries instead of the block geometry.
-    Appends everything to a unified LRM_Blocks feature class, then erases
-    from the existing mergeFinal openings.
-
-    If *layer_configs* is provided, derives block/SU pairs from the
-    Companion_Layer column.
-    """
+def promote_base_openings(scratch_gdb):
+    """Prepare the VRI/Results/FTA merge for the remaining opening sources."""
     merge_final = os.path.join(scratch_gdb, "mergeFinal")
-
-    # Build block/SU pairs from spreadsheet or use defaults
-    if layer_configs:
-        block_su_pairs = []
-        seen_pairs = set()
-        for row in layer_configs:
-            if row.get("Processing_Step") != "opening":
-                continue
-
-            short_name = row.get("Short_Name")
-            if not short_name or not str(short_name).startswith("LRM"):
-                continue
-
-            companion = row.get("Companion_Layer")
-            layer_name = str(row.get("Layer_Name", "")).upper()
-            short_name_upper = str(short_name).upper()
-
-            # Only treat true block rows as primary LRM sources.
-            # SU-only rows can otherwise be appended twice (as block + companion flow).
-            is_block_row = bool(companion) or ("BLOCK" in short_name_upper) or ("BLOCK" in layer_name)
-            if not is_block_row:
-                continue
-
-            block_name = f"Clip_{short_name}"
-            su_name = f"Clip_{companion}" if companion else None
-            label = short_name
-            pair = (block_name, su_name, label)
-            if pair not in seen_pairs:
-                seen_pairs.add(pair)
-                block_su_pairs.append(pair)
-
-        # Keep legacy behavior if no LRM rows were found in the spreadsheet.
-        if not block_su_pairs:
-            block_su_pairs = [
-                ("Clip_LRMADVBlocks", "Clip_LRMADVPRODSU", "ADV"),
-                ("Clip_LRMPPBlocks", "Clip_LRMPPPRODSU", "PP"),
-                ("Clip_LRMBlocksRecent", "Clip_LRMPRODSURecent", "Recent"),
-            ]
-    else:
-        block_su_pairs = [
-            ("Clip_LRMADVBlocks", "Clip_LRMADVPRODSU", "ADV"),
-            ("Clip_LRMPPBlocks", "Clip_LRMPPPRODSU", "PP"),
-            ("Clip_LRMBlocksRecent", "Clip_LRMPRODSURecent", "Recent"),
-        ]
-
-    def _lrm_state_priority(text):
-        """Return precedence rank for LRM states (lower is higher priority)."""
-        value = str(text).upper()
-        if "RECENT" in value:
-            return 0
-        if "ADV" in value:
-            return 1
-        if "PP" in value:
-            return 2
-        return 99
-
-    # Ensure deterministic precedence regardless of spreadsheet row order.
-    # Recent SU wins over ADV/PP, then ADV over PP.
-    block_su_pairs.sort(key=lambda p: _lrm_state_priority(p[2]))
-
-    # Track which CUTB_SEQ_NBR values were already satisfied by higher-priority SUs.
-    su_ids_claimed = set()
-
-    # Create LRM_Blocks from mergeFinal template
-    arcpy.management.CreateFeatureclass(
-        scratch_gdb, "LRM_Blocks", "POLYGON", merge_final,
-    )
-    lrm_blocks = os.path.join(scratch_gdb, "LRM_Blocks")
-
-    arcpy.AddMessage(
-        "Checking LRM Blocks & Standard Unit layers. "
-        "If Block contains SUs, productive units are used; "
-        "otherwise the entire cut block shape is used."
-    )
-
-    def append_lrm_non_overlapping(src_fc, tag):
-        """Append src_fc to lrm_blocks after removing overlap with existing LRM."""
-        if not arcpy.Exists(src_fc) or get_feature_count(src_fc) == 0:
-            return
-
-        if get_feature_count(lrm_blocks) == 0:
-            ez_append(src_fc, lrm_blocks)
-            return
-
-        clean_fc = f"memory\\lrm_nonoverlap_{tag}"
-        erase = EraseFeatures(
-            in_features=src_fc,
-            erase_features=lrm_blocks,
-            out_features=clean_fc,
-        )
-        erase.erase_analysis()
-
-        if arcpy.Exists(clean_fc) and get_feature_count(clean_fc) > 0:
-            ez_append(clean_fc, lrm_blocks)
-        cleanup_memory(clean_fc)
-
-    for blocks_name, su_name, label in block_su_pairs:
-        blocks_path = os.path.join(scratch_gdb, blocks_name)
-        su_path = os.path.join(scratch_gdb, su_name) if su_name else None
-
-        if not arcpy.Exists(blocks_path):
-            continue
-
-        # Create feature layers so selections persist between tool calls
-        blocks_lyr = f"{blocks_name}_lyr"
-        arcpy.management.MakeFeatureLayer(blocks_path, blocks_lyr)
-
-        su_lyr = None
-        if su_path and arcpy.Exists(su_path):
-            su_lyr = f"{su_name}_lyr"
-            arcpy.management.MakeFeatureLayer(su_path, su_lyr)
-
-            # Fix ECAsrc field name
-            fix_field_name(su_path, FLD_ECA_SRC_ALT, FLD_ECA_SRC, "TEXT", 50)
-
-        block_count = get_feature_count(blocks_path)
-        arcpy.AddMessage(f"{block_count} LRM {label} block(s) found.")
-
-        if block_count > 0 and su_lyr is not None:
-            block_ids = set(
-                row[0] for row in arcpy.da.SearchCursor(blocks_path, [FLD_CUTB_SEQ_NBR])
-            )
-            su_ids = set(
-                row[0] for row in arcpy.da.SearchCursor(su_path, [FLD_CUTB_SEQ_NBR])
-            )
-            raw_matching = (block_ids & su_ids)
-            skipped_claimed = [cid for cid in raw_matching if cid in su_ids_claimed]
-            matching = [cid for cid in raw_matching if cid not in su_ids_claimed]
-
-            arcpy.AddMessage(
-                f"{len(raw_matching)} raw matching {label} SU record(s) found by {FLD_CUTB_SEQ_NBR}."
-            )
-            if skipped_claimed:
-                arcpy.AddMessage(
-                    f"{len(skipped_claimed)} {label} SU record(s) skipped due to higher-priority SU state."
-                )
-            arcpy.AddMessage(f"{len(matching)} matching {label} SU record(s) selected after precedence.")
-
-            if matching:
-                ids_str = str(tuple(matching)) if len(matching) > 1 else f"({matching[0]})"
-                query = f'"{FLD_CUTB_SEQ_NBR}" in {ids_str}'
-
-                # Build CUTB_SEQ_NBR → Info lookup from matching blocks
-                arcpy.management.SelectLayerByAttribute(blocks_lyr, "NEW_SELECTION", query)
-                info_lookup = {
-                    row[0]: row[1]
-                    for row in arcpy.da.SearchCursor(blocks_lyr, [FLD_CUTB_SEQ_NBR, FLD_INFO])
-                }
-
-                # Propagate block Info onto SU records before appending
-                safe_add_field(su_path, FLD_INFO, "TEXT", field_length=255, alias="Info")
-                with arcpy.da.UpdateCursor(su_path, [FLD_CUTB_SEQ_NBR, FLD_INFO]) as cursor:
-                    for row in cursor:
-                        if row[0] in info_lookup:
-                            row[1] = info_lookup[row[0]]
-                            cursor.updateRow(row)
-
-                # Append matching SUs using feature layer (selection persists)
-                arcpy.management.SelectLayerByAttribute(su_lyr, "NEW_SELECTION", query)
-                append_lrm_non_overlapping(su_lyr, f"{label}_su")
-                arcpy.management.SelectLayerByAttribute(su_lyr, "CLEAR_SELECTION")
-
-                # Prevent lower-priority SU states from reusing the same CUTB IDs.
-                su_ids_claimed.update(matching)
-                arcpy.AddMessage(
-                    f"{len(su_ids_claimed)} CUTB_SEQ_NBR value(s) now claimed by SU precedence chain."
-                )
-
-                # Delete blocks that have SUs, keep remaining
-                arcpy.management.SelectLayerByAttribute(blocks_lyr, "NEW_SELECTION", query)
-                arcpy.management.DeleteFeatures(blocks_lyr)
-                arcpy.management.SelectLayerByAttribute(blocks_lyr, "CLEAR_SELECTION")
-
-        # Append remaining blocks
-        if arcpy.Exists(blocks_path) and get_feature_count(blocks_path) > 0:
-            append_lrm_non_overlapping(blocks_path, f"{label}_blocks")
-
-    # Mark crown closure and height as 0
-    arcpy.management.CalculateField(lrm_blocks, FLD_CROWN_CLOSURE, "0", "PYTHON3")
-    arcpy.management.CalculateField(lrm_blocks, FLD_PROJ_HEIGHT, "0", "PYTHON3")
-
-    # Erase LRM blocks area from existing openings
     merge_openings = os.path.join(scratch_gdb, "mergeOpenings")
-    erase = EraseFeatures(
-        in_features=merge_final,
-        erase_features=lrm_blocks,
-        out_features=merge_openings,
-    )
-    erase.erase_analysis()
-
+    arcpy.management.CopyFeatures(merge_final, merge_openings)
     cleanup_memory(merge_final)
-
-    # Fix any field name collisions
     fix_field_name(merge_openings, "CROWN_CLOSURE_1", FLD_CROWN_CLOSURE, "SHORT")
     fix_field_name(merge_openings, "PROJ_HEIGHT_12", FLD_PROJ_HEIGHT, "FLOAT")
     fix_field_name(merge_openings, FLD_ECA_SRC_ALT, FLD_ECA_SRC, "TEXT", 50)
-
-    # Append LRM blocks
-    ez_append(lrm_blocks, merge_openings)
-    cleanup_memory(lrm_blocks)
 
 
 def complete_openings(layer_list, scratch_gdb, output_gdb):
     """Append remaining layers to the openings and produce the Openings FC.
 
     *layer_list* are the additional clipped layer names (wildfire, etc.) that
-    were not part of VRI/Results/FTA/LRM. The VRI/Results/FTA/LRM merge is
+    were not part of the VRI/Results/FTA base. The VRI/Results/FTA merge is
     the highest-priority base. Lower-priority configured layers are processed
     in LOWER_PRIORITY_OPENINGS order and are erased by the already-built
     openings before they are appended, preventing them from overwriting the

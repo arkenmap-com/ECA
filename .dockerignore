@@ -1,0 +1,14 @@
+.git
+.github
+.DS_Store
+__pycache__
+*.py[cod]
+data
+outputs
+webapp_data
+dist
+tests
+qgis_plugin
+templates
+*.pyt
+*.pyt.xml

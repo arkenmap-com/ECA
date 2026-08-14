@@ -55,18 +55,16 @@ FLD_CUTB_SEQ_NBR = "CUTB_SEQ_NBR"
 # ---------------------------------------------------------------------------
 CLIP_LAYERS_REMOVE = [
     "Clip_VRIOpeningsandBurns", "Clip_Results", "Clip_FTAPendingBlocks",
-    "Clip_LRMPPPRODSU", "Clip_LRMADVPRODSU", "Clip_LRMPPBlocks",
-    "Clip_LRMADVBlocks", "Clip_LRMBlocksRecent", "Clip_LRMPRODSURecent",
     "Clip_CurrentPestInfestation", "Clip_HistoricPestInfestation",
     "Clip_VRINaturalandOtherOpenings", "Clip_ResultsPAS",
     # VRI Water is assembled by create_other_openings(), not the main
     # Openings precedence chain.
     "Clip_VRIWater",
     "Clip_WildfireTwentyYearsPlus", "Clip_RoadsPipelinesRailways",
-    "Clip_PrivateLands", "Clip_BCTSProposedRoads",
+    "Clip_PrivateLands",
 ]
 
-# These layers are lower priority than the VRI/Results/FTA/LRM base openings.
+# These layers are lower priority than the VRI/Results/FTA base openings.
 # They are processed in this order and only their non-overlapping portions are
 # appended. Keep the names synchronized with spreadsheet Short_Name values
 # (prefixed with "Clip_").
@@ -77,11 +75,7 @@ LOWER_PRIORITY_OPENINGS = (
 )
 
 # Layers that get an ECAsrc field (vs ECAsrc_1)
-LAYERS_WITH_ECA_SRC = {
-    "Clip_VRIOpeningsandBurns", "Clip_LRMADVBlocks", "Clip_LRMPPBlocks",
-    "Clip_LRMADVPRODandSU", "Clip_LRMPPPRODSU", "Clip_LRMBlocksRecent",
-    "Clip_LRMPRODSURecent",
-}
+LAYERS_WITH_ECA_SRC = {"Clip_VRIOpeningsandBurns"}
 
 # ---------------------------------------------------------------------------
 # Aspect remap ranges (value * 10 to preserve precision before integer truncation)

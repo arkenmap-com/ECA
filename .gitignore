@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.gpkg-wal
+*.gpkg-shm
+
+# Local source downloads and generated analysis runs.
+data/
+outputs/
+webapp_data/
+
+# Build/test caches.
+dist/
+.pytest_cache/
+.coverage

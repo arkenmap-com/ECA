@@ -26,12 +26,6 @@
 			<param name="recovery_curves" displayname="Recovery Curves Spreadsheet" datatype="DEFile" direction="Input" type="Required" expression="recovery_curves">
 				<dialogReference>&lt;p&gt;Excel workbook (.xlsx) containing recovery curve parameters. Each sheet represents a field team (tab name must match the Field_Team value). Columns: BEC_Zone, BEC_Subzone, h0-h5 (height breakpoints in metres), cc0-cc4 (crown closure breakpoints in percent). Leave BEC_Subzone blank for zone-level curves; fill it for subzone overrides.&lt;/p&gt;</dialogReference>
 			</param>
-			<param name="bcgw_sde" displayname="BCGW Connection (.sde)" datatype="DEFile" direction="Input" type="Required" expression="bcgw_sde">
-				<dialogReference>&lt;p&gt;SDE connection file for the BC Geographic Warehouse (BCGW).&lt;/p&gt;</dialogReference>
-			</param>
-			<param name="dbp06_sde" displayname="DBP06 Connection (.sde)" datatype="DEFile" direction="Input" type="Required" expression="dbp06_sde">
-				<dialogReference>&lt;p&gt;SDE connection file for the DBP06 (LRM/BCTS Oracle) database.&lt;/p&gt;</dialogReference>
-			</param>
 		</parameters>
 		<summary>&lt;p&gt;Performs a quick automated Equivalent Clearcut Area analysis. A manual visual check should be performed afterwards to ensure openings and recovery values are correctly represented.&lt;/p&gt;</summary>
 	</tool>

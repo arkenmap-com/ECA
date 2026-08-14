@@ -2,7 +2,7 @@
 Database connection management and spreadsheet-based layer configuration.
 
 Reads the ECA_Input_Layers.xlsx spreadsheet to discover input layers,
-validates SDE connections to BCGW and DBP06, and resolves full feature
+validates the BCGW SDE connection and resolves full feature
 class paths for use by the geoprocessing pipeline.
 """
 
@@ -47,23 +47,12 @@ def load_layer_config(xlsx_path):
 def check_db_connections():
     """Validate that required SDE connections exist before proceeding.
 
-    Returns ``{"BCGW": path, "DBP06": path}``.  ArcGIS Pro will prompt
+    Returns ``{"BCGW": path}``.  ArcGIS Pro will prompt
     the user to authenticate if they haven't already -- no extra tool
     parameters needed.
     """
     import sys
 
-    dbp06_path = r'F:\south_root\GIS_Workspace\Scripts_and_Tools\DBP06.sde'
-    if not arcpy.Exists(dbp06_path):
-        arcpy.AddError(
-            "Please make sure the DBP06 connection here: "
-            r"GIS_Workspace\Scripts_and_Tools\DBP06.sde "
-            "is connected before running the tool"
-        )
-        sys.exit(1)
-    dbp06 = dbp06_path + '\\'
-
-    #bcgw_path = r'Database Connections\BCGW.sde'
     bcgw_path = r'F:\south_root\GIS_Workspace\Scripts_and_Tools\BCGW.sde'
     if not arcpy.Exists(bcgw_path):
         arcpy.AddError(
@@ -74,7 +63,7 @@ def check_db_connections():
     bcgw = bcgw_path + '\\'
 
     arcpy.AddMessage("Database connections validated successfully.")
-    return {"BCGW": bcgw, "DBP06": dbp06}
+    return {"BCGW": bcgw}
 
 
 def resolve_layer_path(row, connections):
@@ -87,14 +76,12 @@ def resolve_layer_path(row, connections):
 
     if source == "BCGW":
         return os.path.join(connections["BCGW"], fc)
-    elif source == "DBP06":
-        return os.path.join(connections["DBP06"], fc)
     elif source == "LOCAL":
         return fc
     else:
         raise ValueError(
             f"Layer '{row.get('Layer_Name', fc)}' has unrecognized Data_Source "
-            f"'{row['Data_Source']}'. Expected 'BCGW', 'DBP06', or 'LOCAL'."
+            f"'{row['Data_Source']}'. Expected 'BCGW' or 'LOCAL'."
         )
 
 
@@ -105,8 +92,6 @@ def resolve_dem_path(dem_row, connections):
 
     if source == "BCGW":
         return os.path.join(connections["BCGW"], raster)
-    elif source == "DBP06":
-        return os.path.join(connections["DBP06"], raster)
     elif source == "LOCAL":
         return raster
     else:
@@ -197,7 +182,7 @@ def apply_joins(feature_layer, joins_for_layer, connections):
 
     Each join dict must have:
       - Join_Table: feature class / table name in the SDE
-      - Join_Data_Source: "BCGW" / "DBP06" / "LOCAL"
+      - Join_Data_Source: "BCGW" / "LOCAL"
       - Join_From_Field: field in the source layer to join on
       - Join_To_Field: field in the join table to join on
       - Join_Type (optional): "KEEP_ALL" (default) or "KEEP_COMMON"
@@ -209,8 +194,6 @@ def apply_joins(feature_layer, joins_for_layer, connections):
 
         if join_source == "BCGW":
             join_path = os.path.join(connections["BCGW"], join_table)
-        elif join_source == "DBP06":
-            join_path = os.path.join(connections["DBP06"], join_table)
         elif join_source == "LOCAL":
             join_path = join_table
         else:

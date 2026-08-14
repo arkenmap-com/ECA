@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open ECA watershed analysis using current public BC Geographic Warehouse data.">
+  <title>Open ECA</title>
+  <style>
+    :root { color-scheme: light; --navy: #163a4d; --teal: #146c70; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; background: #f3f6f7; font: 15px system-ui, sans-serif; }
+    #loading { position: fixed; inset: 0; display: grid; place-content: center; gap: 12px; text-align: center; color: var(--navy); padding: 24px; }
+    #loading strong { font-size: 24px; }
+    #loading a { color: var(--teal); }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; opacity: 0; transition: opacity .2s; }
+    iframe.ready { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div id="loading" role="status">
+    <strong>Starting Open ECA…</strong>
+    <span>The free analysis service may take about a minute to wake up.</span>
+    <a href="https://arkenmap-eca.onrender.com/">Open the analysis service directly</a>
+  </div>
+  <iframe id="app" title="Open ECA analysis workspace" src="https://arkenmap-eca.onrender.com/" allow="downloads"></iframe>
+  <script>
+    const app = document.querySelector('#app');
+    app.addEventListener('load', () => {
+      app.classList.add('ready');
+      document.querySelector('#loading').hidden = true;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: arkenmap-eca
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: ECA_DATA_DIR
+        value: /tmp/eca-webapp-data
+      - key: ECA_MAX_UPLOAD_MB
+        value: "100"

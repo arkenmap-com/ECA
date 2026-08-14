@@ -267,11 +267,11 @@ class ECAEstimateTool:
         list_list = openings.clip_transport_layers(
             transport_configs, connections, ws_fc, scratch_gdb, output_gdb, joins,
         )
-        buff_layers, bcts_path = openings.buffer_transport(list_list, scratch_gdb)
+        buff_layers = openings.buffer_transport(list_list, scratch_gdb)
         # Clean up transport clips — consumed by buffer_transport
         workspace.cleanup_memory(list_list[0], list_list[1])
         openings.merge_transport(buff_layers, ws_fc, scratch_gdb)
-        # Clean up buffer layers — consumed by merge_transport (keep bcts for other_openings)
+        # Clean up buffer layers — consumed by merge_transport.
         workspace.cleanup_memory(buff_layers)
 
         # --- Opening layers ---
@@ -285,7 +285,7 @@ class ECAEstimateTool:
         )
         openings.add_info_fields(scratch_gdb, opening_configs)
         openings.merge_vri_results_fta(scratch_gdb)
-        openings.setup_lrm_blocks(scratch_gdb, vector_layers)
+        openings.promote_base_openings(scratch_gdb)
         openings.complete_openings(layer_list, scratch_gdb, output_gdb)
 
         # --- Other openings and pest ---
