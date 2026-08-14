@@ -26,6 +26,8 @@ from open_eca.recovery import load_curves
 
 
 TEST_CURVES = Path(__file__).with_name("test_recovery_curves.json")
+CALIBRATED_CURVES = Path(__file__).parents[1] / "templates" / "TKO_ECA_Recovery_Curves.xlsx"
+CALIBRATED_FIELD_TEAMS = ("Arrow", "Boundary", "Cranbrook", "Invermere", "Kootenay Lake")
 
 
 @dataclass
@@ -61,13 +63,13 @@ def _home() -> HTMLResponse:
 <form action="/runs" method="post" enctype="multipart/form-data"><div class="grid">
 <div class="field"><label for="fwa-search">Freshwater Atlas watershed</label><input id="fwa-search" type="search" placeholder="e.g. Falls Creek" autocomplete="off"><p class="help">Search the BC Freshwater Atlas, then select the exact named watershed. Names are not always unique.</p><button id="find-watersheds" class="secondary" type="button">Find watersheds</button><div id="fwa-results" class="help" aria-live="polite"></div><input id="fwa-id" name="fwa_id" type="hidden" required></div>
 <div class="field"><label>Analysis data</label><div class="source-choice"><label><input name="data_source" type="radio" value="bc_live" checked> Live BC data</label><label><input name="data_source" type="radio" value="upload"> Prepared cache</label></div><div id="inputs-field" hidden><label for="inputs">Catalogue input cache</label><input id="inputs" name="inputs" type="file" accept=".gpkg"><p class="help">GeoPackage containing VRI openings and BEC zones, plus any standard source layers.</p></div><p id="live-help" class="help">Downloads current, watershed-scoped layers from BC OpenMaps. A provenance manifest records the source snapshot.</p></div>
-<div class="field"><label>Recovery curves</label><div class="source-choice"><label><input name="curve_source" type="radio" value="test" checked> Synthetic test preset</label><label><input name="curve_source" type="radio" value="upload"> Upload curves</label></div><p id="test-curves-help" class="notice"><strong>Testing only.</strong> These plausible synthetic curves are not calibrated, approved, or suitable for operational decisions. <a href="/test-recovery-curves.json">View JSON</a>.</p><div id="curves-field" hidden><label for="curves">Curve workbook or JSON</label><input id="curves" name="curves" type="file" accept=".xlsx,.json"></div></div>
-<div class="field"><label for="field_team">Field team</label><input id="field_team" name="field_team" value="Synthetic Test" placeholder="Boundary"><p class="help">Use “Synthetic Test” with the test preset. For uploaded curves, enter the matching workbook sheet or JSON team name.</p></div>
+<div class="field"><label>Recovery curves</label><div class="source-choice"><label><input name="curve_source" type="radio" value="calibrated" checked> Calibrated Kootenay curves</label><label><input name="curve_source" type="radio" value="test"> Synthetic test preset</label><label><input name="curve_source" type="radio" value="upload"> Upload curves</label></div><p id="calibrated-curves-help" class="help">Local height × crown-closure thresholds by BCTS Kootenay field team and BEC zone. <a href="/calibrated-recovery-curves.xlsx">Download workbook</a>.</p><p id="test-curves-help" class="notice" hidden><strong>Testing only.</strong> These province-wide synthetic curves are not calibrated or suitable for operational decisions. <a href="/test-recovery-curves.json">View JSON</a>.</p><div id="curves-field" hidden><label for="curves">Curve workbook or JSON</label><input id="curves" name="curves" type="file" accept=".xlsx,.json"></div></div>
+<div class="field"><label for="field_team">Field team</label><input id="field_team" name="field_team" list="calibrated-field-teams" placeholder="Select or enter the exact curve set" required><datalist id="calibrated-field-teams"><option value="Arrow"><option value="Boundary"><option value="Cranbrook"><option value="Invermere"><option value="Kootenay Lake"></datalist><p class="help">The calibrated workbook covers Arrow, Boundary, Cranbrook, Invermere, and Kootenay Lake. Uploaded curves use their workbook sheet or JSON team name.</p></div>
 </div><p class="help">This streamlined mode does not use a DEM: ECA is reported for the entire selected watershed, without an H60 elevation split.</p><section class="additional"><h2>Additional inputs</h2><p class="muted">Add local vector layers without changing the catalogue cache. “ECA opening” adds uncovered area to the ECA calculation; “Context only” is retained as other openings.</p><div id="additional-inputs"></div><button class="secondary" id="add-input" type="button">Add input layer</button></section><p><button type="submit">Run ECA draft</button></p></form></section>""",
         """<script>
 const list=document.querySelector('#additional-inputs');document.querySelector('#add-input').addEventListener('click',()=>{const row=document.createElement('div');row.className='additional-row';row.innerHTML=`<div><label>Vector layer<input type="file" name="additional_files" accept=".gpkg,.geojson,.json,.shp" required></label></div><div><label>Source label<input name="additional_labels" placeholder="Local harvest block" required></label></div><div><label>Role<select name="additional_roles"><option value="opening">ECA opening</option><option value="other">Context only</option></select></label></div><div><label>GeoPackage layer <span class="muted">(optional)</span><input name="additional_layers" placeholder="layer_name"></label></div><div><label>Buffer (m) <span class="muted">(optional)</span><input name="additional_buffers" type="number" min="0" step="0.1" placeholder="0"></label></div><button class="secondary" type="button">Remove</button>`;row.querySelector('button').addEventListener('click',()=>row.remove());list.append(row)});
 const inputsField=document.querySelector('#inputs-field'),inputs=document.querySelector('#inputs'),liveHelp=document.querySelector('#live-help');document.querySelectorAll('input[name=data_source]').forEach(radio=>radio.addEventListener('change',()=>{if(!radio.checked)return;const upload=radio.value==='upload';inputsField.hidden=!upload;liveHelp.hidden=upload;inputs.required=upload}));
-const curvesField=document.querySelector('#curves-field'),curves=document.querySelector('#curves'),testCurvesHelp=document.querySelector('#test-curves-help'),fieldTeam=document.querySelector('#field_team');document.querySelectorAll('input[name=curve_source]').forEach(radio=>radio.addEventListener('change',()=>{if(!radio.checked)return;const upload=radio.value==='upload';curvesField.hidden=!upload;testCurvesHelp.hidden=upload;curves.required=upload;if(upload&&fieldTeam.value==='Synthetic Test')fieldTeam.value='';if(!upload&&!fieldTeam.value.trim())fieldTeam.value='Synthetic Test'}));
+const curvesField=document.querySelector('#curves-field'),curves=document.querySelector('#curves'),testCurvesHelp=document.querySelector('#test-curves-help'),calibratedCurvesHelp=document.querySelector('#calibrated-curves-help'),fieldTeam=document.querySelector('#field_team');document.querySelectorAll('input[name=curve_source]').forEach(radio=>radio.addEventListener('change',()=>{if(!radio.checked)return;const upload=radio.value==='upload',test=radio.value==='test';curvesField.hidden=!upload;testCurvesHelp.hidden=!test;calibratedCurvesHelp.hidden=radio.value!=='calibrated';curves.required=upload;if(test)fieldTeam.value='Synthetic Test';else if(fieldTeam.value==='Synthetic Test')fieldTeam.value=''}));
 const fwaSearch=document.querySelector('#fwa-search'),fwaResults=document.querySelector('#fwa-results'),fwaId=document.querySelector('#fwa-id');document.querySelector('#find-watersheds').addEventListener('click',async()=>{const query=fwaSearch.value.trim();if(query.length<2){fwaResults.textContent='Enter at least two characters.';return}fwaResults.textContent='Searching the BC Freshwater Atlas…';try{const response=await fetch(`/fwa/search?q=${encodeURIComponent(query)}`);const payload=await response.json();if(!response.ok)throw new Error(payload.detail||'Search failed');fwaResults.replaceChildren();if(!payload.length){fwaResults.textContent='No named watersheds found.';return}payload.forEach(item=>{const label=document.createElement('label'),radio=document.createElement('input');radio.type='radio';radio.name='fwa-choice';radio.value=item.named_watershed_id;radio.addEventListener('change',()=>{fwaId.value=item.named_watershed_id});label.append(radio,` ${item.name} — ID ${item.named_watershed_id}${item.area_ha===null?'':`, ${item.area_ha.toLocaleString(undefined,{maximumFractionDigits:0})} ha`}`);fwaResults.append(label)})}catch(error){fwaResults.textContent=error.message}});
 </script>""",
     )
@@ -154,6 +156,14 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             filename="synthetic-test-recovery-curves.json",
         )
 
+    @app.get("/calibrated-recovery-curves.xlsx")
+    def calibrated_recovery_curves() -> FileResponse:
+        return FileResponse(
+            CALIBRATED_CURVES,
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            filename="TKO_ECA_Recovery_Curves.xlsx",
+        )
+
     @app.get("/", response_class=HTMLResponse)
     def home() -> HTMLResponse:
         return _home()
@@ -172,7 +182,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         fwa_id: int = Form(...),
         data_source: str = Form("bc_live"),
         inputs: UploadFile | None = File(default=None),
-        curve_source: str = Form("test"),
+        curve_source: str = Form("calibrated"),
         curves: UploadFile | None = File(default=None),
         field_team: str = Form(""),
         additional_files: list[UploadFile] = File(default=[]),
@@ -183,14 +193,18 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     ) -> RedirectResponse:
         if data_source not in {"bc_live", "upload"}:
             raise HTTPException(status_code=422, detail="Choose live BC data or a prepared cache.")
-        if curve_source not in {"test", "upload"}:
-            raise HTTPException(status_code=422, detail="Choose the synthetic test curves or upload a curve file.")
+        if curve_source not in {"calibrated", "test", "upload"}:
+            raise HTTPException(status_code=422, detail="Choose calibrated, synthetic test, or uploaded recovery curves.")
         if curve_source == "upload" and (curves is None or not curves.filename):
             raise HTTPException(status_code=422, detail="Upload a recovery-curve workbook or JSON file.")
         if data_source == "upload" and (inputs is None or not inputs.filename):
             raise HTTPException(status_code=422, detail="Upload a catalogue input cache for prepared-cache mode.")
-        if data_source == "bc_live" and not field_team.strip():
-            raise HTTPException(status_code=422, detail="Field team is required for live BC data.")
+        if not field_team.strip():
+            raise HTTPException(status_code=422, detail="Field team is required to select the correct recovery curve.")
+        if curve_source == "calibrated" and field_team.strip().casefold() not in {team.casefold() for team in CALIBRATED_FIELD_TEAMS}:
+            raise HTTPException(status_code=422, detail="Select a field team included in the calibrated Kootenay workbook.")
+        if curve_source == "test" and field_team.strip().casefold() != "synthetic test":
+            raise HTTPException(status_code=422, detail="Use the Synthetic Test field team with the synthetic preset.")
         if len(additional_files) != len(additional_labels) or len(additional_files) != len(additional_roles):
             raise HTTPException(status_code=422, detail="Each additional input needs a layer, source label, and role.")
         if additional_buffers and len(additional_files) != len(additional_buffers):
@@ -200,11 +214,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         uploads = directory / "uploads"
         uploads.mkdir(parents=True)
         saved_inputs = await _save_upload(inputs, uploads, "inputs", max_upload_bytes) if data_source == "upload" and inputs is not None else None
-        saved_curves = (
-            await _save_upload(curves, uploads, "curves", max_upload_bytes)
-            if curve_source == "upload" and curves is not None
-            else TEST_CURVES
-        )
+        saved_curves = await _save_upload(curves, uploads, "curves", max_upload_bytes) if curve_source == "upload" and curves is not None else (TEST_CURVES if curve_source == "test" else CALIBRATED_CURVES)
         extras: list[AdditionalInput] = []
         for index, upload in enumerate(additional_files):
             path = await _save_upload(upload, uploads, f"additional_{index + 1}", max_upload_bytes)

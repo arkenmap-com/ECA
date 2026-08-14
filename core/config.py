@@ -5,6 +5,7 @@ All hardcoded paths, field names, and recovery curve data
 are defined here so they can be maintained in one place.
 """
 
+import math
 import os
 
 # ---------------------------------------------------------------------------
@@ -118,6 +119,7 @@ SLOPE_REMAP = [
 _ZEROS = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 _ONES = (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
 _TWOS = (2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
+RECOVERY_PARAMETER_COLUMNS = ("h0", "h1", "h2", "h3", "h4", "h5", "cc0", "cc1", "cc2", "cc3", "cc4")
 
 RECOVERY_CURVES = {
     "Boundary": {
@@ -174,17 +176,25 @@ def get_recovery_params(field_team, bec_zone, bec_subzone=None, curves=None):
     if curves is None:
         curves = RECOVERY_CURVES
 
-    ft_curves = curves.get(field_team, curves.get("_default", _ONES))
+    def lookup(mapping, key, default):
+        if key in mapping:
+            return mapping[key]
+        normalized = " ".join(str(key).split()).casefold() if key is not None else ""
+        return next(
+            (value for candidate, value in mapping.items()
+             if " ".join(str(candidate).split()).casefold() == normalized),
+            default,
+        )
+
+    ft_curves = lookup(curves, field_team, curves.get("_default", _ONES))
 
     if isinstance(ft_curves, tuple):
         return ft_curves
 
-    zone_val = ft_curves.get(bec_zone, ft_curves.get("_default", _ZEROS))
+    zone_val = lookup(ft_curves, bec_zone, ft_curves.get("_default", _ZEROS))
 
     if isinstance(zone_val, dict):
-        if bec_subzone and bec_subzone in zone_val:
-            return zone_val[bec_subzone]
-        return zone_val.get("_default", _TWOS)
+        return lookup(zone_val, bec_subzone, zone_val.get("_default", _TWOS))
 
     return zone_val
 
@@ -198,36 +208,66 @@ def load_recovery_curves(xlsx_path):
     """
     import pandas as pd
 
-    PARAM_COLS = ["h0", "h1", "h2", "h3", "h4", "h5",
-                  "cc0", "cc1", "cc2", "cc3", "cc4"]
-
     xls = pd.ExcelFile(xlsx_path, engine="openpyxl")
     curves = {}
 
     for sheet_name in xls.sheet_names:
         team_name = sheet_name.strip()
+        if team_name in curves:
+            raise ValueError(f"Duplicate recovery sheet name after trimming: {team_name!r}")
         df = pd.read_excel(xls, sheet_name=sheet_name, engine="openpyxl")
         df.columns = df.columns.str.strip()
         df = df.where(pd.notnull(df), None)
+        missing = sorted(set(("BEC_Zone", "BEC_Subzone", *RECOVERY_PARAMETER_COLUMNS)) - set(df.columns))
+        if missing:
+            raise ValueError(f"Recovery sheet {sheet_name!r} is missing columns: {', '.join(missing)}")
+
+        def parameters(row, location):
+            values = []
+            for column in RECOVERY_PARAMETER_COLUMNS:
+                try:
+                    number = float(row[column])
+                except (TypeError, ValueError) as error:
+                    raise ValueError(f"{location} {column} must be numeric.") from error
+                if not math.isfinite(number):
+                    raise ValueError(f"{location} {column} must be finite.")
+                values.append(int(number) if number.is_integer() else number)
+            result = tuple(values)
+            if result not in {_ZEROS, _ONES, _TWOS}:
+                if any(left > right for left, right in zip(result[:6], result[1:6])):
+                    raise ValueError(f"{location} height thresholds must be non-decreasing.")
+                if any(left > right for left, right in zip(result[6:], result[7:])):
+                    raise ValueError(f"{location} crown-closure thresholds must be non-decreasing.")
+                if result[0] < 0 or result[6] < 0 or result[-1] > 100:
+                    raise ValueError(f"{location} thresholds are outside their valid range.")
+            return result
 
         team_curves = {}
 
         for zone, group in df.groupby("BEC_Zone", sort=False):
+            zone_name = str(zone).strip()
             subzone_rows = group[group["BEC_Subzone"].notna()]
             zone_only_rows = group[group["BEC_Subzone"].isna()]
 
             if len(subzone_rows) > 0:
                 # Zone has subzone-level entries -> build a sub-dict
+                names = [str(value).strip() for value in subzone_rows["BEC_Subzone"]]
+                if len(zone_only_rows) or len(names) != len(set(names)):
+                    raise ValueError(
+                        f"{team_name}/{zone_name} must use either one zone curve or unique subzone curves."
+                    )
                 zone_dict = {}
                 for _, row in subzone_rows.iterrows():
                     sz = str(row["BEC_Subzone"]).strip()
-                    zone_dict[sz] = tuple(int(row[c]) for c in PARAM_COLS)
+                    zone_dict[sz] = parameters(row, f"{team_name}/{zone_name}/{sz}")
                 zone_dict["_default"] = _TWOS
-                team_curves[zone] = zone_dict
+                team_curves[zone_name] = zone_dict
             elif len(zone_only_rows) == 1:
                 # Single zone-level row -> store as tuple
                 row = zone_only_rows.iloc[0]
-                team_curves[zone] = tuple(int(row[c]) for c in PARAM_COLS)
+                team_curves[zone_name] = parameters(row, f"{team_name}/{zone_name}")
+            else:
+                raise ValueError(f"{team_name}/{zone_name} contains more than one zone-level curve.")
 
         team_curves["_default"] = _ZEROS
         curves[team_name] = team_curves

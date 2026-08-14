@@ -21,6 +21,9 @@ def calculate_recovery(height, crown_closure, params):
             - 998 = BEC zone not applicable for field team
             - 999 = calculation error (should not happen)
     """
+    if len(params) != 11:
+        return 999
+
     # Sentinel checks
     if all(v == 0 for v in params):
         return 998
@@ -28,7 +31,6 @@ def calculate_recovery(height, crown_closure, params):
         return 997
     if all(v == 2 for v in params):
         return 996
-
     h0, h1, h2, h3, h4, h5, cc0, cc1, cc2, cc3, cc4 = params
     h = height if height is not None else 0
     cc = crown_closure if crown_closure is not None else 0
@@ -117,6 +119,8 @@ def apply_recovery(openings_bec_path, has_override=False, curves=None):
             override = row[6] if has_override else -1
 
             if has_override and override is not None and override != -1:
+                if not 0 <= override <= 100:
+                    raise ValueError(f"Recovery Override must be between 0 and 100 (found {override!r}).")
                 row[5] = override
             else:
                 params = get_recovery_params(ft, zone, subzone, curves=curves)

@@ -1125,6 +1125,31 @@ GIS Terms: The projected height and crown closure values come from the VRI
   soil, and elevation.
 ```
 
+### Accuracy, calibration, and appropriate use
+
+The operational source of truth is
+`templates/TKO_ECA_Recovery_Curves.xlsx`. The application loads its field-team,
+BEC-zone, and BEC-subzone thresholds directly and tests that the workbook is
+identical to the ArcGIS fallback table. Decimal thresholds are preserved.
+Malformed, non-monotonic, or out-of-range curves are rejected instead of being
+silently rounded or applied.
+
+These are discrete local decision curves, not universal biological growth
+curves. The bundled calibration covers the five BCTS Kootenay field teams only.
+Analyses elsewhere require a locally reviewed workbook; the province-wide
+synthetic preset is retained strictly for software testing. BC research defines
+stand ECA as `area × (1 − hydrologic recovery)` and identifies stand height,
+canopy density/crown closure, species, runoff regime, elevation, and regional
+conditions as relevant controls. It also cautions that stand-scale ECA is an
+indicator with uncertainty when interpreted at watershed scale:
+
+- [Operational method of assessing hydrologic recovery (BC Ministry of Forests, TR-032)](https://www2.gov.bc.ca/assets/gov/environment/air-land-water/water/science-data/tsitika-river/tr032_operational_method_of_asssessing_hydrologic_recovery.pdf)
+- [Equivalent Clearcut Area as an Indicator of Hydrologic Change in Snow-dominated Watersheds of Southern British Columbia](https://a100.gov.bc.ca/pub/eirs/lookupDocument.do?documentId=15072&fromStatic=true&repository=BDP)
+
+For defensible operational results, verify the selected field team, inspect all
+`Error` records, and review stale or uncertain VRI projected-height and
+crown-closure values before accepting the final ECA.
+
 ### Sentinel Error Codes
 
 ```

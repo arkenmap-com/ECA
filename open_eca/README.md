@@ -54,6 +54,11 @@ The recovery module consumes the existing recovery-curve workbook and a
 QGIS-reviewed openings layer. It produces `Recovery` and `Error` fields and
 supports the existing `Override` convention when `--override` is supplied.
 An equivalent nested JSON curve file is also supported for headless use.
+The web app defaults to the bundled Kootenay calibration and requires an
+explicit field team. Its province-wide synthetic preset is for testing only;
+use a locally reviewed upload outside the five Kootenay field teams. Curve
+loaders preserve decimal thresholds and reject malformed or non-monotonic
+tables before analysis.
 
 ## Opening assembly
 

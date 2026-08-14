@@ -7,7 +7,7 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 from open_eca.recovery import calculate_recovery, get_params, load_curves
-from webapp.app import TEST_CURVES, create_app
+from webapp.app import CALIBRATED_CURVES, TEST_CURVES, create_app
 
 
 class WebAppTests(unittest.TestCase):
@@ -17,8 +17,18 @@ class WebAppTests(unittest.TestCase):
             self.assertEqual(client.get("/health").json(), {"status": "ok"})
             home = client.get("/").text
             self.assertIn("Live BC data", home)
+            self.assertIn("Calibrated Kootenay curves", home)
             self.assertIn("Synthetic test preset", home)
             self.assertIn("Testing only", home)
+
+    def test_calibrated_curves_are_the_operational_default(self):
+        curves = load_curves(CALIBRATED_CURVES)
+        boundary_ich = get_params("Boundary", "ICH", None, curves)
+        self.assertEqual(boundary_ich, (5, 9, 11, 15, 20, 25, 15, 20, 30, 45, 55))
+        with tempfile.TemporaryDirectory() as directory:
+            response = TestClient(create_app(Path(directory))).get("/calibrated-recovery-curves.xlsx")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.content.startswith(b"PK"))
 
     def test_synthetic_curves_are_available_and_plausible(self):
         curves = load_curves(TEST_CURVES)
@@ -44,6 +54,20 @@ class WebAppTests(unittest.TestCase):
             )
         self.assertEqual(response.status_code, 422)
         self.assertEqual(response.json()["detail"], "Upload a recovery-curve workbook or JSON file.")
+
+    def test_calibrated_mode_rejects_unknown_field_team(self):
+        with tempfile.TemporaryDirectory() as directory:
+            response = TestClient(create_app(Path(directory))).post(
+                "/runs",
+                data={
+                    "fwa_id": "1",
+                    "data_source": "bc_live",
+                    "curve_source": "calibrated",
+                    "field_team": "Synthetic Test",
+                },
+            )
+        self.assertEqual(response.status_code, 422)
+        self.assertIn("calibrated Kootenay workbook", response.json()["detail"])
 
     def test_environment_data_directory(self):
         with tempfile.TemporaryDirectory() as directory:
