@@ -135,11 +135,12 @@ def merge_base_openings(
     results: gpd.GeoDataFrame | None = None,
     fta: gpd.GeoDataFrame | None = None,
 ) -> gpd.GeoDataFrame:
-    """Merge VRI, RESULTS, and FTA openings using legacy ID precedence.
+    """Merge openings with strict VRI, RESULTS, then FTA precedence.
 
-    VRI keeps records with matching ``OPENING_ID``. New RESULTS or FTA records
-    erase their overlap from the accumulated base and are added as unrecovered
-    openings (zero crown closure and projected height).
+    VRI retains its complete footprint. New RESULTS or FTA records are added as
+    unrecovered openings (zero crown closure and projected height) only for
+    area not already represented by a higher-priority source. Matching opening
+    IDs remain represented exclusively by the higher-priority record.
     """
     current = _normalise_openings(vri, "VRI Openings and Burns", False)
     if "OPENING_ID" not in vri:
@@ -154,7 +155,7 @@ def merge_base_openings(
         selected = candidate.loc[
             candidate["OPENING_ID"].isna() | ~candidate["OPENING_ID"].isin(existing_ids)
         ].copy()
-        current = _concat_openings([_erase(current, selected), selected], current.crs)
+        current = _concat_openings([current, _erase(selected, current)], current.crs)
     result = add_opening_area(current)
     assert_non_overlapping(result, "Merged openings")
     return result

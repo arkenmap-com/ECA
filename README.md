@@ -730,8 +730,8 @@ flowchart TD
 
     CHECK -->|"ID exists in VRI"| KEEP["Keep VRI record<br/>(it has crown/height data)"]
     CHECK -->|"ID NOT in VRI"| NEW["New opening found"]
-    NEW --> ERASE["Erase overlapping VRI area<br/>under new opening polygon"]
-    ERASE --> APPEND["Append new opening to merged result<br/>(crown closure = 0, height = 0)"]
+    NEW --> ERASE["Erase higher-priority VRI area<br/>from the new opening polygon"]
+    ERASE --> APPEND["Append uncovered remainder<br/>(crown closure = 0, height = 0)"]
 
     KEEP --> FINAL["mergeFinal<br/>(scratch GDB)"]
     APPEND --> FINAL
@@ -753,7 +753,7 @@ Script: openings.merge_vri_results_fta(scratch_gdb)
      e. Find non-matching IDs in Results/FTA
      f. For non-matching records only:
         - Select them from Results/FTA
-        - Erase their footprint from the VRI layer (EraseFeatures)
+        - Erase the higher-priority VRI/Results footprint from their geometry
         - Build FieldMappings to align temp_ID->OPENING_ID, ECAcrown->CROWN_CLOSURE, etc.
         - Append to the erased VRI layer
   3. Copy final result to scratch_gdb/mergeFinal
@@ -765,10 +765,11 @@ GIS Terms: The three data sources overlap in space:
     after harvesting. They may have more current geometry than VRI.
   - FTA (Forest Tenure Act) pending blocks are approved but not yet harvested.
 
-  The merge logic prefers VRI data when an OPENING_ID exists in both VRI and
-  Results/FTA, because VRI has crown closure and height measurements. When
-  Results/FTA have openings NOT in VRI (new openings the VRI hasn't caught up
-  with), those are added with crown=0 and height=0 (fully clearcut equivalent).
+  The merge logic always gives VRI spatial precedence over Results/FTA because
+  VRI has crown closure and height measurements. Results can fill only area
+  outside VRI, and FTA can fill only area outside both VRI and Results. New
+  remainder polygons are added with crown=0 and height=0 (fully clearcut
+  equivalent).
 ```
 
 ### Complete Openings Assembly

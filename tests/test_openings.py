@@ -24,14 +24,17 @@ class OpeningTests(unittest.TestCase):
         self.assertAlmostEqual(merged.geometry.union_all().area, 150)
         assert_non_overlapping(merged, "test openings")
 
-    def test_base_merge_keeps_vri_for_matching_id_and_replaces_overlap_for_new_id(self):
+    def test_base_merge_always_keeps_vri_over_results(self):
         vri = frame([1], [box(0, 0, 10, 10)])
         results = frame([1, 2], [box(0, 0, 10, 10), box(5, 0, 15, 10)])
         merged = merge_base_openings(vri, results)
         self.assertEqual(set(merged["OPENING_ID"]), {1, 2})
-        self.assertEqual(merged.loc[merged["OPENING_ID"] == 1, "ECAsrc"].iloc[0], "VRI Openings and Burns")
+        retained_vri = merged.loc[merged["OPENING_ID"] == 1].iloc[0]
+        self.assertEqual(retained_vri["ECAsrc"], "VRI Openings and Burns")
+        self.assertAlmostEqual(retained_vri.geometry.area, 100)
         added = merged.loc[merged["OPENING_ID"] == 2].iloc[0]
         self.assertEqual(added["CROWN_CLOSURE"], 0)
+        self.assertAlmostEqual(added.geometry.area, 50)
         self.assertAlmostEqual(merged.geometry.area.sum(), 150)
 
     def test_lower_priority_only_fills_uncovered_area(self):
