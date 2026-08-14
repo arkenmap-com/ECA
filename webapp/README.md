@@ -19,9 +19,15 @@ Open <http://127.0.0.1:8000>. Search the BC Freshwater Atlas by watershed
 name and select the exact `NAMED_WATERSHED_ID` result. In the default **Live
 BC data** mode, the app downloads that boundary and the standard analysis
 layers directly from public BC OpenMaps WFS services backed by the BC
-Geographic Warehouse. Supply the recovery curves and field-team name, then
+Geographic Warehouse. Use the bundled synthetic recovery curves for a test run,
+or supply an operational curve file and matching field-team name, then
 download the resulting GeoPackage and reports or use the interactive map
 dashboard. Live acquisition requires `ogr2ogr` from GDAL (QGIS includes it).
+
+The default **Synthetic test preset** contains plausible but invented height and
+crown-closure thresholds for common BC BEC zones under the field-team name
+`Synthetic Test`. It exists only to exercise the workflow. It has not been
+calibrated or approved and must not be used for operational decisions.
 
 Choose **Prepared cache** to retain the previous offline/reproducible workflow.
 That mode accepts an existing catalogue-input GeoPackage instead of making
