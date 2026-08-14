@@ -3,7 +3,7 @@ import unittest
 import geopandas as gpd
 from shapely.geometry import LineString, box
 
-from open_eca.openings import append_lower_priority, build_other_openings, merge_base_openings, split_openings
+from open_eca.openings import assert_non_overlapping, append_lower_priority, build_other_openings, merge_base_openings, split_openings
 
 
 def frame(ids, geometries, crowns=None, heights=None):
@@ -17,6 +17,13 @@ def frame(ids, geometries, crowns=None, heights=None):
 
 
 class OpeningTests(unittest.TestCase):
+    def test_vri_internal_overlaps_are_removed(self):
+        vri = frame([1, 2], [box(0, 0, 10, 10), box(5, 0, 15, 10)])
+        merged = merge_base_openings(vri)
+        self.assertAlmostEqual(merged.geometry.area.sum(), 150)
+        self.assertAlmostEqual(merged.geometry.union_all().area, 150)
+        assert_non_overlapping(merged, "test openings")
+
     def test_base_merge_keeps_vri_for_matching_id_and_replaces_overlap_for_new_id(self):
         vri = frame([1], [box(0, 0, 10, 10)])
         results = frame([1, 2], [box(0, 0, 10, 10), box(5, 0, 15, 10)])
@@ -33,6 +40,21 @@ class OpeningTests(unittest.TestCase):
         self.assertEqual(len(merged), 2)
         self.assertAlmostEqual(merged.geometry.area.sum(), 150)
         self.assertAlmostEqual(merged.loc[merged["ECAsrc"] == "Wildfire", "Hectares"].iloc[0], 0.005)
+
+    def test_overlaps_within_one_lower_priority_source_are_removed(self):
+        base = merge_base_openings(frame([1], [box(0, 0, 5, 10)]))
+        wildfire = frame(
+            [2, 3], [box(5, 0, 15, 10), box(10, 0, 20, 10)],
+        )
+        merged = append_lower_priority(base, [(wildfire, "Wildfire")])
+        self.assertAlmostEqual(merged.geometry.area.sum(), 200)
+        self.assertAlmostEqual(merged.geometry.union_all().area, 200)
+        assert_non_overlapping(merged, "test openings")
+
+    def test_overlap_validator_rejects_positive_area_overlap(self):
+        overlapping = frame([1, 2], [box(0, 0, 10, 10), box(5, 0, 15, 10)])
+        with self.assertRaisesRegex(ValueError, "overlapping polygon area"):
+            assert_non_overlapping(overlapping, "Unclean inputs")
 
     def test_results_opening_boundary_is_only_a_spatial_gap_filler(self):
         base = merge_base_openings(frame([1], [box(0, 0, 10, 10)]))

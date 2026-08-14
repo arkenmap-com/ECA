@@ -23,6 +23,7 @@ import pandas as pd
 from open_eca.dem import derive_h60, whole_watershed_zone
 from open_eca.openings import (
     add_opening_area,
+    assert_non_overlapping,
     append_lower_priority,
     build_other_openings,
     clip_sources_to_watershed,
@@ -138,7 +139,9 @@ def _recovery_layer(
     )
     openings_bec["Field_Team"] = field_team
     openings_bec = add_opening_area(openings_bec)
-    return add_opening_area(apply_recovery(openings_bec, curves, has_override=False))
+    result = add_opening_area(apply_recovery(openings_bec, curves, has_override=False))
+    assert_non_overlapping(result, "BEC recovery opening splits")
+    return result
 
 
 def _write_layers(path: Path, layers: dict[str, gpd.GeoDataFrame]) -> None:

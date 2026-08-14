@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
-from typing import Tuple, Union
+from typing import Optional, Tuple, Union
 
 import geopandas as gpd
 import pandas as pd
+from shapely.geometry.base import BaseGeometry
 
 from open_eca.spatial import clip_to_boundary, polygonal_features
 
@@ -17,6 +18,65 @@ OpeningLayer = Union[
     Tuple[gpd.GeoDataFrame, str],
     Tuple[gpd.GeoDataFrame, str, bool],
 ]
+
+
+def _polygon_parts(geometry: Optional[BaseGeometry]) -> list[BaseGeometry]:
+    if geometry is None or geometry.is_empty:
+        return []
+    if geometry.geom_type == "Polygon":
+        return [geometry]
+    if geometry.geom_type in {"MultiPolygon", "GeometryCollection"}:
+        return [part for geometry_part in geometry.geoms for part in _polygon_parts(geometry_part)]
+    return []
+
+
+def _remove_internal_overlaps(features: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Give earlier records precedence and remove later positive-area overlap."""
+    if features.empty:
+        return features.copy()
+    features = features.copy()
+    features.geometry = features.geometry.make_valid()
+    features = polygonal_features(features)
+    geometry_name = features.geometry.name
+    records: list[dict] = []
+    occupied: Optional[BaseGeometry] = None
+    for _, row in features.iterrows():
+        geometry = row.geometry
+        remainder = geometry if occupied is None else geometry.difference(occupied)
+        for part in _polygon_parts(remainder):
+            record = row.to_dict()
+            record[geometry_name] = part
+            records.append(record)
+        occupied = geometry if occupied is None else occupied.union(geometry)
+    if not records:
+        return features.iloc[0:0].copy()
+    return gpd.GeoDataFrame(
+        records, columns=features.columns, geometry=geometry_name, crs=features.crs,
+    ).reset_index(drop=True)
+
+
+def assert_non_overlapping(
+    features: gpd.GeoDataFrame,
+    label: str,
+    tolerance_square_metres: float = 1e-6,
+) -> None:
+    """Raise when polygon interiors overlap by more than floating-point noise."""
+    polygons = polygonal_features(features)
+    if len(polygons) < 2:
+        return
+    if polygons.crs is None:
+        raise ValueError(f"{label} has no CRS.")
+    measured = polygons.to_crs("EPSG:3005").reset_index(drop=True)
+    for position, geometry in enumerate(measured.geometry):
+        candidates = measured.sindex.query(geometry, predicate="intersects")
+        for candidate_position in candidates:
+            if candidate_position <= position:
+                continue
+            overlap_area = float(geometry.intersection(measured.geometry.iloc[candidate_position]).area)
+            if overlap_area > tolerance_square_metres:
+                raise ValueError(
+                    f"{label} contains at least {overlap_area:.6f} m² of overlapping polygon area."
+                )
 
 
 def _normalise_openings(
@@ -30,7 +90,7 @@ def _normalise_openings(
     # ECA is an area calculation. Public WFS responses and user files can
     # contain stray lines, points, or GeometryCollection parts; retaining them
     # would make later polygon overlays fail or create zero-area records.
-    result = polygonal_features(openings)
+    result = _remove_internal_overlaps(polygonal_features(openings))
     for field in BASE_FIELDS:
         if field not in result:
             result[field] = None
@@ -95,7 +155,9 @@ def merge_base_openings(
             candidate["OPENING_ID"].isna() | ~candidate["OPENING_ID"].isin(existing_ids)
         ].copy()
         current = _concat_openings([_erase(current, selected), selected], current.crs)
-    return add_opening_area(current)
+    result = add_opening_area(current)
+    assert_non_overlapping(result, "Merged openings")
+    return result
 
 
 def append_lower_priority(
@@ -109,7 +171,9 @@ def append_lower_priority(
         zero_recovery = recovery_setting[0] if recovery_setting else True
         candidate = _normalise_openings(layer, label, zero_recovery).to_crs(current.crs)
         current = _concat_openings([current, _erase(candidate, current)], current.crs)
-    return add_opening_area(current)
+    result = add_opening_area(current)
+    assert_non_overlapping(result, "Completed openings")
+    return result
 
 
 def build_other_openings(
@@ -123,7 +187,9 @@ def build_other_openings(
         candidate = _erase(candidate, main_openings)
         candidate = _erase(candidate, current)
         current = _concat_openings([current, candidate], main_openings.crs)
-    return add_opening_area(current)
+    result = add_opening_area(current)
+    assert_non_overlapping(result, "Other openings")
+    return result
 
 
 def split_openings(
@@ -138,7 +204,9 @@ def split_openings(
         raise ValueError("Subbasins must contain Sub_Basin.")
     h60 = gpd.overlay(openings, h60_zones[["ELEVATION", "geometry"]].to_crs(openings.crs), how="intersection")
     split = gpd.overlay(h60, subbasins[["Sub_Basin", "geometry"]].to_crs(openings.crs), how="intersection")
-    return add_opening_area(split)
+    result = add_opening_area(split)
+    assert_non_overlapping(result, "H60 and sub-basin opening splits")
+    return result
 
 
 def add_opening_area(openings: gpd.GeoDataFrame) -> gpd.GeoDataFrame:

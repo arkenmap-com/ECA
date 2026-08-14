@@ -73,6 +73,13 @@ VRI, RESULTS forest cover, or FTA, so gross opening boundaries cannot replace
 better vegetation or tenure geometry. These records are labelled `RESULTS
 Openings (recent unmatched)` for review.
 
+Polygon interiors are topology-cleaned at every opening-source boundary. Within
+a single source, earlier cached records retain the shared area and later
+records are trimmed; between sources, the documented source-precedence chain
+controls which geometry retains it. The assembled openings, other openings,
+H60/sub-basin splits, and BEC recovery splits are each validated to contain no
+positive-area overlap before output is written.
+
 ## Complete draft tool
 
 Acquire the configured public layers into an input cache, provide a local DEM,
