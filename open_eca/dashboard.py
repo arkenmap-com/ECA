@@ -83,8 +83,16 @@ def create_dashboard(draft: Path, output: Path) -> Path:
         "watershed": _geojson(watershed, ["Watershed", "BasinArea"]),
         "h60": _geojson(h60, ["ELEVATION", "H60Area"]),
         "recovery": _geojson(recovery, [
-            "ECAsrc", "ELEVATION", "Sub_Basin", "Hectares", "ECA_Hectares", "Recovery", "Error",
-            "OPENING_ID", "FEATURE_ID", "HARVEST_DATE", "PROJ_AGE_1",
+            "ECAsrc", "Info", "ELEVATION", "Sub_Basin", "Hectares", "ECA_Hectares", "Recovery", "Error",
+            "ZONE", "SUBZONE", "OPENING_ID", "OPENING_CATEGORY_CODE", "OPENING_STATUS_CODE",
+            "OPENING_LOCATION_NAME", "OPENING_GROSS_AREA", "FOREST_FILE_ID", "CUTTING_PERMIT_ID",
+            "CUT_BLOCK_ID", "DISTURBANCE_START_DATE", "DISTURBANCE_END_DATE",
+            "DENUDATION_1_DISTURBANCE_CODE", "DENUDATION_1_COMPLETION_DATE",
+            "DENUDATION_2_DISTURBANCE_CODE", "DENUDATION_2_COMPLETION_DATE",
+            "RESULTS_SUBMISSION_ID", "OBSERVATION_DATE", "DATA_QUALITY_COMMENT",
+            "CAPTURE_METHOD_CODE", "DATA_SOURCE_CODE", "FOREST_COVER_ID",
+            "STOCKING_STATUS_CODE", "STOCKING_TYPE_CODE", "FEATURE_ID", "HARVEST_DATE",
+            "PROJ_AGE_1", "CROWN_CLOSURE", "PROJ_HEIGHT_1",
         ]),
         "other": _geojson(other, ["ECAsrc", "Hectares", "Info"]),
         "sources": sources, "elevations": elevations,
@@ -96,7 +104,7 @@ def create_dashboard(draft: Path, output: Path) -> Path:
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>body{margin:0;font:14px system-ui,-apple-system,sans-serif;color:#1b2838;background:#f5f7f9}header{padding:18px 24px;background:#163a4d;color:white}header h1{margin:0 0 4px;font-size:25px}main{display:grid;grid-template-columns:minmax(0,2fr) minmax(325px,1fr);height:calc(100vh - 92px)}#map{height:100%;min-height:540px}aside{padding:18px;overflow:auto;background:white}h2{margin:0 0 12px}h3{font-size:14px;margin:22px 0 8px}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{background:#edf5f4;padding:10px;border-radius:6px;font-size:20px;font-weight:700;color:#146c70}.metric span{display:block;margin-top:2px;font-size:11px;font-weight:500;color:#50616d}.filters{border:1px solid #dce4e8;border-radius:6px;padding:10px;background:#fbfcfd}.filters fieldset{border:0;margin:0 0 8px;padding:0}.filters fieldset:last-child{margin-bottom:0}.filters legend{font-weight:650;font-size:12px;margin-bottom:4px}.filters label{display:block;font-size:12px;line-height:1.65;cursor:pointer}.filter-status{font-size:12px;color:#50616d;margin:8px 0 0}button{border:1px solid #8aa2ae;border-radius:4px;padding:6px 8px;background:white;color:#163a4d;cursor:pointer;font:inherit;font-size:12px}table.summary{border-collapse:collapse;width:100%;font-size:12px}.summary th{background:#e8f0f3}.summary td,.summary th{padding:6px;text-align:right;border-bottom:1px solid #dce4e8}.summary td:first-child,.summary th:first-child,.summary td:nth-child(2),.summary th:nth-child(2){text-align:left}.note,.empty{color:#50616d;font-size:12px;line-height:1.45}.legend{background:white;padding:8px;line-height:1.4;color:#334;font-size:11px;box-shadow:0 1px 4px #777}.swatch{display:inline-block;width:10px;height:10px;margin-right:4px;border-radius:2px}@media(max-width:800px){main{display:block;height:auto}#map{height:65vh}}</style>
 </head><body><header><h1>__BASIN__ — draft ECA map</h1><div>BC Data Catalogue / Freshwater Atlas inputs · open-source draft output</div></header>
-<main><div id="map" aria-label="Interactive draft ECA map"></div><aside><h2>Draft result</h2><div class="metrics"><div class="metric">__TOTAL_ECA__ ha<span>Total ECA (__PERCENT__% of basin)</span></div><div class="metric">__OPENINGS__ ha<span>Mapped openings</span></div><div class="metric">__ABOVE_ECA__<span>__ABOVE_LABEL__</span></div><div class="metric">__BASIN_AREA__ ha<span>Watershed area</span></div></div><h3>Map symbology</h3><label for="symbology" class="note">Colour recovering openings by</label><select id="symbology" aria-label="Opening symbology"><option value="recovery">Recovery %</option><option value="type">Opening type</option></select><h3>Filter mapped openings</h3><div id="filters" class="filters"></div><p id="filter-status" class="filter-status"></p><button id="reset-view" type="button">Reset map view</button><h3>ECA by source and elevation</h3>__SUMMARY__<p class="note">This is a screening draft: it includes currently acquired VRI and BEC data; optional tenure, roads, wildfire and local-review layers are not represented unless acquired and rerun.</p></aside></main>
+<main><div id="map" aria-label="Interactive draft ECA map"></div><aside><h2>Draft result</h2><div class="metrics"><div class="metric">__TOTAL_ECA__ ha<span>Total ECA (__PERCENT__% of basin)</span></div><div class="metric">__OPENINGS__ ha<span>Mapped openings</span></div><div class="metric">__ABOVE_ECA__<span>__ABOVE_LABEL__</span></div><div class="metric">__BASIN_AREA__ ha<span>Watershed area</span></div></div><h3>Map symbology</h3><label for="symbology" class="note">Colour recovering openings by</label><select id="symbology" aria-label="Opening symbology"><option value="recovery">Recovery %</option><option value="type">Opening type</option></select><h3>Filter mapped openings</h3><div id="filters" class="filters"></div><p id="filter-status" class="filter-status"></p><button id="reset-view" type="button">Reset map view</button><h3>ECA by source and elevation</h3>__SUMMARY__<p class="note">This is a screening draft assembled from the configured live BC sources. Review source details, recovery errors, and unmatched RESULTS boundaries in the map popups before operational use.</p></aside></main>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const data = __DATA__;
@@ -104,7 +112,9 @@ const map=L.map('map');
 const streets=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);
 const satellite=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community'});
 function escapeHtml(value){const el=document.createElement('div');el.textContent=String(value);return el.innerHTML}
-function popup(p){return Object.entries(p).filter(([,v])=>v!==null && v!==undefined && v!=='' && !Number.isNaN(v)).map(([k,v])=>`<b>${escapeHtml(k)}</b>: ${typeof v==='number'?v.toFixed(2):escapeHtml(v)}`).join('<br>')}
+const popupLabels={ECAsrc:'ECA source',Info:'Source record',ELEVATION:'H60 zone',Sub_Basin:'Sub-basin',Hectares:'Opening area (ha)',ECA_Hectares:'ECA (ha)',Recovery:'Recovery (%)',Error:'Recovery QA',ZONE:'BEC zone',SUBZONE:'BEC subzone',OPENING_ID:'RESULTS opening ID',OPENING_CATEGORY_CODE:'Opening category',OPENING_STATUS_CODE:'Opening status',OPENING_LOCATION_NAME:'Opening location',OPENING_GROSS_AREA:'Opening gross area (ha)',FOREST_FILE_ID:'Forest file',CUTTING_PERMIT_ID:'Cutting permit',CUT_BLOCK_ID:'Cut block',DISTURBANCE_START_DATE:'Disturbance start',DISTURBANCE_END_DATE:'Disturbance end',DENUDATION_1_DISTURBANCE_CODE:'Primary disturbance code',DENUDATION_1_COMPLETION_DATE:'Primary disturbance completion',DENUDATION_2_DISTURBANCE_CODE:'Secondary disturbance code',DENUDATION_2_COMPLETION_DATE:'Secondary disturbance completion',RESULTS_SUBMISSION_ID:'RESULTS submission ID',OBSERVATION_DATE:'Geometry observation date',DATA_QUALITY_COMMENT:'Data quality comment',CAPTURE_METHOD_CODE:'Capture method',DATA_SOURCE_CODE:'Geometry data source',FOREST_COVER_ID:'RESULTS forest-cover ID',STOCKING_STATUS_CODE:'Stocking status',STOCKING_TYPE_CODE:'Stocking type',FEATURE_ID:'VRI feature ID',HARVEST_DATE:'VRI harvest date',PROJ_AGE_1:'Projected age',CROWN_CLOSURE:'Crown closure (%)',PROJ_HEIGHT_1:'Projected height (m)'};
+function popupValue(key,value){if(typeof value!=='number')return escapeHtml(value);if((key.endsWith('_ID')||key==='FEATURE_ID')&&Number.isInteger(value))return String(value);return value.toFixed(2)}
+function popup(p){const note=p.ECAsrc==='RESULTS Openings (recent unmatched)'?'<p><b>Why included:</b> recent mapped RESULTS boundary area not already represented by higher-priority VRI, RESULTS forest cover, or FTA geometry. Assigned 0% recovery for conservative review.</p>':'';const details=Object.entries(p).filter(([,v])=>v!==null&&v!==undefined&&v!==''&&!Number.isNaN(v)).map(([k,v])=>`<b>${escapeHtml(popupLabels[k]||k)}</b>: ${popupValue(k,v)}`).join('<br>');return note+details}
 const boundary=L.geoJSON(data.watershed,{style:{color:'#132f3f',weight:3,fill:false}}).addTo(map);
 const h60=L.geoJSON(data.h60,{style:f=>({color:'#8d6e63',weight:1,fillColor:f.properties.ELEVATION==='H60 Above'?'#d98f39':'#55a868',fillOpacity:.16}),onEachFeature:(f,l)=>l.bindPopup(popup(f.properties))}).addTo(map);
 const sourcePalette=['#4e79a7','#f28e2b','#e15759','#76b7b2','#59a14f','#edc948','#b07aa1','#ff9da7','#9c755f','#bab0ab'];
@@ -133,7 +143,8 @@ const legend=L.control({position:'bottomleft'});legend.onAdd=function(){this._co
             .replace("__ABOVE_ECA__", f"{above_eca:,.1f} ha" if has_h60 else "—")
             .replace("__ABOVE_LABEL__", "ECA above H60" if has_h60 else "No DEM / H60 split")
             .replace("__SUMMARY__", summary_html)
-            .replace("__DATA__", json.dumps(data, separators=(",", ":"))))
+            .replace("__DATA__", json.dumps(data, separators=(",", ":"))
+                     .replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")))
     output.write_text(page, encoding="utf-8")
     return output
 

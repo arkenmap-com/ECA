@@ -44,6 +44,9 @@ non-retired openings disturbed within 20 years are considered only outside
 the higher-priority VRI, RESULTS forest-cover, and FTA geometry. Any included
 remainder is clearly labelled and assigned zero recovery for conservative
 manual review; it never replaces higher-quality source geometry.
+Dashboard popups expose the supporting RESULTS opening status and category,
+disturbance dates, forest-file and block identifiers, geometry provenance and
+data-quality comments when those fields are present in the source record.
 
 By default the app discovers NRCan's current 30 m Medium Resolution Digital
 Elevation Model terrain asset through its public STAC catalogue, streams only

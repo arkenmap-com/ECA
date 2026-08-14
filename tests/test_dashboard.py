@@ -17,7 +17,16 @@ class DashboardTests(unittest.TestCase):
                 {"Watershed": ["Example Creek"], "BasinArea": [1.0]}, geometry=[box(0, 0, 100, 100)], crs="EPSG:3005",
             ).to_file(draft, layer="watershed", driver="GPKG")
             gpd.GeoDataFrame(
-                {"ECAsrc": ["VRI"], "ELEVATION": ["H60 Below"], "Hectares": [1.0], "ECA_Hectares": [0.7], "Recovery": [30]},
+                {
+                    "ECAsrc": ["RESULTS Openings (recent unmatched)"],
+                    "ELEVATION": ["H60 Below"], "Hectares": [1.0],
+                    "ECA_Hectares": [1.0], "Recovery": [0],
+                    "OPENING_ID": [12345], "OPENING_STATUS_CODE": ["APP"],
+                    "OPENING_CATEGORY_CODE": ["FTSBF"],
+                    "DISTURBANCE_END_DATE": ["2024-10-15"],
+                    "FOREST_FILE_ID": ["A12345"],
+                    "DATA_QUALITY_COMMENT": ["Verified </script> source geometry"],
+                },
                 geometry=[box(0, 0, 100, 100)], crs="EPSG:3005",
             ).to_file(draft, layer="openings_recovery", driver="GPKG", mode="a")
             output = create_dashboard(draft, root / "dashboard.html")
@@ -32,3 +41,10 @@ class DashboardTests(unittest.TestCase):
             self.assertIn("Satellite imagery", text)
             self.assertIn("World_Imagery/MapServer/tile", text)
             self.assertIn("Tiles © Esri", text)
+            self.assertIn("RESULTS opening ID", text)
+            self.assertIn("Opening status", text)
+            self.assertIn("Disturbance end", text)
+            self.assertIn("Data quality comment", text)
+            self.assertIn("Why included", text)
+            self.assertIn(r"Verified \u003c/script\u003e source geometry", text)
+            self.assertNotIn("Verified </script> source geometry", text)
